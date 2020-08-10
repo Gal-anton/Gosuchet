@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "vid_organisation".
  *
@@ -31,7 +29,7 @@ class VidOrganisation extends \yii\db\ActiveRecord
         return [
             [['kod_vid'], 'required'],
             [['kod_vid'], 'integer'],
-            [['name_vid'], 'string', 'max' => 65],
+            [['name_vid'], 'string', 'max' => 255],
             [['kod_vid'], 'unique'],
         ];
     }

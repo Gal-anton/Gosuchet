@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "okved".
  *
@@ -31,7 +29,7 @@ class Okved extends \yii\db\ActiveRecord
         return [
             [['kod_okved'], 'required'],
             [['kod_okved'], 'string', 'max' => 8],
-            [['name_okved'], 'string', 'max' => 65],
+            [['name_okved'], 'string', 'max' => 255],
             [['kod_okved'], 'unique'],
         ];
     }

@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "okopf".
  *
@@ -31,7 +29,7 @@ class Okopf extends \yii\db\ActiveRecord
         return [
             [['kod_okopf'], 'required'],
             [['kod_okopf'], 'integer'],
-            [['name_okopf'], 'string', 'max' => 65],
+            [['name_okopf'], 'string', 'max' => 255],
             [['kod_okopf'], 'unique'],
         ];
     }

@@ -3,18 +3,17 @@
 namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
  * This is the model class for table "organisation".
  *
  * @property int $id_org
- * @property int $reg_num
+ * @property string $reg_num
  * @property string $full_name
  * @property string $short_name
  * @property int $inn
- * @property int $kod_ppo
+ * @property string $ppo
  * @property int $id_tip
  * @property int $id_vid
  * @property int $id_okved
@@ -34,10 +33,9 @@ use yii\db\Expression;
  * @property Okato $okato
  * @property VidOrganisation $idV
  * @property VidSob $okfs
- * @property Ppo $kodPpo
  * @property Oktmo $oktmo
  */
-class Organisation extends ActiveRecord
+class Organisation extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -46,30 +44,6 @@ class Organisation extends ActiveRecord
     {
         return 'organisation';
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['reg_num', 'full_name', 'short_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
-            [['reg_num', 'inn', 'kod_ppo', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['full_name'], 'string', 'max' => 255],
-            [['short_name', 'id_owner'], 'string', 'max' => 65],
-            [['kod_ppo'], 'unique'],
-            [['id_okopf'], 'exist', 'skipOnError' => true, 'targetClass' => Okopf::className(), 'targetAttribute' => ['id_okopf' => 'id_okopf']],
-            [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
-            [['id_okved'], 'exist', 'skipOnError' => true, 'targetClass' => Okved::className(), 'targetAttribute' => ['id_okved' => 'id_okved']],
-            [['id_okato'], 'exist', 'skipOnError' => true, 'targetClass' => Okato::className(), 'targetAttribute' => ['id_okato' => 'id_okato']],
-            [['id_vid'], 'exist', 'skipOnError' => true, 'targetClass' => VidOrganisation::className(), 'targetAttribute' => ['id_vid' => 'id_vid']],
-            [['id_okfs'], 'exist', 'skipOnError' => true, 'targetClass' => VidSob::className(), 'targetAttribute' => ['id_okfs' => 'id_okfs']],
-            [['kod_ppo'], 'exist', 'skipOnError' => true, 'targetClass' => Ppo::className(), 'targetAttribute' => ['kod_ppo' => 'id_ppo']],
-            [['id_oktmo'], 'exist', 'skipOnError' => true, 'targetClass' => Oktmo::className(), 'targetAttribute' => ['id_oktmo' => 'id_oktmo']],
-        ];
-    }
-
 
     public function behaviors()
     {
@@ -86,6 +60,28 @@ class Organisation extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return [
+            [['reg_num', 'full_name', 'short_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
+            [['inn', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['full_name', 'ppo', 'id_owner', 'short_name'], 'string', 'max' => 255],
+            [['reg_num'], 'string', 'max' => 15],
+            [['reg_num'], 'unique'],
+            [['id_okopf'], 'exist', 'skipOnError' => true, 'targetClass' => Okopf::className(), 'targetAttribute' => ['id_okopf' => 'id_okopf']],
+            [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
+            [['id_okved'], 'exist', 'skipOnError' => true, 'targetClass' => Okved::className(), 'targetAttribute' => ['id_okved' => 'id_okved']],
+            [['id_okato'], 'exist', 'skipOnError' => true, 'targetClass' => Okato::className(), 'targetAttribute' => ['id_okato' => 'id_okato']],
+            [['id_vid'], 'exist', 'skipOnError' => true, 'targetClass' => VidOrganisation::className(), 'targetAttribute' => ['id_vid' => 'id_vid']],
+            [['id_okfs'], 'exist', 'skipOnError' => true, 'targetClass' => VidSob::className(), 'targetAttribute' => ['id_okfs' => 'id_okfs']],
+            [['id_oktmo'], 'exist', 'skipOnError' => true, 'targetClass' => Oktmo::className(), 'targetAttribute' => ['id_oktmo' => 'id_oktmo']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -94,7 +90,7 @@ class Organisation extends ActiveRecord
             'full_name' => 'Full Name',
             'short_name' => 'Short Name',
             'inn' => 'Inn',
-            'kod_ppo' => 'Kod Ppo',
+            'ppo' => 'Ppo',
             'id_tip' => 'Id Tip',
             'id_vid' => 'Id Vid',
             'id_okved' => 'Id Okved',
@@ -168,16 +164,10 @@ class Organisation extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKodPpo()
-    {
-        return $this->hasOne(Ppo::className(), ['id_ppo' => 'kod_ppo']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getOktmo()
     {
         return $this->hasOne(Oktmo::className(), ['id_oktmo' => 'id_oktmo']);
     }
+
+
 }

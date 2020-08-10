@@ -2,13 +2,11 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "okato".
  *
  * @property int $id_okato
- * @property int $kod_okato
+ * @property string $kod_okato
  * @property string $name_okato
  *
  * @property Organisation[] $organisations
@@ -30,7 +28,7 @@ class Okato extends \yii\db\ActiveRecord
     {
         return [
             [['kod_okato'], 'required'],
-            [['kod_okato'], 'integer'],
+            [['kod_okato'], 'string', 'max' => 11],
             [['name_okato'], 'string', 'max' => 65],
             [['kod_okato'], 'unique'],
         ];
