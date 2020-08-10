@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\models\import;
+namespace app\models;
 
 
 class FtpConnection
@@ -10,7 +10,7 @@ class FtpConnection
     const FTP_USER_NAME = 'gmuext';
     const FTP_USER_PASS = 'YctTa34AdOPyld2';
     const FTP_ROOT_DIRECTORY = "/GeneralInfo";
-    const LOCAL_TEMP_DIRECTORY = "../../temp/";
+    const LOCAL_TEMP_DIRECTORY = "../temp/";
 
     private $_connID;
 

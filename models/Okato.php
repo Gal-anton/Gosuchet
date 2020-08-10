@@ -32,6 +32,7 @@ class Okato extends \yii\db\ActiveRecord
             [['kod_okato'], 'required'],
             [['kod_okato'], 'integer'],
             [['name_okato'], 'string', 'max' => 65],
+            [['kod_okato'], 'unique'],
         ];
     }
 

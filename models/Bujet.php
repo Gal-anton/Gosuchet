@@ -32,6 +32,7 @@ class Bujet extends \yii\db\ActiveRecord
             [['kod_buj'], 'required'],
             [['kod_buj'], 'integer'],
             [['name_buj'], 'string', 'max' => 65],
+            [['kod_buj'], 'unique'],
         ];
     }
 

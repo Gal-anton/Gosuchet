@@ -33,6 +33,7 @@ class Oktmo extends \yii\db\ActiveRecord
             [['kod_oktmo'], 'required'],
             [['kod_oktmo', 'population'], 'integer'],
             [['name_oktmo'], 'string', 'max' => 65],
+            [['kod_oktmo'], 'unique'],
         ];
     }
 

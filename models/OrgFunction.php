@@ -38,6 +38,7 @@ class OrgFunction extends \yii\db\ActiveRecord
             [['kod_fun', 'id_tip'], 'required'],
             [['kod_fun', 'id_tip'], 'integer'],
             [['name_fun'], 'string', 'max' => 65],
+            [['kod_fun'], 'unique'],
             [['id_tip'], 'unique'],
             [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
         ];

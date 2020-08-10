@@ -32,6 +32,7 @@ class VidSob extends \yii\db\ActiveRecord
             [['kod_okfs'], 'required'],
             [['kod_okfs'], 'integer'],
             [['name_okfs'], 'string', 'max' => 65],
+            [['kod_okfs'], 'unique'],
         ];
     }
 

@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "okved".
  *
  * @property int $id_okved
- * @property int $kod_okved
+ * @property string $kod_okved
  * @property string $name_okved
  *
  * @property Organisation[] $organisations
@@ -30,8 +30,9 @@ class Okved extends \yii\db\ActiveRecord
     {
         return [
             [['kod_okved'], 'required'],
-            [['kod_okved'], 'integer'],
+            [['kod_okved'], 'string', 'max' => 8],
             [['name_okved'], 'string', 'max' => 65],
+            [['kod_okved'], 'unique'],
         ];
     }
 

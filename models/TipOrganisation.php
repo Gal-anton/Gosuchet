@@ -33,6 +33,7 @@ class TipOrganisation extends \yii\db\ActiveRecord
             [['kod_tip'], 'required'],
             [['kod_tip'], 'integer'],
             [['name_tip'], 'string', 'max' => 65],
+            [['kod_tip'], 'unique'],
         ];
     }
 

@@ -32,6 +32,7 @@ class VidOrganisation extends \yii\db\ActiveRecord
             [['kod_vid'], 'required'],
             [['kod_vid'], 'integer'],
             [['name_vid'], 'string', 'max' => 65],
+            [['kod_vid'], 'unique'],
         ];
     }
 

@@ -32,6 +32,7 @@ class Okopf extends \yii\db\ActiveRecord
             [['kod_okopf'], 'required'],
             [['kod_okopf'], 'integer'],
             [['name_okopf'], 'string', 'max' => 65],
+            [['kod_okopf'], 'unique'],
         ];
     }
 

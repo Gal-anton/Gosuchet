@@ -33,7 +33,6 @@ use Yii;
  * @property VidOrganisation $idV
  * @property VidSob $okfs
  * @property Ppo $kodPpo
- * @property Bujet $buj
  * @property Oktmo $oktmo
  */
 class Organisation extends \yii\db\ActiveRecord
@@ -52,7 +51,7 @@ class Organisation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['reg_num', 'full_name', 'short_name', 'inn', 'kod_ppo', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf', 'created_at', 'updated_at'], 'required'],
+            [['reg_num', 'full_name', 'short_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf', 'created_at', 'updated_at'], 'required'],
             [['reg_num', 'inn', 'kod_ppo', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['full_name'], 'string', 'max' => 255],
@@ -65,7 +64,6 @@ class Organisation extends \yii\db\ActiveRecord
             [['id_vid'], 'exist', 'skipOnError' => true, 'targetClass' => VidOrganisation::className(), 'targetAttribute' => ['id_vid' => 'id_vid']],
             [['id_okfs'], 'exist', 'skipOnError' => true, 'targetClass' => VidSob::className(), 'targetAttribute' => ['id_okfs' => 'id_okfs']],
             [['kod_ppo'], 'exist', 'skipOnError' => true, 'targetClass' => Ppo::className(), 'targetAttribute' => ['kod_ppo' => 'id_ppo']],
-            [['id_buj'], 'exist', 'skipOnError' => true, 'targetClass' => Bujet::className(), 'targetAttribute' => ['id_buj' => 'id_buj']],
             [['id_oktmo'], 'exist', 'skipOnError' => true, 'targetClass' => Oktmo::className(), 'targetAttribute' => ['id_oktmo' => 'id_oktmo']],
         ];
     }
@@ -158,14 +156,6 @@ class Organisation extends \yii\db\ActiveRecord
     public function getKodPpo()
     {
         return $this->hasOne(Ppo::className(), ['id_ppo' => 'kod_ppo']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBuj()
-    {
-        return $this->hasOne(Bujet::className(), ['id_buj' => 'id_buj']);
     }
 
     /**

@@ -32,6 +32,7 @@ class Ppo extends \yii\db\ActiveRecord
             [['kod_ppo'], 'required'],
             [['kod_ppo'], 'integer'],
             [['name_ppo'], 'string', 'max' => 65],
+            [['kod_ppo'], 'unique'],
         ];
     }
 
