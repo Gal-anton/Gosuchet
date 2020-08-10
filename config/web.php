@@ -50,7 +50,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             /*'rules' => [
-                '<action>' => 'post/<action>',
+                //'<action>' => 'post/<action>',
+                //'vidsob' => 'table/vidsob',
             ],*/
         ],
         

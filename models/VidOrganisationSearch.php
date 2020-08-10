@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Country;
+use app\models\VidOrganisation;
 
 /**
- * CountrySearch represents the model behind the search form of `app\models\Country`.
+ * VidOrganisationSearch represents the model behind the search form of `app\models\VidOrganisation`.
  */
-class CountrySearch extends Country
+class VidOrganisationSearch extends VidOrganisation
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CountrySearch extends Country
     public function rules()
     {
         return [
-            [['code', 'name'], 'safe'],
-            [['population'], 'integer'],
+            [['id_vid', 'kod_vid'], 'integer'],
+            [['name_vid'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CountrySearch extends Country
      */
     public function search($params)
     {
-        $query = Country::find();
+        $query = VidOrganisation::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,11 @@ class CountrySearch extends Country
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'population' => $this->population,
+            'id_vid' => $this->id_vid,
+            'kod_vid' => $this->kod_vid,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name_vid', $this->name_vid]);
 
         return $dataProvider;
     }
