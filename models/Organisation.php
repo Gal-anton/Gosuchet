@@ -12,7 +12,7 @@ use yii\db\Expression;
  * @property string $reg_num
  * @property string $full_name
  * @property string $short_name
- * @property int $inn
+ * @property string $inn
  * @property string $ppo
  * @property int $id_tip
  * @property int $id_vid
@@ -63,12 +63,14 @@ class Organisation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['reg_num', 'full_name', 'short_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
-            [['inn', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
+            [['reg_num', 'full_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
+            [['id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['short_name'], 'default', 'value' => ""],
             [['full_name', 'ppo', 'id_owner', 'short_name'], 'string', 'max' => 255],
-            [['reg_num'], 'string', 'max' => 15],
-            [['reg_num'], 'unique'],
+            [['full_name'], 'string', 'max' => 500],
+            [['reg_num', 'inn'], 'string', 'max' => 15],
+            [['reg_num', 'inn'], 'unique'],
             [['id_okopf'], 'exist', 'skipOnError' => true, 'targetClass' => Okopf::className(), 'targetAttribute' => ['id_okopf' => 'id_okopf']],
             [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
             [['id_okved'], 'exist', 'skipOnError' => true, 'targetClass' => Okved::className(), 'targetAttribute' => ['id_okved' => 'id_okved']],

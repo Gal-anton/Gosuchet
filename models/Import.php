@@ -3,6 +3,7 @@
 
 namespace app\models;
 
+use Yii;
 use ZipArchive;
 
 class Import
@@ -13,36 +14,61 @@ class Import
     private $_ftp;
 
     /**
+     * @var ZipArchive
+     */
+    private $_zip;
+
+    /**
      * @var Organisation
      */
     private $_organisation;
 
+    /**
+     * @var integer
+     */
+    private $_importErrors;
+
     function __construct()
     {
-       $this->_ftp = new FtpConnection();
+        $this->_ftp = new FtpConnection();
+        $this->_zip = new ZipArchive;
     }
 
-    function start(){
+    function start()
+    {
+        $start = microtime(true);
         $directories = $this->_ftp->getFileNames();
-        $count = 0;
+        $amountOfFiles = 0;
+        //$count = 0;
         foreach ($directories as $directory) {
             $archiveNames = $this->_ftp->getFileNames($directory);
+            $log = date('Y-m-d H:i:s') . ' Начата загрузка директории:' . $directory;
+            file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
             foreach ($archiveNames as $archiveName) {
+                $log = date('Y-m-d H:i:s') . ' Начата загрузка файла:' . $archiveName;
+                file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
                 $directory = $this->getFilesFromArchive($archiveName);
                 $listOfFiles = $this->scanDirFullPath($directory);
                 $this->exploreFiles($listOfFiles);
-                if ($count++ > 5) break;
+                rmdir(substr($directory, 0, -1));
+                $amountOfFiles++;
             }
-            break;
+            $log = date('Y-m-d H:i:s') . ' Окончена обработка директории:' . $directory;
+            file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
         }
+        $finish = microtime(true);
+        print_r("\nThe count of errors = " . $this->_importErrors);
+        print_r("\nThe amount of files = " . $amountOfFiles);
+        $result = $finish - $start;
+        print_r("\nThe time = " . $result . "сек");
+
     }
 
     private function unzipFiles($archive, $localDir) {
-        $zip = new ZipArchive;
-        if ($zip->open($archive) === TRUE) {
+        if ($this->_zip->open($archive) === TRUE) {
             // путь к каталогу, в который будут помещены файлы
-            $zip->extractTo($localDir);
-            $zip->close();
+            $this->_zip->extractTo($localDir);
+            $this->_zip->close();
             return true;
         }
         return false;
@@ -75,16 +101,15 @@ class Import
         foreach ($list as $file) {
             if ($this->getExtension($file) === "xml") {
                 $xml = simplexml_load_file($file);
-                $this->getOrganisationFromXML($xml);
-                if (!$this->_organisation->save()) {
-                    var_dump($this->_organisation->errors);
-                }
+                $this->saveOrganisationFromXML($xml);
             }
             unlink($file);
+            unset($this->_organisation);
         }
     }
 
-    private function getOrganisationFromXML($xml) {
+    private function saveOrganisationFromXML($xml)
+    {
 
         $this->_organisation = new Organisation();
 
@@ -97,39 +122,64 @@ class Import
         $classifier = $main->classifier->children('');
         $additional = $position->additional->children('');
 
-        if (isset($classifier->okopf)) $this->setOkopf($classifier->okopf);
-        if (isset($main)) $this->setTipOrganisation($main);
-        if (isset($classifier->okved)) $this->setOkved($classifier->okved);
-        if (isset($classifier->oktmo)) $this->setOktmo($classifier->oktmo);
-        if (isset($classifier->okfs)) $this->setVidSob($classifier->okfs);
-        if (isset($additional->okato)) $this->setOkato($additional->okato);
-        if (isset($additional->institutionType)) $this->setVidOrganisation($additional->institutionType);
-
+        if (isset($initiator->inn)) $this->_organisation->inn = (string)$initiator->inn;
         if (isset($initiator->regNum)) $this->_organisation->reg_num = (string)$initiator->regNum;
-        if (isset($initiator->fullName)) $this->_organisation->full_name = (string)$initiator->fullName;
-        if (isset($main->shortName)) $this->_organisation->short_name = (string)$main->shortName;
-        if (isset($initiator->inn)) $this->_organisation->inn = (int)$initiator->inn;
-        if (isset($other->founder->fullName)) $this->_organisation->id_owner = (string)$other->founder->fullName;
-        if (isset($additional->ppo->name)) $this->_organisation->ppo = (string)$additional->ppo->name;
 
-        return $this->_organisation;
+        if ($this->_organisation->validate(["inn", "reg_num"])) {
+            if (isset($classifier->okopf)) $this->setOkopf($classifier->okopf);
+            if (isset($main)) $this->setTipOrganisation($main);
+            if (isset($classifier->okved)) $this->setOkved($classifier->okved);
+
+            if (isset($classifier->oktmo)) {
+                $this->setOktmo($classifier->oktmo);
+            } elseif (isset($additional->ppo->oktmo)) {
+                $this->setOktmo($additional->ppo->oktmo);
+            }
+
+            if (isset($additional->okato)) {
+                $this->setOkato($additional->okato);
+            } elseif (isset($additional->ppo->okato)) {
+                $this->setOkato($additional->ppo->okato);
+            }
+
+            if (isset($classifier->okfs)) $this->setVidSob($classifier->okfs);
+            if (isset($additional->institutionType)) $this->setVidOrganisation($additional->institutionType);
+            if (isset($initiator->fullName)) $this->_organisation->full_name = (string)$initiator->fullName;
+            if (isset($main->shortName)) $this->_organisation->short_name = (string)$main->shortName;
+            if (isset($other->founder->fullName)) $this->_organisation->id_owner = (string)$other->founder->fullName;
+            if (isset($additional->ppo->name)) $this->_organisation->ppo = (string)$additional->ppo->name;
+
+            if (!$this->_organisation->save()) {
+                $this->_importErrors++;
+            }
+            $errors = $this->_organisation->getErrors();
+            if (!empty($errors)) {
+                $log = date('Y-m-d H:i:s') . ' Ошибки:' . print_r($errors, true);
+                file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
+            }
+            return true;
+        }
+        return false;
     }
-    private function setOkopf($attributes) {
-        $okopf = Okopf::findOne(["kod_okopf" => (string) $attributes->code]);
-        if (is_null($okopf)) {
+
+    private function setOkopf($attributes)
+    {
+        $okopf = Okopf::find()->where(["kod_okopf" => (string)$attributes->code])->asArray()->one();
+        if (empty($okopf) === true) {
             $okopf = new Okopf();
             $okopf->kod_okopf = (string)$attributes->code;
             $okopf->name_okopf = (string)$attributes->name;
             if (!$okopf->save()) {
-                var_dump($okopf->errors);
+                $this->_importErrors++;
             }
-            $okopf = Okopf::findOne(["kod_okopf" => (string)$attributes->code]);
+            $this->_organisation->id_okopf = $okopf->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_okopf = $okopf->getPrimaryKey();
+        $this->_organisation->id_okopf = $okopf["id_okopf"];
     }
 
     private function setTipOrganisation($attributes) {
-        $tip = TipOrganisation::findOne(["kod_tip" => (string) $attributes->orgType]);
+        $tip = TipOrganisation::find()->where(["kod_tip" => (string)$attributes->code])->asArray()->one();
         if (is_null($tip)) {
             $tip = new TipOrganisation();
             $tip->kod_tip = (string)$attributes->orgType;
@@ -146,85 +196,96 @@ class Import
             if (!$tip->save()) {
                 var_dump($tip->errors);
             }
-            $tip = TipOrganisation::findOne(["kod_tip" => (string)$attributes->orgType]);
+            $this->_organisation->id_tip = $tip->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_tip = $tip->getPrimaryKey();
+        $this->_organisation->id_tip = $tip["id_tip"];
     }
 
     private function setOkved($attributes)
     {
-        $okved = Okved::findOne(["kod_okved" => (string) $attributes->code]);
-        if (is_null($okved) === true) {
+        $okved = Okved::find()->where(["kod_okved" => (string)$attributes->code])->asArray()->one();
+        if (empty($okved) === true) {
             $okved = new Okved();
             $okved->kod_okved = (string)$attributes->code;
             $okved->name_okved = (string)$attributes->name;
             if (!$okved->save()) {
-                var_dump($okved->errors);
+                $this->_importErrors++;
             }
-            $okved = Okved::findOne(["kod_okved" => (string)$attributes->code]);
+            $this->_organisation->id_okved = $okved->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_okved = $okved->getPrimaryKey();
+        $this->_organisation->id_okved = $okved["id_okved"];
     }
 
     private function setVidSob($attributes)
     {
-        $okfs = VidSob::findOne(["kod_okfs" => (string)$attributes->code]);
-        if (is_null($okfs) === true) {
+        $okfs = VidSob::find()->where(["kod_okfs" => (string)$attributes->code])->asArray()->one();
+        if (empty($okfs) === true) {
             $okfs = new VidSob();
             $okfs->kod_okfs = (string)$attributes->code;
             $okfs->name_okfs = (string)$attributes->name;
             if (!$okfs->save()) {
-                var_dump($okfs->errors);
+                $this->_importErrors++;
             }
-            $okfs = VidSob::findOne(["kod_okfs" => (string)$attributes->code]);
+            $this->_organisation->id_okfs = $okfs->getPrimaryKey();
+            $this->_organisation->id_buj = (int)$attributes->code;
+            return;
         }
-        $this->_organisation->id_okfs = $okfs->getPrimaryKey();
-        $this->_organisation->id_buj = $okfs->kod_okfs;
+        $this->_organisation->id_okfs = $okfs["id_okfs"];
+        $this->_organisation->id_buj = (int)$attributes->code;
+        unset($okfs);
     }
 
     private function setOkato($attributes)
     {
-        $okato = Okato::findOne(["kod_okato" => (string) $attributes->code]);
-        if (is_null($okato) === true) {
+        $okato = Okato::find()->where(["kod_okato" => (string)$attributes->code])->asArray()->one();
+        if (empty($okato) === true) {
             $okato = new Okato();
             $okato->kod_okato = (string)$attributes->code;
             $okato->name_okato = (string)$attributes->name;
             if (!$okato->save()) {
-                var_dump($okato->errors);
+                $this->_importErrors++;
             }
-            $okato = Okato::findOne(["kod_okato" => (string)$attributes->code]);
+            $this->_organisation->id_okato = $okato->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_okato = $okato->getPrimaryKey();
+        $this->_organisation->id_okato = $okato["id_okato"];
+        unset($okato);
     }
 
     private function setOktmo($attributes)
     {
-        $oktmo = Oktmo::findOne(["kod_oktmo" => (string) $attributes->code]);
-        if (is_null($oktmo) === true) {
+        $oktmo = Oktmo::find()->where(["kod_oktmo" => (string)$attributes->code])->asArray()->one();
+        if (empty($oktmo) === true) {
             $oktmo = new Oktmo();
             $oktmo->kod_oktmo = (string)$attributes->code;
             $oktmo->name_oktmo = (string)$attributes->name;
             if (!$oktmo->save()) {
-                var_dump($oktmo->errors);
+                $this->_importErrors++;
             }
-            $oktmo = Oktmo::findOne(["kod_oktmo" => (string)$attributes->code]);
+            $this->_organisation->id_oktmo = $oktmo->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_oktmo = $oktmo->getPrimaryKey();
+        $this->_organisation->id_oktmo = $oktmo["id_oktmo"];
+        unset($oktmo);
     }
 
     private function setVidOrganisation($attributes)
     {
-        $type = VidOrganisation::findOne(["kod_vid" => (string) $attributes->code]);
-        if (is_null($type) === true) {
+        $type = VidOrganisation::find()->where(["kod_vid" => (string)$attributes->code])->asArray()->one();
+        if (empty($type) === true) {
             $type = new VidOrganisation();
             $type->kod_vid = (string)$attributes->code;
             $type->name_vid = (string)$attributes->name;
             if (!$type->save()) {
-                var_dump($type->errors);
+                $this->_importErrors++;
             }
-            $type = VidOrganisation::findOne(["kod_vid" => (string)$attributes->code]);
+            $this->_organisation->id_vid = $type->getPrimaryKey();
+            return;
         }
-        $this->_organisation->id_vid = $type->getPrimaryKey();
+        $this->_organisation->id_vid = $type["id_vid"];
+        unset($type);
     }
 
 }
