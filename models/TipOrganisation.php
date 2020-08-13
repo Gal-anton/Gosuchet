@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tip_organisation".
@@ -14,7 +14,7 @@ use Yii;
  * @property OrgFunction[] $functions
  * @property Organisation[] $organisations
  */
-class TipOrganisation extends \yii\db\ActiveRecord
+class TipOrganisation extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -43,9 +43,9 @@ class TipOrganisation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_tip' => 'Id Tip',
-            'kod_tip' => 'Kod Tip',
-            'name_tip' => 'Name Tip',
+            'id_tip' => 'Номер записи',
+            'kod_tip' => 'Код типа организации',
+            'name_tip' => 'Наименование',
         ];
     }
 

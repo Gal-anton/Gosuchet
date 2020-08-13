@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "vid_sob".
@@ -13,7 +13,7 @@ use Yii;
  *
  * @property Organisation[] $organisations
  */
-class VidSob extends \yii\db\ActiveRecord
+class VidSob extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,9 +42,9 @@ class VidSob extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_okfs' => 'Id Okfs',
-            'kod_okfs' => 'Kod Okfs',
-            'name_okfs' => 'Name Okfs',
+            'id_okfs' => 'Номер записи',
+            'kod_okfs' => 'Код ОКФС',
+            'name_okfs' => 'Вид собственности',
         ];
     }
 

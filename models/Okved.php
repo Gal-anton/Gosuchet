@@ -2,6 +2,10 @@
 
 namespace app\models;
 
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+
 /**
  * This is the model class for table "okved".
  *
@@ -11,7 +15,7 @@ namespace app\models;
  *
  * @property Organisation[] $organisations
  */
-class Okved extends \yii\db\ActiveRecord
+class Okved extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -19,6 +23,19 @@ class Okved extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'okved';
+    }
+
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**
@@ -40,9 +57,9 @@ class Okved extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_okved' => 'Id Okved',
-            'kod_okved' => 'Kod Okved',
-            'name_okved' => 'Name Okved',
+            'id_okved' => 'Номер записи',
+            'kod_okved' => 'Код ОКВЕД',
+            'name_okved' => 'Наименование',
         ];
     }
 

@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "org_function".
@@ -19,7 +20,7 @@ use Yii;
  * @property Orgstruct[] $orgstructs
  * @property Outputs[] $outputs
  */
-class OrgFunction extends \yii\db\ActiveRecord
+class OrgFunction extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -50,15 +51,15 @@ class OrgFunction extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_fun' => 'Id Fun',
-            'kod_fun' => 'Kod Fun',
-            'name_fun' => 'Name Fun',
-            'id_tip' => 'Id Tip',
+            'id_fun' => 'Номер записи',
+            'kod_fun' => 'Код функции',
+            'name_fun' => 'Наименование',
+            'id_tip' => 'Тип организации',
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDataReports()
     {
@@ -66,7 +67,7 @@ class OrgFunction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDmus()
     {
@@ -74,7 +75,7 @@ class OrgFunction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getInputs()
     {
@@ -82,7 +83,7 @@ class OrgFunction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTip()
     {
@@ -90,7 +91,7 @@ class OrgFunction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrgstructs()
     {
@@ -98,7 +99,7 @@ class OrgFunction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOutputs()
     {

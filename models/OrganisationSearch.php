@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Organisation;
 
 /**
  * OrganisationSearch represents the model behind the search form of `app\models\Organisation`.
@@ -18,8 +16,8 @@ class OrganisationSearch extends Organisation
     public function rules()
     {
         return [
-            [['id_org', 'reg_num', 'inn', 'kod_ppo', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['full_name', 'short_name', 'id_owner', 'created_at', 'updated_at'], 'safe'],
+            [['id_org', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
+            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,9 +58,6 @@ class OrganisationSearch extends Organisation
         // grid filtering conditions
         $query->andFilterWhere([
             'id_org' => $this->id_org,
-            'reg_num' => $this->reg_num,
-            'inn' => $this->inn,
-            'kod_ppo' => $this->kod_ppo,
             'id_tip' => $this->id_tip,
             'id_vid' => $this->id_vid,
             'id_okved' => $this->id_okved,
@@ -75,8 +70,11 @@ class OrganisationSearch extends Organisation
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'full_name', $this->full_name])
+        $query->andFilterWhere(['like', 'reg_num', $this->reg_num])
+            ->andFilterWhere(['like', 'full_name', $this->full_name])
             ->andFilterWhere(['like', 'short_name', $this->short_name])
+            ->andFilterWhere(['like', 'inn', $this->inn])
+            ->andFilterWhere(['like', 'ppo', $this->ppo])
             ->andFilterWhere(['like', 'id_owner', $this->id_owner]);
 
         return $dataProvider;

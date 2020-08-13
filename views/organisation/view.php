@@ -30,10 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_org',
             'reg_num',
-            'full_name',
+            'full_name:ntext',
             'short_name',
             'inn',
-            'kod_ppo',
+            'ppo',
             'id_tip',
             'id_vid',
             'id_okved',

@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'inn') ?>
 
-    <?php // echo $form->field($model, 'kod_ppo') ?>
+    <?php // echo $form->field($model, 'ppo') ?>
 
     <?php // echo $form->field($model, 'id_tip') ?>
 

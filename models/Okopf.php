@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "okopf".
  *
@@ -11,7 +13,7 @@ namespace app\models;
  *
  * @property Organisation[] $organisations
  */
-class Okopf extends \yii\db\ActiveRecord
+class Okopf extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,9 +42,9 @@ class Okopf extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_okopf' => 'Id Okopf',
-            'kod_okopf' => 'Kod Okopf',
-            'name_okopf' => 'Name Okopf',
+            'id_okopf' => 'Номер записи',
+            'kod_okopf' => 'Код ОКОПФ',
+            'name_okopf' => 'Наименование',
         ];
     }
 

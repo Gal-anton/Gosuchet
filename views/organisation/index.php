@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OrganisationSearch */
@@ -27,10 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id_org',
             'reg_num',
-            'full_name',
+            'full_name:ntext',
             'short_name',
             'inn',
-            //'kod_ppo',
+            //'ppo',
             //'id_tip',
             //'id_vid',
             //'id_okved',

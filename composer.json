@@ -21,7 +21,7 @@
         "ext-ftp": "*",
         "ext-zip": "*",
         "ext-simplexml": "*",
-        "ext-pcntl": "*"
+        "kartik-v/yii2-widget-select2": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
