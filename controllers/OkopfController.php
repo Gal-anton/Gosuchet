@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OkopfSearch;
+use app\models\tables\Okopf;
 use Yii;
-use app\models\Okopf;
-use app\models\OkopfSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OkopfController implements the CRUD actions for Okopf model.

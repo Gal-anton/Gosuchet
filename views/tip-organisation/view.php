@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TipOrganisation */
+/* @var $model \app\models\tables\TipOrganisation */
 
 $this->title = $model->id_tip;
 $this->params['breadcrumbs'][] = ['label' => 'Tip Organisations', 'url' => ['index']];

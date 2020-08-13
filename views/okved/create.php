@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Okved */
+/* @var $model \app\models\tables\Okved */
 
 $this->title = 'Create Okved';
 $this->params['breadcrumbs'][] = ['label' => 'Okveds', 'url' => ['index']];

@@ -3,6 +3,14 @@
 
 namespace app\models;
 
+use app\models\tables\Okato;
+use app\models\tables\Okopf;
+use app\models\tables\Oktmo;
+use app\models\tables\Okved;
+use app\models\tables\Organisation;
+use app\models\tables\TipOrganisation;
+use app\models\tables\VidOrganisation;
+use app\models\tables\VidSob;
 use Yii;
 use ZipArchive;
 

@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\VidSobSearch;
+use app\models\tables\VidSob;
 use Yii;
-use app\models\VidSob;
-use app\models\VidSobSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * VidSobController implements the CRUD actions for VidSob model.

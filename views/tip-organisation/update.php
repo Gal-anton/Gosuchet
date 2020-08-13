@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TipOrganisation */
+/* @var $model \app\models\tables\TipOrganisation */
 
 $this->title = 'Update Tip Organisation: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Tip Organisations', 'url' => ['index']];

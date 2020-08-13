@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\TipOrganisationSearch;
+use app\models\tables\TipOrganisation;
 use Yii;
-use app\models\TipOrganisation;
-use app\models\TipOrganisationSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TipOrganisationController implements the CRUD actions for TipOrganisation model.

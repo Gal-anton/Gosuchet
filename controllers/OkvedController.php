@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OkvedSearch;
+use app\models\tables\Okved;
 use Yii;
-use app\models\Okved;
-use app\models\OkvedSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OkvedController implements the CRUD actions for Okved model.

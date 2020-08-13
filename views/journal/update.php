@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Journal */
+/* @var $model \app\models\tables\Journal */
 
 $this->title = 'Update Journal: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Journals', 'url' => ['index']];

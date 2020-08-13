@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Orgstruct;
-use app\models\OrgstructSearch;
+use app\models\search\OrgstructSearch;
+use app\models\tables\Orgstruct;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\VidOrganisation */
+/* @var $model \app\models\tables\VidOrganisation */
 
 $this->title = 'Update Vid Organisation: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Vid Organisations', 'url' => ['index']];

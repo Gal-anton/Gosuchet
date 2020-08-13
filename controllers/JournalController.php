@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Journal;
-use app\models\JournalSearch;
+use app\models\search\JournalSearch;
+use app\models\tables\Journal;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

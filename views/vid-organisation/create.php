@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\VidOrganisation */
+/* @var $model \app\models\tables\VidOrganisation */
 
 $this->title = 'Create Vid Organisation';
 $this->params['breadcrumbs'][] = ['label' => 'Vid Organisations', 'url' => ['index']];

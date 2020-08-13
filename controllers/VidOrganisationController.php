@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\VidOrganisationSearch;
+use app\models\tables\VidOrganisation;
 use Yii;
-use app\models\VidOrganisation;
-use app\models\VidOrganisationSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * VidOrganisationController implements the CRUD actions for VidOrganisation model.

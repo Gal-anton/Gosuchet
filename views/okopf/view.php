@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Okopf */
+/* @var $model \app\models\tables\Okopf */
 
 $this->title = $model->id_okopf;
 $this->params['breadcrumbs'][] = ['label' => 'Okopfs', 'url' => ['index']];

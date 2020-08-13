@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OktmoSearch;
+use app\models\tables\Oktmo;
 use Yii;
-use app\models\Oktmo;
-use app\models\OktmoSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OktmoController implements the CRUD actions for Oktmo model.

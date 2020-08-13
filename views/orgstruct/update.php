@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Orgstruct */
+/* @var $model \app\models\tables\Orgstruct */
 
 $this->title = 'Update Orgstruct: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Orgstructs', 'url' => ['index']];
