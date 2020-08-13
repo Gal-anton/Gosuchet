@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
@@ -35,7 +36,7 @@ use yii\db\Expression;
  * @property VidSob $okfs
  * @property Oktmo $oktmo
  */
-class Organisation extends \yii\db\ActiveRecord
+class Organisation extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -64,13 +65,14 @@ class Organisation extends \yii\db\ActiveRecord
     {
         return [
             [['reg_num', 'full_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
+            [['full_name'], 'string'],
             [['id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['short_name'], 'default', 'value' => ""],
-            [['full_name', 'ppo', 'id_owner', 'short_name'], 'string', 'max' => 255],
-            [['full_name'], 'string', 'max' => 500],
-            [['reg_num', 'inn'], 'string', 'max' => 15],
-            [['reg_num', 'inn'], 'unique'],
+            [['reg_num'], 'string', 'max' => 15],
+            [['short_name', 'ppo', 'id_owner'], 'string', 'max' => 255],
+            [['inn'], 'string', 'max' => 11],
+            [['reg_num'], 'unique'],
+            [['inn'], 'unique'],
             [['id_okopf'], 'exist', 'skipOnError' => true, 'targetClass' => Okopf::className(), 'targetAttribute' => ['id_okopf' => 'id_okopf']],
             [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
             [['id_okved'], 'exist', 'skipOnError' => true, 'targetClass' => Okved::className(), 'targetAttribute' => ['id_okved' => 'id_okved']],
@@ -170,6 +172,4 @@ class Organisation extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Oktmo::className(), ['id_oktmo' => 'id_oktmo']);
     }
-
-
 }

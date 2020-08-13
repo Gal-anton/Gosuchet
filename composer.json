@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "ext-ftp": "*",
         "ext-zip": "*",
-      "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-pcntl": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

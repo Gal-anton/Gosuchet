@@ -130,6 +130,12 @@ class Import
             if (isset($main)) $this->setTipOrganisation($main);
             if (isset($classifier->okved)) $this->setOkved($classifier->okved);
 
+            if (isset($classifier->okved)) {
+                $this->setOkved($classifier->okved);
+            } elseif (isset($additional->activity->okved)) {
+                $this->setOkved($additional->activity->okved);
+            }
+
             if (isset($classifier->oktmo)) {
                 $this->setOktmo($classifier->oktmo);
             } elseif (isset($additional->ppo->oktmo)) {
