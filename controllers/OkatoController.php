@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OkatoSearch;
+use app\models\tables\Okato;
 use Yii;
-use app\models\Okato;
-use app\models\OkatoSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OkatoController implements the CRUD actions for Okato model.

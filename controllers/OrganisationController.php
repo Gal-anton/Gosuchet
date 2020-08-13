@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OrganisationSearch;
+use app\models\tables\Organisation;
 use Yii;
-use app\models\Organisation;
-use app\models\OrganisationSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OrganisationController implements the CRUD actions for Organisation model.

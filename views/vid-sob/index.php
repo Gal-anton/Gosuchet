@@ -1,10 +1,10 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\VidSobSearch */
+/* @var $searchModel \app\models\search\VidSobSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Vid Sobs';

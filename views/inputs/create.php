@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Inputs */
+/* @var $model \app\models\tables\Inputs */
 
 $this->title = 'Create Inputs';
 $this->params['breadcrumbs'][] = ['label' => 'Inputs', 'url' => ['index']];

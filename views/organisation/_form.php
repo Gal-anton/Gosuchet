@@ -1,12 +1,12 @@
 <?php
 
-use app\models\VidOrganisation;
+use app\models\tables\VidOrganisation;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Organisation */
+/* @var $model \app\models\tables\Organisation */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

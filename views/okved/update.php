@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Okved */
+/* @var $model \app\models\tables\Okved */
 
 $this->title = 'Update Okved: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Okveds', 'url' => ['index']];

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Inputs */
+/* @var $model \app\models\tables\Inputs */
 
 $this->title = 'Update Inputs: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Inputs', 'url' => ['index']];

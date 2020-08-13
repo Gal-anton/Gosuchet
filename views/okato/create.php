@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Okato */
+/* @var $model \app\models\tables\Okato */
 
 $this->title = 'Create Okato';
 $this->params['breadcrumbs'][] = ['label' => 'Okatos', 'url' => ['index']];

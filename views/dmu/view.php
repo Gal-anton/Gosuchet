@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Dmu */
+/* @var $model \app\models\tables\Dmu */
 
 $this->title = $model->id_dmu;
 $this->params['breadcrumbs'][] = ['label' => 'Dmus', 'url' => ['index']];

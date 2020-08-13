@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Dmu;
-use app\models\DmuSearch;
+use app\models\search\DmuSearch;
+use app\models\tables\Dmu;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\OrgFunction */
+/* @var $model \app\models\tables\OrgFunction */
 
 $this->title = $model->id_fun;
 $this->params['breadcrumbs'][] = ['label' => 'Org Functions', 'url' => ['index']];

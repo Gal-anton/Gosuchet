@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\search\OrgFunctionSearch;
+use app\models\tables\OrgFunction;
 use Yii;
-use app\models\OrgFunction;
-use app\models\OrgFunctionSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OrgFunctionController implements the CRUD actions for OrgFunction model.

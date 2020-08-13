@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Outputs */
+/* @var $model \app\models\tables\Outputs */
 
 $this->title = 'Create Outputs';
 $this->params['breadcrumbs'][] = ['label' => 'Outputs', 'url' => ['index']];

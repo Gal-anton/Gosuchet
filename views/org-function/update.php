@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\OrgFunction */
+/* @var $model \app\models\tables\OrgFunction */
 
 $this->title = 'Update Org Function: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Org Functions', 'url' => ['index']];

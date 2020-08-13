@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Dmu */
+/* @var $model \app\models\tables\Dmu */
 
 $this->title = 'Update Dmu: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Dmus', 'url' => ['index']];

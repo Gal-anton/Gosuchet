@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Inputs;
-use app\models\InputsSearch;
+use app\models\search\InputsSearch;
+use app\models\tables\Inputs;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -4,7 +4,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\DmuSearch */
+/* @var $searchModel \app\models\search\DmuSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Dmus';
