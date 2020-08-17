@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\InputsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Inputs';
+$this->title = 'Вид ресурса';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inputs-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Inputs', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать вид ресурса', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,10 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_input',
+            //'id_input',
             'kod_input',
             'name_input',
-            'id_fun',
+            //'id_fun',
+            ['attribute' => 'name_fun', 'label' => 'Функция', 'value' => 'fun.name_fun'],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

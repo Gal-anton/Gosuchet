@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Inputs */
 
-$this->title = 'Create Inputs';
-$this->params['breadcrumbs'][] = ['label' => 'Inputs', 'url' => ['index']];
+$this->title = 'Создать вид ресурса';
+$this->params['breadcrumbs'][] = ['label' => 'Вид ресурса', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inputs-create">

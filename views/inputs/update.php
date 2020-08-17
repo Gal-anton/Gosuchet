@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Inputs */
 
-$this->title = 'Update Inputs: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Inputs', 'url' => ['index']];
+$this->title = "Изменить: $model->name_input";
+$this->params['breadcrumbs'][] = ['label' => 'Вид ресурса', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_input, 'url' => ['view', 'id' => $model->id_input]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="inputs-update">
 

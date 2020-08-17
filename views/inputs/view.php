@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Inputs */
 
-$this->title = $model->id_input;
-$this->params['breadcrumbs'][] = ['label' => 'Inputs', 'url' => ['index']];
+$this->title = $model->name_input;
+$this->params['breadcrumbs'][] = ['label' => 'Вид ресурса', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inputs-view">
