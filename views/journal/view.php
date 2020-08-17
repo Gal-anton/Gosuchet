@@ -29,7 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_j',
-            'id_dmu',
+            //'id_dmu',
+            ['attribute' => 'dmu_dmu', 'label' => 'DMU',
+                'value' => function ($model) {
+                    return $model->dmu->id_dmu . " " . $model->dmu->dmu_dmu;
+                },],
             'minX',
             'maxX',
             'minY',

@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\models\tables\Dmu;
 use app\models\tables\Journal;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,6 +12,8 @@ use yii\data\ActiveDataProvider;
  */
 class JournalSearch extends Journal
 {
+    public $dmu_dmu;
+
     /**
      * @inheritdoc
      */
@@ -18,7 +21,7 @@ class JournalSearch extends Journal
     {
         return [
             [['id_j', 'id_dmu', 'minX', 'maxX', 'minY', 'maxY', 'un_efficency'], 'integer'],
-            [['created_at'], 'safe'],
+            [['created_at', 'dmu_dmu'], 'safe'],
         ];
     }
 
@@ -41,13 +44,18 @@ class JournalSearch extends Journal
     public function search($params)
     {
         $query = Journal::find();
-
+        $query->joinWith('dmu');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+
+        $dataProvider->sort->attributes['dmu_dmu'] = [
+            'asc' => [Dmu::tableName() . '.dmu_dmu' => SORT_ASC],
+            'desc' => [Dmu::tableName() . '.dmu_dmu' => SORT_DESC],
+        ];
         $this->load($params);
 
         if (!$this->validate()) {
@@ -64,10 +72,11 @@ class JournalSearch extends Journal
             'maxX' => $this->maxX,
             'minY' => $this->minY,
             'maxY' => $this->maxY,
+            //'dmu_dmu' => $this->dmu_dmu,
             'un_efficency' => $this->un_efficency,
             'created_at' => $this->created_at,
         ]);
-
+        $query->andFilterWhere(['like', Dmu::tableName() . '.dmu_dmu', $this->dmu_dmu]);
         return $dataProvider;
     }
 }

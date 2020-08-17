@@ -61,7 +61,7 @@ class Journal extends ActiveRecord
     {
         return [
             'id_j' => 'Номер записи',
-            'id_dmu' => 'ДМУ',
+            'id_dmu' => 'DMU',
             'minX' => 'Минимальный X',
             'maxX' => 'Максимальный X',
             'minY' => 'Минимальный Y',

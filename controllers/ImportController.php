@@ -12,25 +12,25 @@ class ImportController extends \yii\web\Controller
 
     public function actionIndex()
     {
-
-        set_time_limit(100000);
+        /*
+        set_time_limit(0);
         ignore_user_abort(true);
         $import = new Import();
         $import->start();
         set_time_limit(120);
         return $this->render('index');
+*/
 
-        /*
-                error_reporting(E_ALL);
-                set_time_limit(0);
-                if (WebHelpers::request('new_task') === '1') //Генерируем новый ID задачи
-                {
-                    WebHelpers::echoJson(['task' => TaskHelper::generateTaskId()]);
-                    return false;
-                }
+        error_reporting(E_ALL);
+        set_time_limit(0);
+        if (WebHelpers::request('new_task') === '1') //Генерируем новый ID задачи
+        {
+            WebHelpers::echoJson(['task' => TaskHelper::generateTaskId()]);
+            return false;
+        }
 
-                //Запускаем длительный процесс (на 60 шагов по 200 миллисекунд) с контролем прогресса
-                if (WebHelpers::request('long_process') === '1') {
+        //Запускаем длительный процесс (на 60 шагов по 200 миллисекунд) с контролем прогресса
+        if (WebHelpers::request('long_process') === '1') {
                     $task_id = TaskHelper::getTaskId();
                     if ($task_id === null)
                         return false;
@@ -56,7 +56,7 @@ class ImportController extends \yii\web\Controller
 
                         return false;
                     }
-        */
+
         return $this->render('index');
     }
 
