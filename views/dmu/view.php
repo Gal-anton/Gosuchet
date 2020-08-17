@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Dmu */
 
-$this->title = $model->id_dmu;
-$this->params['breadcrumbs'][] = ['label' => 'Dmus', 'url' => ['index']];
+$this->title = $model->dmu_dmu;
+$this->params['breadcrumbs'][] = ['label' => 'DMU', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dmu-view">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_dmu], ['class' => 'btn btn-primary']) ?>
+        <?php //echo Html::a('Update', ['update', 'id' => $model->id_dmu], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id_dmu], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -31,11 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_dmu',
             'dmu_dmu',
             'kod_is',
-            'id_fun',
-            'id_mod',
-            'id_input',
+            ['attribute' => 'name_fun', 'label' => 'Функция организации',
+                'value' => function ($model) {
+                    return $model->fun->kod_fun . " " . $model->fun->name_fun;
+                },],
+            ['attribute' => 'name_mod', 'label' => 'Модель',
+                'value' => function ($model) {
+                    return $model->mod->kod_mod . " " . $model->mod->name_mod;
+                },],
+            ['attribute' => 'input', 'label' => 'Входные данные',
+                'value' => function ($model) {
+                    return $model->input->kod_input . " " . $model->input->name_input;
+                },],
             'sum_input',
-            'id_output',
+            ['attribute' => 'output', 'label' => 'Результат',
+                'value' => function ($model) {
+                    return $model->output->kod_output . " " . $model->output->name_output;
+                },],
             'sum_output',
             'efficency',
             'created_at',

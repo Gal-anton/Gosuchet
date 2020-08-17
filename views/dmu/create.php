@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Dmu */
 
-$this->title = 'Create Dmu';
-$this->params['breadcrumbs'][] = ['label' => 'Dmus', 'url' => ['index']];
+$this->title = 'Создать DMU';
+$this->params['breadcrumbs'][] = ['label' => 'DMU', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dmu-create">

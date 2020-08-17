@@ -87,7 +87,7 @@ class OrganisationSearch extends Organisation
             ->andFilterWhere(['like', 'inn', $this->inn])
             ->andFilterWhere(['like', 'ppo', $this->ppo])
             ->andFilterWhere(['like', 'id_owner', $this->id_owner])
-            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name]);;
+            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name]);
 
         return $dataProvider;
     }

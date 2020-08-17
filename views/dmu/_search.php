@@ -19,10 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'dmu_dmu') ?>
 
-    <?= $form->field($model, 'kod_is') ?>
-
-    <?= $form->field($model, 'id_fun') ?>
-
     <?= $form->field($model, 'id_mod') ?>
 
     <?php // echo $form->field($model, 'id_input') ?>

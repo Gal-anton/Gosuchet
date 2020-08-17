@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Dmu */
 
-$this->title = 'Update Dmu: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Dmus', 'url' => ['index']];
+$this->title = 'Изменить DMU: ' . $model->dmu_dmu;
+$this->params['breadcrumbs'][] = ['label' => 'DMU', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_dmu, 'url' => ['view', 'id' => $model->id_dmu]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="dmu-update">
 
