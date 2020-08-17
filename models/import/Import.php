@@ -1,8 +1,9 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\import;
 
+use app\models\FtpConnection;
 use app\models\tables\Okato;
 use app\models\tables\Okopf;
 use app\models\tables\Oktmo;
@@ -42,26 +43,27 @@ class Import
         $this->_zip = new ZipArchive;
     }
 
-    function start()
+    function start($first = 0, $number = null)
     {
         $start = microtime(true);
         $directories = $this->_ftp->getFileNames();
         $amountOfFiles = 0;
         //$count = 0;
-        foreach ($directories as $directory) {
-            $archiveNames = $this->_ftp->getFileNames($directory);
-            $log = date('Y-m-d H:i:s') . ' Начата загрузка директории:' . $directory;
+        $number = isset($number) ? $number : sizeof($directories);
+        for ($i = $first; $i < $number; $i++) {
+            $archiveNames = $this->_ftp->getFileNames($directories[$i]);
+            $log = date('Y-m-d H:i:s') . ' Начата загрузка директории:' . $directories[$i];
             file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
             foreach ($archiveNames as $archiveName) {
                 $log = date('Y-m-d H:i:s') . ' Начата загрузка файла:' . $archiveName;
                 file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
-                $directory = $this->getFilesFromArchive($archiveName);
-                $listOfFiles = $this->scanDirFullPath($directory);
+                $directories[$i] = $this->getFilesFromArchive($archiveName);
+                $listOfFiles = $this->scanDirFullPath($directories[$i]);
                 $this->exploreFiles($listOfFiles);
-                rmdir(substr($directory, 0, -1));
+                rmdir(substr($directories[$i], 0, -1));
                 $amountOfFiles++;
             }
-            $log = date('Y-m-d H:i:s') . ' Окончена обработка директории:' . $directory;
+            $log = date('Y-m-d H:i:s') . ' Окончена обработка директории:' . $directories[$i];
             file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
         }
         $finish = microtime(true);
@@ -193,7 +195,7 @@ class Import
     }
 
     private function setTipOrganisation($attributes) {
-        $tip = TipOrganisation::find()->where(["kod_tip" => (string)$attributes->code])->asArray()->one();
+        $tip = TipOrganisation::find()->where(["kod_tip" => (string)$attributes->orgType])->asArray()->one();
         if (is_null($tip)) {
             $tip = new TipOrganisation();
             $tip->kod_tip = (string)$attributes->orgType;

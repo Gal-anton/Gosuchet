@@ -109,6 +109,16 @@ class Organisation extends ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        $this->id_buj = $this->idV->kod_vid;
+
+        return true;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

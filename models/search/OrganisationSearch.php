@@ -3,14 +3,18 @@
 namespace app\models\search;
 
 use app\models\tables\Organisation;
+use app\models\tables\TipOrganisation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * OrganisationSearch represents the model behind the search form of `app\models\Organisation`.
+ * OrganisationSearch represents the model behind the search form of `app\models\tables\Organisation`.
  */
 class OrganisationSearch extends Organisation
 {
+
+    public $tip_name;
+
     /**
      * @inheritdoc
      */
@@ -18,7 +22,7 @@ class OrganisationSearch extends Organisation
     {
         return [
             [['id_org', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at'], 'safe'],
+            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at', 'tip_name'], 'safe'],
         ];
     }
 
@@ -41,12 +45,18 @@ class OrganisationSearch extends Organisation
     public function search($params)
     {
         $query = Organisation::find();
-
+        $query->joinWith('tip');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['name_tip'] = [
+            'asc' => [TipOrganisation::tableName() . '.name_tip' => SORT_ASC],
+            'desc' => [TipOrganisation::tableName() . '.name_tip' => SORT_DESC],
+        ];
+
 
         $this->load($params);
 
@@ -76,7 +86,8 @@ class OrganisationSearch extends Organisation
             ->andFilterWhere(['like', 'short_name', $this->short_name])
             ->andFilterWhere(['like', 'inn', $this->inn])
             ->andFilterWhere(['like', 'ppo', $this->ppo])
-            ->andFilterWhere(['like', 'id_owner', $this->id_owner]);
+            ->andFilterWhere(['like', 'id_owner', $this->id_owner])
+            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name]);;
 
         return $dataProvider;
     }

@@ -2,7 +2,8 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Система оценки';
+
 ?>
 <div class="site-index">
 

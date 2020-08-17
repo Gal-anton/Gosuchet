@@ -1,7 +1,9 @@
 <?php
 
+use app\models\tables\TipOrganisation;
 use app\models\tables\VidOrganisation;
 use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +14,9 @@ use yii\widgets\ActiveForm;
 
 <div class="organisation-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'organisation-form',
+    ]); ?>
 
     <?= $form->field($model, 'reg_num')->textInput(['maxlength' => true]) ?>
 
@@ -24,31 +28,85 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ppo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_tip')->textInput() ?>
-
-    <?= $form->field($model, 'id_vid')->widget(Select2::classname(), [
-        'data' => VidOrganisation::find()
-            ->select(['concat(kod_vid, " ", name_vid) as value'])
-            ->orderBy(['value' => SORT_ASC])
-            ->column(),
-        'options' => ['placeholder' => 'Select Vid Organisation ...'],
+    <?= $form->field($model, 'id_tip')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(TipOrganisation::find()
+            ->select(['id_tip', 'concat(kod_tip, " ", name_tip) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_tip', 'value'),
+        'options' => ['placeholder' => 'Выберите тип организации ...'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => true,
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id_okved')->textInput() ?>
+    <?= $form->field($model, 'id_vid')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(VidOrganisation::find()
+            ->select(['id_vid', 'concat(kod_vid, " ", name_vid) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_vid', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]);
+    echo Select2::widget([
+        'model' => $model,
+        'attribute' => 'id_vid',
+        'data' => ArrayHelper::map(VidOrganisation::find()
+            ->select(['id_vid', 'concat(kod_vid, " ", name_vid) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_vid', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
+    <?= $form->field($model, 'id_okved')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(\app\models\tables\Okved::find()
+            ->select(['id_okved', 'concat(kod_okved, " ", name_okved) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_okved', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
+    <?= $form->field($model, 'id_okato')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(\app\models\tables\Okato::find()
+            ->select(['id_okato', 'concat(kod_okato, " ", name_okato) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_okato', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'id_okato')->textInput() ?>
+    <?= $form->field($model, 'id_oktmo')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(\app\models\tables\Oktmo::find()
+            ->select(['id_oktmo', 'concat(kod_oktmo, " ", name_oktmo) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_oktmo', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'id_oktmo')->textInput() ?>
+    <?= $form->field($model, 'id_okfs')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(\app\models\tables\VidSob::find()
+            ->select(['id_okfs', 'concat(kod_okfs, " ", name_okfs) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_okfs', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'id_okfs')->textInput() ?>
-
-    <?= $form->field($model, 'id_buj')->textInput() ?>
-
-    <?= $form->field($model, 'id_okopf')->textInput() ?>
+    <?= $form->field($model, 'id_okopf')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(\app\models\tables\Okopf::find()
+            ->select(['id_okopf', 'concat(kod_okopf, " ", name_okopf) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_okopf', 'value'),
+        'options' => ['placeholder' => 'Выберите вид организации ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'id_owner')->textInput(['maxlength' => true]) ?>
 

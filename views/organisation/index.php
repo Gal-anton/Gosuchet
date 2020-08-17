@@ -2,12 +2,13 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel \app\models\search\OrganisationSearch */
+/* @var $searchModel app\models\search\OrganisationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Organisations';
+$this->title = 'Справочник организаций';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="organisation-index">
@@ -24,13 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id_org',
             'reg_num',
+            'inn',
             'full_name:ntext',
             'short_name',
-            'inn',
-            //'ppo',
+            //['attribute' => 'tip_name','label' => 'Тип', 'value'=>'tip.name_tip'],
+            'ppo',
             //'id_tip',
             //'id_vid',
             //'id_okved',
@@ -42,8 +42,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_owner',
             //'created_at',
             //'updated_at',
-
+            ['label' => 'Отчеты',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return Html::a('Дабавить отчет', Url::to(['data-report/create?id_org=' . $data->id_org]));
+                }],
             ['class' => 'yii\grid\ActionColumn'],
+
+
         ],
     ]); ?>
 </div>

@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\DataReport */
 
-$this->title = 'Update Data Report: {id_data_report}';
-$this->params['breadcrumbs'][] = ['label' => 'Data Reports', 'url' => ['index']];
+$this->title = "Обновить отчет: {$model->id_data_report}";
+$this->params['breadcrumbs'][] = ['label' => 'Отчетные данные', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_data_report, 'url' => ['view', 'id' => $model->id_data_report]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="data-report-update">
 

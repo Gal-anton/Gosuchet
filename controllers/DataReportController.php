@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\search\DataReportSearch;
 use app\models\tables\DataReport;
+use app\models\tables\Organisation;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -64,6 +65,8 @@ class DataReportController extends Controller
      */
     public function actionCreate()
     {
+        $id_org = Yii::$app->request->get('id_org');
+        $orgName = Organisation::findOne($id_org)->full_name;
         $model = new DataReport();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -72,6 +75,8 @@ class DataReportController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'id_org' => $id_org,
+            'orgName' => $orgName,
         ]);
     }
 

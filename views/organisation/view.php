@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\Organisation */
+/* @var $model app\models\tables\Organisation */
 
-$this->title = $model->id_org;
+$this->title = $model->short_name;
 $this->params['breadcrumbs'][] = ['label' => 'Organisations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,14 +34,40 @@ $this->params['breadcrumbs'][] = $this->title;
             'short_name',
             'inn',
             'ppo',
-            'id_tip',
-            'id_vid',
-            'id_okved',
-            'id_okato',
-            'id_oktmo',
-            'id_okfs',
-            'id_buj',
-            'id_okopf',
+            ['attribute' => 'tip_name', 'label' => 'Тип организации',
+                'value' => function ($model) {
+                    return $model->tip->kod_tip . " " . $model->tip->name_tip;
+                },],
+            ['attribute' => 'vid_name', 'label' => 'Вид организации',
+                'value' => function ($model) {
+                    return $model->idV->kod_vid . " " . $model->idV->name_vid;
+                },],
+            //'id_okved',
+            ['attribute' => 'id_okved', 'label' => 'ОКВЭД',
+                'value' => function ($model) {
+                    return $model->okved->kod_okved . " " . $model->okved->name_okved;
+                },],
+            //'id_okato',
+            ['attribute' => 'id_okato', 'label' => 'ОКАТО',
+                'value' => function ($model) {
+                    return $model->okato->kod_okato . " " . $model->okato->name_okato;
+                },],
+            //'id_oktmo',
+            ['attribute' => 'id_oktmo', 'label' => 'ОКТМО',
+                'value' => function ($model) {
+                    return $model->oktmo->kod_oktmo . " " . $model->oktmo->name_oktmo;
+                },],
+            //'id_okfs',
+            ['attribute' => 'id_okfs', 'label' => 'Вид собственности(ОКФС)',
+                'value' => function ($model) {
+                    return $model->okfs->kod_okfs . " " . $model->okfs->name_okfs;
+                },],
+            //'id_buj',
+            //'id_okopf',
+            ['attribute' => 'id_okopf', 'label' => 'Вид организации',
+                'value' => function ($model) {
+                    return $model->okopf->kod_okopf . " " . $model->okopf->name_okopf;
+                },],
             'id_owner',
             'created_at',
             'updated_at',

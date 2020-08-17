@@ -2,12 +2,13 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel \app\models\search\DataReportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Data Reports';
+$this->title = 'Отчетные данные';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="data-report-index">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Data Report', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать отчет', Url::to(['organisation/']), ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

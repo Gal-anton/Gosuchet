@@ -40,7 +40,8 @@ class DataReport extends ActiveRecord
     {
         return [
             [['id_org', 'report_year', 'report_staff_plan', 'report_staff_fact', 'report_sum_fin', 'report_sum_fot', 'id_orgstr', 'id_fun', 'resource_sum'], 'required'],
-            [['id_org', 'report_year', 'report_staff_plan', 'report_staff_fact', 'report_sum_fin', 'report_sum_fot', 'id_orgstr', 'id_fun', 'resource_sum'], 'integer'],
+            [['id_org', 'report_staff_plan', 'report_staff_fact', 'report_sum_fin', 'report_sum_fot', 'id_orgstr', 'id_fun', 'resource_sum'], 'integer', 'min' => 0],
+            [['report_year'], 'integer', 'max' => (int)date('Y'), 'min' => 1900],
             [['id_fun'], 'exist', 'skipOnError' => true, 'targetClass' => OrgFunction::className(), 'targetAttribute' => ['id_fun' => 'id_fun']],
             [['id_org'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['id_org' => 'id_org']],
             [['id_orgstr'], 'exist', 'skipOnError' => true, 'targetClass' => Orgstruct::className(), 'targetAttribute' => ['id_orgstr' => 'id_orgstr']],
@@ -62,7 +63,7 @@ class DataReport extends ActiveRecord
             'report_sum_fot' => 'Сумма ФОТ',
             'id_orgstr' => 'Тип структуры',
             'id_fun' => 'Вид функции',
-            'resource_sum' => 'Количество интеллектцальных агентов',
+            'resource_sum' => 'Количество интеллектуальных агентов',
         ];
     }
 

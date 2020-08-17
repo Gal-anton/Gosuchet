@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\Organisation */
+/* @var $model app\models\tables\Organisation */
 
-$this->title = "Изменить: {$model->short_name}";
+$this->title = "Карточка организации: {$model->short_name}";
 $this->params['breadcrumbs'][] = ['label' => 'Organisations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_org, 'url' => ['view', 'id' => $model->id_org]];
 $this->params['breadcrumbs'][] = 'Update';
