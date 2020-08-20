@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\VidOrganisation */
 
-$this->title = 'Update Vid Organisation: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Vid Organisations', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_vid, 'url' => ['view', 'id' => $model->id_vid]];
+$this->title = 'Обновить вид организации: ' . $model->kod_vid;
+$this->params['breadcrumbs'][] = ['label' => 'Вид организации', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_vid, 'url' => ['view', 'id' => $model->id_vid]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="vid-organisation-update">

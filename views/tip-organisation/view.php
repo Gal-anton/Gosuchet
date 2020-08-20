@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\TipOrganisation */
 
-$this->title = $model->id_tip;
-$this->params['breadcrumbs'][] = ['label' => 'Tip Organisations', 'url' => ['index']];
+$this->title = $model->kod_tip . " " . $model->name_tip;
+$this->params['breadcrumbs'][] = ['label' => 'Тип организации', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tip-organisation-view">

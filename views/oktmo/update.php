@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Oktmo */
 
-$this->title = 'Update Oktmo: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Oktmos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_oktmo, 'url' => ['view', 'id' => $model->id_oktmo]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Обновить ОКТМО: ' . $model->kod_oktmo;
+$this->params['breadcrumbs'][] = ['label' => 'ОКТМО', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_oktmo, 'url' => ['view', 'id' => $model->id_oktmo]];
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="oktmo-update">
 

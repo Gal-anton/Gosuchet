@@ -3,6 +3,8 @@
 namespace app\models\search;
 
 use app\models\tables\DataReport;
+use app\models\tables\OrgFunction;
+use app\models\tables\Orgstruct;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -11,6 +13,10 @@ use yii\data\ActiveDataProvider;
  */
 class DataReportSearch extends DataReport
 {
+
+    public $name_orgstr;
+    public $name_fun;
+
     /**
      * @inheritdoc
      */
@@ -18,6 +24,7 @@ class DataReportSearch extends DataReport
     {
         return [
             [['id_data_report', 'id_org', 'report_year', 'report_staff_plan', 'report_staff_fact', 'report_sum_fin', 'report_sum_fot', 'id_orgstr', 'id_fun', 'resource_sum'], 'integer'],
+            [['name_fun', 'name_orgstr'], 'safe'],
         ];
     }
 
@@ -42,11 +49,22 @@ class DataReportSearch extends DataReport
         $query = DataReport::find();
 
         // add conditions that should always apply here
+        $query->joinWith('orgstr');
+        $query->joinWith('fun');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['name_orgstr'] = [
+            'asc' => [Orgstruct::tableName() . '.name_orgstr' => SORT_ASC],
+            'desc' => [Orgstruct::tableName() . '.name_orgstr' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['name_fun'] = [
+            'asc' => [OrgFunction::tableName() . '.name_fun' => SORT_ASC],
+            'desc' => [OrgFunction::tableName() . '.name_fun' => SORT_DESC],
+        ];
         $this->load($params);
 
         if (!$this->validate()) {
@@ -66,9 +84,13 @@ class DataReportSearch extends DataReport
             'report_sum_fot' => $this->report_sum_fot,
             'id_orgstr' => $this->id_orgstr,
             'id_fun' => $this->id_fun,
+            'name_mod' => $this->name_orgstr,
+            'name_fun' => $this->name_fun,
             'resource_sum' => $this->resource_sum,
         ]);
 
+        $query->andFilterWhere(['like', Orgstruct::tableName() . '.name_orgstr', $this->name_orgstr])
+            ->andFilterWhere(['like', OrgFunction::tableName() . '.name_fun', $this->name_fun]);
         return $dataProvider;
     }
 }

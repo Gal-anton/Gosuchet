@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OktmoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Oktmos';
+$this->title = 'ОКТМО';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="oktmo-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Oktmo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить ОКТМО', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_oktmo',
+            //'id_oktmo',
             'kod_oktmo',
             'name_oktmo',
             'population',

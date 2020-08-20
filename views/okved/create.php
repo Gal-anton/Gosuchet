@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okved */
 
-$this->title = 'Create Okved';
-$this->params['breadcrumbs'][] = ['label' => 'Okveds', 'url' => ['index']];
+$this->title = 'Добавить ОКВЭД';
+$this->params['breadcrumbs'][] = ['label' => 'ОКВЭД', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okved-create">

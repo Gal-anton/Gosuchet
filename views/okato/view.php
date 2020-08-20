@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okato */
 
-$this->title = $model->id_okato;
-$this->params['breadcrumbs'][] = ['label' => 'Okatos', 'url' => ['index']];
+$this->title = $model->kod_okato;
+$this->params['breadcrumbs'][] = ['label' => 'ОКАТО', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okato-view">

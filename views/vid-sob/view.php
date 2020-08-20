@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model \app\models\tables\VidSob */
 
 $this->title = $model->id_okfs;
-$this->params['breadcrumbs'][] = ['label' => 'Vid Sobs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Вид собственности (ОКФС)', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vid-sob-view">

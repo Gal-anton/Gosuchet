@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OutputsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Outputs';
+$this->title = 'Виды результата';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="outputs-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Outputs', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить вид результата', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,10 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_output',
+            //'id_output',
             'kod_output',
             'name_output',
-            'id_fun',
+            //'id_fun',
+            ['attribute' => 'name_fun', 'label' => 'Функция', 'value' => 'fun.name_fun'],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

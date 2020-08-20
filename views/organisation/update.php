@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\tables\Organisation */
 
 $this->title = "Карточка организации: {$model->short_name}";
-$this->params['breadcrumbs'][] = ['label' => 'Organisations', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Организации', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_org, 'url' => ['view', 'id' => $model->id_org]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="organisation-update">
 

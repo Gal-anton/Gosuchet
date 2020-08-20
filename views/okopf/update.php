@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okopf */
 
-$this->title = 'Update Okopf: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Okopfs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_okopf, 'url' => ['view', 'id' => $model->id_okopf]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Обновить ОКОПФ: ' . $model->kod_okopf;
+$this->params['breadcrumbs'][] = ['label' => 'ОКОПФ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_okopf, 'url' => ['view', 'id' => $model->id_okopf]];
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="okopf-update">
 

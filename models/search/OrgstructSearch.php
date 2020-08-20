@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\models\tables\OrgFunction;
 use app\models\tables\Orgstruct;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,6 +12,9 @@ use yii\data\ActiveDataProvider;
  */
 class OrgstructSearch extends Orgstruct
 {
+
+    public $name_fun;
+
     /**
      * @inheritdoc
      */
@@ -18,7 +22,7 @@ class OrgstructSearch extends Orgstruct
     {
         return [
             [['id_orgstr', 'kod_orgstr', 'id_fun'], 'integer'],
-            [['name_orgstr'], 'safe'],
+            [['name_orgstr', 'name_fun'], 'safe'],
         ];
     }
 
@@ -42,11 +46,18 @@ class OrgstructSearch extends Orgstruct
     {
         $query = Orgstruct::find();
 
+        $query->joinWith('fun');
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['name_fun'] = [
+            'asc' => [OrgFunction::tableName() . '.name_fun' => SORT_ASC],
+            'desc' => [OrgFunction::tableName() . '.name_fun' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -61,9 +72,11 @@ class OrgstructSearch extends Orgstruct
             'id_orgstr' => $this->id_orgstr,
             'kod_orgstr' => $this->kod_orgstr,
             'id_fun' => $this->id_fun,
+            'name_fun' => $this->name_fun,
         ]);
 
-        $query->andFilterWhere(['like', 'name_orgstr', $this->name_orgstr]);
+        $query->andFilterWhere(['like', 'name_orgstr', $this->name_orgstr])
+            ->andFilterWhere(['like', OrgFunction::tableName() . '.name_fun', $this->name_fun]);
 
         return $dataProvider;
     }

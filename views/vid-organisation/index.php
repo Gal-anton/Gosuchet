@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\VidOrganisationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vid Organisations';
+$this->title = 'Вид организации';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vid-organisation-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Vid Organisation', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить вид', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_vid',
+            //'id_vid',
             'kod_vid',
             'name_vid',
 

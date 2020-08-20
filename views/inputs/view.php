@@ -31,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_input',
             'kod_input',
             'name_input',
-            'id_fun',
+            //'id_fun',
+            ['attribute' => 'name_fun', 'label' => 'Функция',
+                'value' => function ($model) {
+                    return $model->fun->kod_fun . " " . $model->fun->name_fun;
+                },],
         ],
     ]) ?>
 

@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Oktmo */
 
-$this->title = $model->id_oktmo;
-$this->params['breadcrumbs'][] = ['label' => 'Oktmos', 'url' => ['index']];
+$this->title = $model->kod_oktmo;
+$this->params['breadcrumbs'][] = ['label' => 'ОКТМО', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="oktmo-view">

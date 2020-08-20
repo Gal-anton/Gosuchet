@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Обновить функцию:' . $model->kod_fun;
 $this->params['breadcrumbs'][] = ['label' => 'Функции', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_fun, 'url' => ['view', 'id' => $model->id_fun]];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_fun, 'url' => ['view', 'id' => $model->id_fun]];
 $this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="org-function-update">

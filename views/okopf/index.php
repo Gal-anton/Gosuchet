@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OkopfSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Okopfs';
+$this->title = 'ОКОПФ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okopf-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Okopf', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить ОКОПФ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_okopf',
+            //'id_okopf',
             'kod_okopf',
             'name_okopf',
 

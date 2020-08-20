@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Oktmo */
 
-$this->title = 'Create Oktmo';
-$this->params['breadcrumbs'][] = ['label' => 'Oktmos', 'url' => ['index']];
+$this->title = 'Добавить ОКТМО';
+$this->params['breadcrumbs'][] = ['label' => 'ОКТМО', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="oktmo-create">

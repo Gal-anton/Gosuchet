@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okved */
 
-$this->title = $model->id_okved;
-$this->params['breadcrumbs'][] = ['label' => 'Okveds', 'url' => ['index']];
+$this->title = $model->kod_okved;
+$this->params['breadcrumbs'][] = ['label' => 'ОКВЭД', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okved-view">

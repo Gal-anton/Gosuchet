@@ -33,7 +33,7 @@ class Orgstruct extends ActiveRecord
     {
         return [
             [['kod_orgstr', 'id_fun'], 'required'],
-            [['kod_orgstr', 'id_fun'], 'integer'],
+            [['id_fun'], 'integer'],
             [['kod_orgstr'], 'string', 'max' => 8],
             [['name_orgstr'], 'string', 'max' => 65],
             [['kod_orgstr'], 'unique'],

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Orgstruct */
 
-$this->title = $model->id_orgstr;
+$this->title = $model->kod_orgstr;
 $this->params['breadcrumbs'][] = ['label' => 'Орг. структуры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_orgstr',
             'kod_orgstr',
             'name_orgstr',
-            'id_fun',
+            //'id_fun',
+            ['attribute' => 'name_fun', 'label' => 'Функция',
+                'value' => function ($model) {
+                    return $model->fun->kod_fun . " " . $model->fun->name_fun;
+                },],
         ],
     ]) ?>
 

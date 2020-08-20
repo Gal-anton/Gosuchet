@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OkatoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Okatos';
+$this->title = 'ОКАТО';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okato-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Okato', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить ОКАТО', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_okato',
+            //'id_okato',
             'kod_okato',
             'name_okato',
 

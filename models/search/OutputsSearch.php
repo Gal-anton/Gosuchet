@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\models\tables\OrgFunction;
 use app\models\tables\Outputs;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,6 +12,9 @@ use yii\data\ActiveDataProvider;
  */
 class OutputsSearch extends Outputs
 {
+
+    public $name_fun;
+
     /**
      * @inheritdoc
      */
@@ -18,7 +22,7 @@ class OutputsSearch extends Outputs
     {
         return [
             [['id_output', 'kod_output', 'id_fun'], 'integer'],
-            [['name_output'], 'safe'],
+            [['name_output', 'name_fun'], 'safe'],
         ];
     }
 
@@ -41,6 +45,7 @@ class OutputsSearch extends Outputs
     public function search($params)
     {
         $query = Outputs::find();
+        $query->joinWith('fun');
 
         // add conditions that should always apply here
 
@@ -48,6 +53,10 @@ class OutputsSearch extends Outputs
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['name_fun'] = [
+            'asc' => [OrgFunction::tableName() . '.name_fun' => SORT_ASC],
+            'desc' => [OrgFunction::tableName() . '.name_fun' => SORT_DESC],
+        ];
         $this->load($params);
 
         if (!$this->validate()) {
@@ -61,9 +70,11 @@ class OutputsSearch extends Outputs
             'id_output' => $this->id_output,
             'kod_output' => $this->kod_output,
             'id_fun' => $this->id_fun,
+            'name_fun' => $this->name_fun,
         ]);
 
-        $query->andFilterWhere(['like', 'name_output', $this->name_output]);
+        $query->andFilterWhere(['like', 'name_output', $this->name_output])
+            ->andFilterWhere(['like', OrgFunction::tableName() . '.name_fun', $this->name_fun]);
 
         return $dataProvider;
     }

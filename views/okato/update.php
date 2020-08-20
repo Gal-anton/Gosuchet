@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okato */
 
-$this->title = 'Update Okato: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Okatos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_okato, 'url' => ['view', 'id' => $model->id_okato]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Обновить ОКАТО:' . $model->kod_okato;
+$this->params['breadcrumbs'][] = ['label' => 'ОКАТО', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_okato, 'url' => ['view', 'id' => $model->id_okato]];
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="okato-update">
 

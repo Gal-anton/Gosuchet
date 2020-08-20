@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Model */
 
-$this->title = 'Create Model';
-$this->params['breadcrumbs'][] = ['label' => 'Models', 'url' => ['index']];
+$this->title = 'Добавить модель';
+$this->params['breadcrumbs'][] = ['label' => 'Модели', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="model-create">

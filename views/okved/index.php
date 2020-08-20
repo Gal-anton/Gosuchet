@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OkvedSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Okveds';
+$this->title = 'ОКВЭД';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okved-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Okved', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить ОКВЭД', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_okved',
+            //'id_okved',
             'kod_okved',
             'name_okved',
 

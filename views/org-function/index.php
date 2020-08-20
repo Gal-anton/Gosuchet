@@ -28,9 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_fun',
             'kod_fun',
             'name_fun',
-            'autonomus',
-            'budgetary',
-            'kazennoe',
+            ['label' => 'Тип организации',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $dataOut = "";
+                    $dataOut .= ($data->autonomus == true) ? "Автономное учреждение<br>" : "";
+                    $dataOut .= ($data->budgetary == true) ? "Бюджетное учреждение<br>" : "";
+                    $dataOut .= ($data->kazennoe == true) ? "Казенное учреждение<br>" : "";
+                    return $dataOut;
+                }],
+            //'autonomus',
+            //'budgetary',
+            //'kazennoe',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

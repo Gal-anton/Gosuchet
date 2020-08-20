@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okopf */
 
-$this->title = 'Create Okopf';
-$this->params['breadcrumbs'][] = ['label' => 'Okopfs', 'url' => ['index']];
+$this->title = 'Добавить ОКОПФ';
+$this->params['breadcrumbs'][] = ['label' => 'ОКОПФ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okopf-create">

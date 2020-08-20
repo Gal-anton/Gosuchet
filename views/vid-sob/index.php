@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\VidSobSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vid Sobs';
+$this->title = 'Вид собственности (ОКФС)';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vid-sob-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Vid Sob', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить вид собственности (ОКФС)', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_okfs',
+            //'id_okfs',
             'kod_okfs',
             'name_okfs',
 

@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Outputs */
 
-$this->title = 'Create Outputs';
-$this->params['breadcrumbs'][] = ['label' => 'Outputs', 'url' => ['index']];
+$this->title = 'Добавить вид результата';
+$this->params['breadcrumbs'][] = ['label' => 'Вид результата', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="outputs-create">

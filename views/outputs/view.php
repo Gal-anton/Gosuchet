@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Outputs */
 
-$this->title = $model->id_output;
-$this->params['breadcrumbs'][] = ['label' => 'Outputs', 'url' => ['index']];
+$this->title = $model->kod_output;
+$this->params['breadcrumbs'][] = ['label' => 'Виды результата', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="outputs-view">

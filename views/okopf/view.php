@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Okopf */
 
-$this->title = $model->id_okopf;
-$this->params['breadcrumbs'][] = ['label' => 'Okopfs', 'url' => ['index']];
+$this->title = $model->kod_okopf;
+$this->params['breadcrumbs'][] = ['label' => 'ОКОПФ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="okopf-view">

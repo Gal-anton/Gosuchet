@@ -26,16 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_data_report',
+            //'id_data_report',
             'id_org',
             'report_year',
-            'report_staff_plan',
-            'report_staff_fact',
+            //'report_staff_plan',
+            //'report_staff_fact',
             //'report_sum_fin',
             //'report_sum_fot',
             //'id_orgstr',
             //'id_fun',
-            //'resource_sum',
+            ['attribute' => 'name_fun', 'label' => 'Функция', 'value' => 'fun.name_fun'],
+            ['attribute' => 'name_orgstr', 'label' => 'Структура', 'value' => 'orgstr.name_orgstr'],
+            'resource_sum',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

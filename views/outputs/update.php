@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Outputs */
 
-$this->title = 'Update Outputs: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Outputs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_output, 'url' => ['view', 'id' => $model->id_output]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Обновить вид результата: ' . $model->kod_output;
+$this->params['breadcrumbs'][] = ['label' => 'Виды результата', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_output, 'url' => ['view', 'id' => $model->id_output]];
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="outputs-update">
 

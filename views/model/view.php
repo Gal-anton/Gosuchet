@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Model */
 
-$this->title = $model->id_mod;
-$this->params['breadcrumbs'][] = ['label' => 'Models', 'url' => ['index']];
+$this->title = $model->name_mod;
+$this->params['breadcrumbs'][] = ['label' => 'Модели', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="model-view">

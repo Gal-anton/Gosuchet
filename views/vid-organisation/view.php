@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model \app\models\tables\VidOrganisation */
 
 $this->title = $model->id_vid;
-$this->params['breadcrumbs'][] = ['label' => 'Vid Organisations', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Вид организации', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vid-organisation-view">
