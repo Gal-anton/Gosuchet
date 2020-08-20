@@ -34,6 +34,7 @@ class Orgstruct extends ActiveRecord
         return [
             [['kod_orgstr', 'id_fun'], 'required'],
             [['kod_orgstr', 'id_fun'], 'integer'],
+            [['kod_orgstr'], 'string', 'max' => 8],
             [['name_orgstr'], 'string', 'max' => 65],
             [['kod_orgstr'], 'unique'],
             [['id_fun'], 'exist', 'skipOnError' => true, 'targetClass' => OrgFunction::className(), 'targetAttribute' => ['id_fun' => 'id_fun']],

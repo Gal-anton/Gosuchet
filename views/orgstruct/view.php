@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model \app\models\tables\Orgstruct */
 
 $this->title = $model->id_orgstr;
-$this->params['breadcrumbs'][] = ['label' => 'Orgstructs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Орг. структуры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orgstruct-view">

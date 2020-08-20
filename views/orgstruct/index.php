@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel \app\models\search\OrgstructSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orgstructs';
+$this->title = 'Орг. структуры';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orgstruct-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Orgstruct', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать Орг. структуру', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

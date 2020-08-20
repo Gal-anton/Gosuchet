@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Orgstruct */
 
-$this->title = 'Update Orgstruct: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Orgstructs', 'url' => ['index']];
+$this->title = 'Обновить запись: ' . $model->id_orgstr;
+$this->params['breadcrumbs'][] = ['label' => 'Орг. структуры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_orgstr, 'url' => ['view', 'id' => $model->id_orgstr]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="orgstruct-update">
 

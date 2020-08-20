@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Orgstruct */
 
-$this->title = 'Create Orgstruct';
-$this->params['breadcrumbs'][] = ['label' => 'Orgstructs', 'url' => ['index']];
+$this->title = 'Создать структуру';
+$this->params['breadcrumbs'][] = ['label' => 'Орг. структуры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orgstruct-create">
