@@ -11,7 +11,6 @@ use yii\db\ActiveRecord;
  * @property int $kod_tip
  * @property string $name_tip
  *
- * @property OrgFunction[] $functions
  * @property Organisation[] $organisations
  */
 class TipOrganisation extends ActiveRecord
@@ -47,14 +46,6 @@ class TipOrganisation extends ActiveRecord
             'kod_tip' => 'Код типа организации',
             'name_tip' => 'Наименование',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFunctions()
-    {
-        return $this->hasMany(OrgFunction::className(), ['id_tip' => 'id_tip']);
     }
 
     /**

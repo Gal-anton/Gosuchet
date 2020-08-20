@@ -2,9 +2,7 @@
 
 namespace app\models\tables;
 
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "okved".
@@ -25,18 +23,6 @@ class Okved extends ActiveRecord
         return 'okved';
     }
 
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => new Expression('NOW()'),
-            ],
-        ];
-    }
 
     /**
      * @inheritdoc

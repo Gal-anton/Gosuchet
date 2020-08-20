@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * OrgFunctionSearch represents the model behind the search form of `app\models\OrgFunction`.
+ * OrgFunctionSearch represents the model behind the search form of `app\models\tables\OrgFunction`.
  */
 class OrgFunctionSearch extends OrgFunction
 {
@@ -17,7 +17,7 @@ class OrgFunctionSearch extends OrgFunction
     public function rules()
     {
         return [
-            [['id_fun', 'kod_fun', 'id_tip'], 'integer'],
+            [['id_fun', 'kod_fun', 'autonomus', 'budgetary', 'kazennoe'], 'integer'],
             [['name_fun'], 'safe'],
         ];
     }
@@ -60,7 +60,9 @@ class OrgFunctionSearch extends OrgFunction
         $query->andFilterWhere([
             'id_fun' => $this->id_fun,
             'kod_fun' => $this->kod_fun,
-            'id_tip' => $this->id_tip,
+            'autonomus' => $this->autonomus,
+            'budgetary' => $this->budgetary,
+            'kazennoe' => $this->kazennoe,
         ]);
 
         $query->andFilterWhere(['like', 'name_fun', $this->name_fun]);

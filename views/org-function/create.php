@@ -4,10 +4,10 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\OrgFunction */
+/* @var $model app\models\tables\OrgFunction */
 
-$this->title = 'Create Org Function';
-$this->params['breadcrumbs'][] = ['label' => 'Org Functions', 'url' => ['index']];
+$this->title = 'Создать функцию';
+$this->params['breadcrumbs'][] = ['label' => 'Функции', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="org-function-create">

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\TipOrganisation */
+/* @var $model app\models\tables\TipOrganisation */
 
 $this->title = 'Create Tip Organisation';
 $this->params['breadcrumbs'][] = ['label' => 'Tip Organisations', 'url' => ['index']];

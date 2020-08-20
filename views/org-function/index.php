@@ -4,10 +4,10 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel \app\models\search\OrgFunctionSearch */
+/* @var $searchModel app\models\search\OrgFunctionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Org Functions';
+$this->title = 'Функции';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="org-function-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Org Function', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать функцию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,10 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_fun',
+            //'id_fun',
             'kod_fun',
             'name_fun',
-            'id_tip',
+            'autonomus',
+            'budgetary',
+            'kazennoe',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\search\OrgFunctionSearch */
+/* @var $model app\models\search\OrgFunctionSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -21,7 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name_fun') ?>
 
-    <?= $form->field($model, 'id_tip') ?>
+    <?= $form->field($model, 'autonomus') ?>
+
+    <?= $form->field($model, 'budgetary') ?>
+
+    <?php // echo $form->field($model, 'kazennoe') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

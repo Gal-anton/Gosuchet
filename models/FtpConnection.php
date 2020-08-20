@@ -18,7 +18,7 @@ class FtpConnection
     {
         $this->_connID = ftp_connect(self::FTP_SERVER);
         $this->login();
-
+        ftp_pasv($this->_connID, true);
     }
 
     function login()

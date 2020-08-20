@@ -3,12 +3,12 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\OrgFunction */
+/* @var $model app\models\tables\OrgFunction */
 
-$this->title = 'Update Org Function: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Org Functions', 'url' => ['index']];
+$this->title = 'Обновить функцию:' . $model->kod_fun;
+$this->params['breadcrumbs'][] = ['label' => 'Функции', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_fun, 'url' => ['view', 'id' => $model->id_fun]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="org-function-update">
 

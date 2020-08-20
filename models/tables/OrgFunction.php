@@ -2,21 +2,21 @@
 
 namespace app\models\tables;
 
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "org_function".
  *
  * @property int $id_fun
- * @property int $kod_fun
+ * @property string $kod_fun
  * @property string $name_fun
- * @property int $id_tip
+ * @property int $autonomus
+ * @property int $budgetary
+ * @property int $kazennoe
  *
  * @property DataReport[] $dataReports
  * @property Dmu[] $dmus
  * @property Inputs[] $inputs
- * @property TipOrganisation $tip
  * @property Orgstruct[] $orgstructs
  * @property Outputs[] $outputs
  */
@@ -36,12 +36,11 @@ class OrgFunction extends ActiveRecord
     public function rules()
     {
         return [
-            [['kod_fun', 'id_tip'], 'required'],
-            [['kod_fun', 'id_tip'], 'integer'],
-            [['name_fun'], 'string', 'max' => 65],
+            [['kod_fun'], 'required'],
+            [['kod_fun'], 'string', 'max' => 11],
+            [['autonomus', 'budgetary', 'kazennoe'], 'boolean'],
+            [['name_fun'], 'string', 'max' => 255],
             [['kod_fun'], 'unique'],
-            [['id_tip'], 'unique'],
-            [['id_tip'], 'exist', 'skipOnError' => true, 'targetClass' => TipOrganisation::className(), 'targetAttribute' => ['id_tip' => 'id_tip']],
         ];
     }
 
@@ -54,12 +53,14 @@ class OrgFunction extends ActiveRecord
             'id_fun' => 'Номер записи',
             'kod_fun' => 'Код функции',
             'name_fun' => 'Наименование',
-            'id_tip' => 'Тип организации',
+            'autonomus' => 'Автономные учреждения',
+            'budgetary' => 'Бюджетные учреждения',
+            'kazennoe' => 'Казенные учреждения',
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getDataReports()
     {
@@ -67,7 +68,7 @@ class OrgFunction extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getDmus()
     {
@@ -75,7 +76,7 @@ class OrgFunction extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getInputs()
     {
@@ -83,15 +84,7 @@ class OrgFunction extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
-     */
-    public function getTip()
-    {
-        return $this->hasOne(TipOrganisation::className(), ['id_tip' => 'id_tip']);
-    }
-
-    /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getOrgstructs()
     {
@@ -99,7 +92,7 @@ class OrgFunction extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getOutputs()
     {

@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * TipOrganisationSearch represents the model behind the search form of `app\models\TipOrganisation`.
+ * TipOrganisationSearch represents the model behind the search form of `app\models\tables\TipOrganisation`.
  */
 class TipOrganisationSearch extends TipOrganisation
 {
