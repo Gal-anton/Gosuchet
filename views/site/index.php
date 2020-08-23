@@ -8,7 +8,6 @@ $this->title = 'Система оценки';
 <div class="site-index">
 
     <div class="jumbotron">
-        <?= phpinfo(); ?>
         <h1>Congratulations!</h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>

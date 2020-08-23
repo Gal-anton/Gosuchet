@@ -192,7 +192,7 @@ CREATE TABLE `organisation`
     `id_okfs`    int(2)      NOT NULL,
     `id_buj`     int(2)       DEFAULT NULL,
     `id_okopf`   int(5)      NOT NULL,
-    `id_owner`   varchar(255) DEFAULT NULL,
+    `id_owner`   int(11)      DEFAULT NULL,
     `created_at` datetime    NOT NULL,
     `updated_at` datetime    NOT NULL
 ) ENGINE = InnoDB
@@ -242,6 +242,20 @@ CREATE TABLE `outputs`
     `id_fun`      int(11)     NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `owner`
+--
+
+CREATE TABLE `owner`
+(
+    `id_owner` int(11)      NOT NULL,
+    `reg_num`  int(11)      NOT NULL,
+    `name`     varchar(255) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -367,6 +381,7 @@ ALTER TABLE `organisation`
     ADD KEY `id_tip` (`id_tip`),
     ADD KEY `id_okved` (`id_okved`),
     ADD KEY `id_okopf` (`id_okopf`),
+    ADD KEY `id_owner` (`id_owner`),
     ADD KEY `id_vid` (`id_vid`),
     ADD KEY `id_okfs` (`id_okfs`),
     ADD KEY `id_okato` (`id_okato`);
@@ -393,6 +408,13 @@ ALTER TABLE `org_function`
 ALTER TABLE `outputs`
     ADD PRIMARY KEY (`id_output`),
     ADD KEY `id_fun` (`id_fun`);
+
+--
+-- Indexes for table `owner`
+--
+ALTER TABLE `owner`
+    ADD PRIMARY KEY (`id_owner`),
+    ADD UNIQUE KEY `reg_num` (`reg_num`);
 
 --
 -- Indexes for table `tip_organisation`

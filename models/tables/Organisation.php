@@ -23,7 +23,7 @@ use yii\db\Expression;
  * @property int $id_okfs
  * @property int $id_buj
  * @property int $id_okopf
- * @property string $id_owner
+ * @property int $id_owner
  * @property string $created_at
  * @property string $updated_at
  *
@@ -35,6 +35,7 @@ use yii\db\Expression;
  * @property VidOrganisation $idV
  * @property VidSob $okfs
  * @property Oktmo $oktmo
+ * @property Owner $owner
  */
 class Organisation extends ActiveRecord
 {
@@ -66,10 +67,10 @@ class Organisation extends ActiveRecord
         return [
             [['reg_num', 'full_name', 'inn', 'id_tip', 'id_vid', 'id_okved', 'id_okfs', 'id_okopf'], 'required'],
             [['full_name'], 'string'],
-            [['id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
+            [['id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf', 'id_owner'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['reg_num'], 'string', 'max' => 15],
-            [['short_name', 'ppo', 'id_owner'], 'string', 'max' => 255],
+            [['short_name', 'ppo'], 'string', 'max' => 255],
             [['inn'], 'string', 'max' => 11],
             [['reg_num'], 'unique'],
             [['inn'], 'unique'],
@@ -80,6 +81,7 @@ class Organisation extends ActiveRecord
             [['id_vid'], 'exist', 'skipOnError' => true, 'targetClass' => VidOrganisation::className(), 'targetAttribute' => ['id_vid' => 'id_vid']],
             [['id_okfs'], 'exist', 'skipOnError' => true, 'targetClass' => VidSob::className(), 'targetAttribute' => ['id_okfs' => 'id_okfs']],
             [['id_oktmo'], 'exist', 'skipOnError' => true, 'targetClass' => Oktmo::className(), 'targetAttribute' => ['id_oktmo' => 'id_oktmo']],
+            [['id_owner'], 'exist', 'skipOnError' => true, 'targetClass' => Owner::className(), 'targetAttribute' => ['id_owner' => 'id_owner']],
         ];
     }
 
@@ -181,5 +183,13 @@ class Organisation extends ActiveRecord
     public function getOktmo()
     {
         return $this->hasOne(Oktmo::className(), ['id_oktmo' => 'id_oktmo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwner()
+    {
+        return $this->hasOne(Owner::className(), ['id_owner' => 'id_owner']);
     }
 }

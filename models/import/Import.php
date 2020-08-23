@@ -9,6 +9,7 @@ use app\models\tables\Okopf;
 use app\models\tables\Oktmo;
 use app\models\tables\Okved;
 use app\models\tables\Organisation;
+use app\models\tables\Owner;
 use app\models\tables\TipOrganisation;
 use app\models\tables\VidOrganisation;
 use app\models\tables\VidSob;
@@ -62,7 +63,9 @@ class Import
                 $this->exploreFiles($listOfFiles);
                 rmdir(substr($directories[$i], 0, -1));
                 $amountOfFiles++;
+                break;
             }
+            break;
             $log = date('Y-m-d H:i:s') . ' Окончена обработка директории:' . $directories[$i];
             file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
         }
@@ -159,11 +162,11 @@ class Import
             }
 
             if (isset($classifier->okfs)) $this->setVidSob($classifier->okfs);
+            if (isset($other->founder)) $this->setOwner($other->founder);
             if (isset($additional->institutionType)) $this->setVidOrganisation($additional->institutionType);
             if (isset($initiator->fullName)) $this->_organisation->full_name = (string)$initiator->fullName;
-            if (isset($main->shortName)) $this->_organisation->short_name = (string)$main->shortName;
-            if (isset($other->founder->fullName)) $this->_organisation->id_owner = (string)$other->founder->fullName;
-            if (isset($additional->ppo->name)) $this->_organisation->ppo = (string)$additional->ppo->name;
+            if (isset($main->shortName)) $this->_organisation->short_name = $this->getNameString($main->shortName);
+            if (isset($additional->ppo->name)) $this->_organisation->ppo = $this->getNameString($additional->ppo->name);
 
             if (!$this->_organisation->save()) {
                 $this->_importErrors++;
@@ -184,7 +187,7 @@ class Import
         if (empty($okopf) === true) {
             $okopf = new Okopf();
             $okopf->kod_okopf = (string)$attributes->code;
-            $okopf->name_okopf = (string)$attributes->name;
+            $okopf->name_okopf = $this->getNameString($attributes->name);
             if (!$okopf->save()) {
                 $this->_importErrors++;
             }
@@ -208,6 +211,9 @@ class Import
                     break;
                 case "10":
                     $tip->name_tip = "Автономное учреждение";
+                    break;
+                default:
+                    $tip->name_tip = "Неизвестно";
             }
             if (!$tip->save()) {
                 var_dump($tip->errors);
@@ -224,7 +230,7 @@ class Import
         if (empty($okved) === true) {
             $okved = new Okved();
             $okved->kod_okved = (string)$attributes->code;
-            $okved->name_okved = (string)$attributes->name;
+            $okved->name_okved = $this->getNameString($attributes->name);
             if (!$okved->save()) {
                 $this->_importErrors++;
             }
@@ -240,7 +246,7 @@ class Import
         if (empty($okfs) === true) {
             $okfs = new VidSob();
             $okfs->kod_okfs = (string)$attributes->code;
-            $okfs->name_okfs = (string)$attributes->name;
+            $okfs->name_okfs = $this->getNameString($attributes->name);
             if (!$okfs->save()) {
                 $this->_importErrors++;
             }
@@ -259,7 +265,7 @@ class Import
         if (empty($okato) === true) {
             $okato = new Okato();
             $okato->kod_okato = (string)$attributes->code;
-            $okato->name_okato = (string)$attributes->name;
+            $okato->name_okato = $this->getNameString($attributes->name);
             if (!$okato->save()) {
                 $this->_importErrors++;
             }
@@ -276,7 +282,7 @@ class Import
         if (empty($oktmo) === true) {
             $oktmo = new Oktmo();
             $oktmo->kod_oktmo = (string)$attributes->code;
-            $oktmo->name_oktmo = (string)$attributes->name;
+            $oktmo->name_oktmo = $this->getNameString($attributes->name);
             if (!$oktmo->save()) {
                 $this->_importErrors++;
             }
@@ -293,7 +299,7 @@ class Import
         if (empty($type) === true) {
             $type = new VidOrganisation();
             $type->kod_vid = (string)$attributes->code;
-            $type->name_vid = (string)$attributes->name;
+            $type->name_vid = $this->getNameString($attributes->name);
             if (!$type->save()) {
                 $this->_importErrors++;
             }
@@ -302,6 +308,28 @@ class Import
         }
         $this->_organisation->id_vid = $type["id_vid"];
         unset($type);
+    }
+
+    private function setOwner($attributes)
+    {
+        $owner = Owner::find()->where(["reg_num" => $attributes->regNum])->asArray()->one();
+        if (empty($owner) === true) {
+            $owner = new Owner();
+            $owner->reg_num = (int)trim($attributes->regNum);
+            $owner->name = $this->getNameString($attributes->fullName);
+            if (!$owner->save()) {
+                $this->_importErrors++;
+            }
+            $this->_organisation->id_owner = $owner->getPrimaryKey();
+            return;
+        }
+        $this->_organisation->id_owner = $owner["id_owner"];
+        unset($owner);
+    }
+
+    private function getNameString($name)
+    {
+        return (string)html_entity_decode(substr(trim($name), 0, 255), ENT_QUOTES);
     }
 
 }
