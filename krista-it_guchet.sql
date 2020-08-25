@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 23, 2020 at 07:58 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.2.31
+-- Host: krista-it.mysql
+-- Generation Time: Aug 24, 2020 at 02:48 AM
+-- Server version: 5.6.41-84.1
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `yii2basic`
+-- Database: `krista-it_guchet`
 --
 
 -- --------------------------------------------------------
@@ -26,19 +27,21 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `data_report`
 --
+-- Creation: Aug 24, 2020 at 02:46 AM
+--
 
+DROP TABLE IF EXISTS `data_report`;
 CREATE TABLE `data_report`
 (
-    `id_data_report`    int(11) NOT NULL,
-    `id_org`            int(11) NOT NULL,
-    `report_year`       int(4)  NOT NULL,
-    `report_staff_plan` int(5)  NOT NULL,
-    `report_staff_fact` int(5)  NOT NULL,
-    `report_sum_fin`    int(11) NOT NULL,
-    `report_sum_fot`    int(11) NOT NULL,
-    `id_orgstr`         int(11) NOT NULL,
-    `id_fun`            int(11) NOT NULL,
-    `resource_sum`      int(5)  NOT NULL
+    `id_data_report` int(11) NOT NULL,
+    `id_org`         int(11) NOT NULL,
+    `id_dmu`         int(11) NOT NULL,
+    `id_orgstr`      int(11) NOT NULL,
+    `input`          int(11) DEFAULT '0',
+    `output`         int(11) DEFAULT '0',
+    `efficency`      int(11) DEFAULT NULL,
+    `created_at`     date    NOT NULL,
+    `updated_at`     date    NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -47,19 +50,21 @@ CREATE TABLE `data_report`
 --
 -- Table structure for table `dmu`
 --
+-- Creation: Aug 24, 2020 at 02:44 AM
+--
 
+DROP TABLE IF EXISTS `dmu`;
 CREATE TABLE `dmu`
 (
     `id_dmu`     int(11)     NOT NULL,
     `dmu_dmu`    varchar(65) NOT NULL,
-    `kod_is`     int(27)     NOT NULL,
     `id_fun`     int(11)     NOT NULL,
     `id_mod`     int(11)     NOT NULL,
     `id_input`   int(11)     NOT NULL,
-    `sum_input`  int(5)      NOT NULL,
+    `sum_input`  int(5)      NOT NULL DEFAULT '0',
     `id_output`  int(11)     NOT NULL,
-    `sum_output` int(5)      NOT NULL,
-    `efficency`  int(5) DEFAULT NULL,
+    `sum_output` int(5)      NOT NULL DEFAULT '0',
+    `efficency`  int(5)               DEFAULT NULL,
     `created_at` datetime    NOT NULL,
     `updated_at` datetime    NOT NULL
 ) ENGINE = InnoDB
@@ -70,7 +75,10 @@ CREATE TABLE `dmu`
 --
 -- Table structure for table `inputs`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `inputs`;
 CREATE TABLE `inputs`
 (
     `id_input`   int(11)     NOT NULL,
@@ -85,7 +93,10 @@ CREATE TABLE `inputs`
 --
 -- Table structure for table `journal`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `journal`;
 CREATE TABLE `journal`
 (
     `id_j`         int(11)  NOT NULL,
@@ -104,7 +115,10 @@ CREATE TABLE `journal`
 --
 -- Table structure for table `model`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `model`;
 CREATE TABLE `model`
 (
     `id_mod`   int(11) NOT NULL,
@@ -113,20 +127,15 @@ CREATE TABLE `model`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
---
--- Dumping data for table `model`
---
-
-INSERT INTO `model` (`id_mod`, `kod_mod`, `name_mod`)
-VALUES (1, 1, 'Структуризация по однотипным учреждениям.'),
-       (4, 2, 'Структуризация по подведомственным учреждениям.');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `okato`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `okato`;
 CREATE TABLE `okato`
 (
     `id_okato`   int(11)     NOT NULL,
@@ -140,7 +149,10 @@ CREATE TABLE `okato`
 --
 -- Table structure for table `okopf`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `okopf`;
 CREATE TABLE `okopf`
 (
     `id_okopf`   int(11) NOT NULL,
@@ -154,7 +166,10 @@ CREATE TABLE `okopf`
 --
 -- Table structure for table `oktmo`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `oktmo`;
 CREATE TABLE `oktmo`
 (
     `id_oktmo`   int(11)     NOT NULL,
@@ -169,7 +184,10 @@ CREATE TABLE `oktmo`
 --
 -- Table structure for table `okved`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `okved`;
 CREATE TABLE `okved`
 (
     `id_okved`   int(11)    NOT NULL,
@@ -183,7 +201,10 @@ CREATE TABLE `okved`
 --
 -- Table structure for table `organisation`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `organisation`;
 CREATE TABLE `organisation`
 (
     `id_org`     int(11)     NOT NULL,
@@ -211,7 +232,10 @@ CREATE TABLE `organisation`
 --
 -- Table structure for table `orgstruct`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `orgstruct`;
 CREATE TABLE `orgstruct`
 (
     `id_orgstr`   int(11) NOT NULL,
@@ -226,7 +250,10 @@ CREATE TABLE `orgstruct`
 --
 -- Table structure for table `org_function`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `org_function`;
 CREATE TABLE `org_function`
 (
     `id_fun`   int(11) NOT NULL,
@@ -241,7 +268,10 @@ CREATE TABLE `org_function`
 --
 -- Table structure for table `outputs`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `outputs`;
 CREATE TABLE `outputs`
 (
     `id_output`   int(11)     NOT NULL,
@@ -256,7 +286,10 @@ CREATE TABLE `outputs`
 --
 -- Table structure for table `owner`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `owner`;
 CREATE TABLE `owner`
 (
     `id_owner` int(11)      NOT NULL,
@@ -270,7 +303,10 @@ CREATE TABLE `owner`
 --
 -- Table structure for table `tip_organisation`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `tip_organisation`;
 CREATE TABLE `tip_organisation`
 (
     `id_tip`   int(11) NOT NULL,
@@ -284,7 +320,10 @@ CREATE TABLE `tip_organisation`
 --
 -- Table structure for table `vid_organisation`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `vid_organisation`;
 CREATE TABLE `vid_organisation`
 (
     `id_vid`   int(11) NOT NULL,
@@ -298,7 +337,10 @@ CREATE TABLE `vid_organisation`
 --
 -- Table structure for table `vid_sob`
 --
+-- Creation: Aug 23, 2020 at 06:02 PM
+--
 
+DROP TABLE IF EXISTS `vid_sob`;
 CREATE TABLE `vid_sob`
 (
     `id_okfs`   int(11) NOT NULL,
@@ -317,8 +359,8 @@ CREATE TABLE `vid_sob`
 ALTER TABLE `data_report`
     ADD PRIMARY KEY (`id_data_report`),
     ADD KEY `id_org` (`id_org`),
-    ADD KEY `id_fun` (`id_fun`),
-    ADD KEY `id_orgstr` (`id_orgstr`);
+    ADD KEY `id_orgstr` (`id_orgstr`),
+    ADD KEY `id_dmu` (`id_dmu`);
 
 --
 -- Indexes for table `dmu`
@@ -477,8 +519,7 @@ ALTER TABLE `journal`
 -- AUTO_INCREMENT for table `model`
 --
 ALTER TABLE `model`
-    MODIFY `id_mod` int(11) NOT NULL AUTO_INCREMENT,
-    AUTO_INCREMENT = 5;
+    MODIFY `id_mod` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `okato`
@@ -560,7 +601,6 @@ ALTER TABLE `vid_sob`
 -- Constraints for table `data_report`
 --
 ALTER TABLE `data_report`
-    ADD CONSTRAINT `data_report_ibfk_1` FOREIGN KEY (`id_fun`) REFERENCES `org_function` (`id_fun`),
     ADD CONSTRAINT `data_report_ibfk_2` FOREIGN KEY (`id_org`) REFERENCES `organisation` (`id_org`),
     ADD CONSTRAINT `data_report_ibfk_3` FOREIGN KEY (`id_orgstr`) REFERENCES `orgstruct` (`id_orgstr`);
 

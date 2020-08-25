@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\tables\TipOrganisation */
 
 $this->title = 'Добавить тип';
-$this->params['breadcrumbs'][] = ['label' => 'Тип организациц', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Тип организации', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tip-organisation-create">

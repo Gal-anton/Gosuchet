@@ -12,7 +12,6 @@ use yii\db\Expression;
  *
  * @property int $id_dmu
  * @property string $dmu_dmu
- * @property int $kod_is
  * @property int $id_fun
  * @property int $id_mod
  * @property int $id_input
@@ -59,8 +58,8 @@ class Dmu extends ActiveRecord
     public function rules()
     {
         return [
-            [['dmu_dmu', 'kod_is', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'created_at', 'updated_at'], 'required'],
-            [['kod_is', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
+            [['dmu_dmu', 'id_fun', 'id_mod', 'id_input', 'id_output'], 'required'],
+            [['id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['dmu_dmu'], 'string', 'max' => 65],
             [['id_fun'], 'exist', 'skipOnError' => true, 'targetClass' => OrgFunction::className(), 'targetAttribute' => ['id_fun' => 'id_fun']],
@@ -78,7 +77,6 @@ class Dmu extends ActiveRecord
         return [
             'id_dmu' => 'Номер записи',
             'dmu_dmu' => 'Наименование',
-            'kod_is' => 'Код объекта сравнения',
             'id_fun' => 'Функция',
             'id_mod' => 'Модель',
             'id_input' => 'Входные данные',

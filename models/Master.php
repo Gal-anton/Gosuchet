@@ -11,6 +11,7 @@ use app\models\tables\Model;
 class Master extends Model
 {
     public $id_model;
+    public $id_org;
 
     public function rules()
     {
@@ -26,6 +27,7 @@ class Master extends Model
     {
         return [
             'id_model' => 'Номер записи',
+            'id_org' => 'Организация',
         ];
     }
 

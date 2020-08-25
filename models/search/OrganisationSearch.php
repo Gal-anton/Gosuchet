@@ -3,6 +3,7 @@
 namespace app\models\search;
 
 use app\models\tables\Organisation;
+use app\models\tables\Owner;
 use app\models\tables\TipOrganisation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -14,6 +15,7 @@ class OrganisationSearch extends Organisation
 {
 
     public $tip_name;
+    public $owner_name;
 
     /**
      * @inheritdoc
@@ -22,7 +24,7 @@ class OrganisationSearch extends Organisation
     {
         return [
             [['id_org', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at', 'tip_name'], 'safe'],
+            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at', 'tip_name', 'owner_name'], 'safe'],
         ];
     }
 
@@ -46,6 +48,7 @@ class OrganisationSearch extends Organisation
     {
         $query = Organisation::find();
         $query->joinWith('tip');
+        $query->joinWith('owner');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -55,6 +58,11 @@ class OrganisationSearch extends Organisation
         $dataProvider->sort->attributes['name_tip'] = [
             'asc' => [TipOrganisation::tableName() . '.name_tip' => SORT_ASC],
             'desc' => [TipOrganisation::tableName() . '.name_tip' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['owner_name'] = [
+            'asc' => [TipOrganisation::tableName() . '.name' => SORT_ASC],
+            'desc' => [TipOrganisation::tableName() . '.name' => SORT_DESC],
         ];
 
 
@@ -77,6 +85,7 @@ class OrganisationSearch extends Organisation
             'id_okfs' => $this->id_okfs,
             'id_buj' => $this->id_buj,
             'id_okopf' => $this->id_okopf,
+            'owner_name' => $this->owner_name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -86,8 +95,8 @@ class OrganisationSearch extends Organisation
             ->andFilterWhere(['like', 'short_name', $this->short_name])
             ->andFilterWhere(['like', 'inn', $this->inn])
             ->andFilterWhere(['like', 'ppo', $this->ppo])
-            ->andFilterWhere(['like', 'id_owner', $this->id_owner])
-            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name]);
+            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name])
+            ->andFilterWhere(['like', Owner::tableName() . '.name', $this->owner_name]);
 
         return $dataProvider;
     }

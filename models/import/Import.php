@@ -63,9 +63,7 @@ class Import
                 $this->exploreFiles($listOfFiles);
                 rmdir(substr($directories[$i], 0, -1));
                 $amountOfFiles++;
-                break;
             }
-            break;
             $log = date('Y-m-d H:i:s') . ' Окончена обработка директории:' . $directories[$i];
             file_put_contents(Yii::getAlias('@runtime') . "/logs/import.log", $log . PHP_EOL, FILE_APPEND);
         }

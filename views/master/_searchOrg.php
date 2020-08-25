@@ -8,27 +8,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\Organisation */
+/* @var $model app\models\search\OrganisationSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="organisation-form">
+<div class="organisation-search">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'organisation-form',
+        'action' => ['index'],
+        'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'reg_num')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'reg_num') ?>
 
-    <?= $form->field($model, 'full_name')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'full_name') ?>
 
-    <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'inn') ?>
 
-    <?= $form->field($model, 'inn')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ppo')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'id_tip')->widget(Select2::classname(), [
+    <?php echo $form->field($model, 'id_tip')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(TipOrganisation::find()
             ->select(['id_tip', 'concat(kod_tip, " ", name_tip) as value'])
             ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_tip', 'value'),
@@ -108,7 +105,8 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

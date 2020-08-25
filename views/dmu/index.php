@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id_dmu',
             'dmu_dmu',
-            'kod_is',
+            //'kod_is',
             ['attribute' => 'name_fun', 'label' => 'Функция', 'value' => 'fun.name_fun'],
             ['attribute' => 'name_mod', 'label' => 'Модель', 'value' => 'mod.name_mod'],
             //'id_input',

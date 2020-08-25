@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Master;
+use app\models\search\OrganisationSearch;
 use Yii;
 
 class MasterController extends \yii\web\Controller
@@ -13,35 +14,25 @@ class MasterController extends \yii\web\Controller
     }
 
 
-    public function actionTest()
+    public function actionModel()
     {
-        // Создаём экземпляр модели.
-        $model = new Master();
-        // Устанавливаем формат ответа JSON
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        // Если пришёл AJAX запрос
-        if (Yii::$app->request->isAjax) {
-            $data = Yii::$app->request->post();
-            // Получаем данные модели из запроса
-            if ($model->load($data)) {
-                //Если всё успешно, отправляем ответ с данными
-                return [
-                    "data" => $model->id_model,
-                    "error" => null
-                ];
-            } else {
-                // Если нет, отправляем ответ с сообщением об ошибке
-                return [
-                    "data" => null,
-                    "error" => "error1"
-                ];
-            }
-        } else {
-            // Если это не AJAX запрос, отправляем ответ с сообщением об ошибке
-            return [
-                "data" => null,
-                "error" => "error2"
-            ];
+        $request = Yii::$app->request;
+        $modelNum = $request->get('model', 1);
+        $model = new Master;
+        $modelView = "model1";
+        switch ($modelNum) {
+            case "1" :
+                $modelView = "model1";
+                $searchModel = new OrganisationSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                $params = array("model" => $model, "searchModel" => $searchModel, "orgData" => $dataProvider);
+                break;
+            case "2" :
+                $modelView = "model2";
+                $params = array("model" => $model);
+                break;
         }
+        $model->id_model = $modelNum;
+        return $this->render($modelView, $params);
     }
 }

@@ -23,7 +23,7 @@ class DmuSearch extends Dmu
     public function rules()
     {
         return [
-            [['id_dmu', 'kod_is', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
+            [['id_dmu', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
             [['dmu_dmu', 'created_at', 'updated_at', 'name_fun', 'name_mod'], 'safe'],
         ];
     }
@@ -77,7 +77,6 @@ class DmuSearch extends Dmu
         // grid filtering conditions
         $query->andFilterWhere([
             'id_dmu' => $this->id_dmu,
-            'kod_is' => $this->kod_is,
             'id_fun' => $this->id_fun,
             'id_mod' => $this->id_mod,
             'id_input' => $this->id_input,

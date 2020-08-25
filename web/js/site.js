@@ -11,11 +11,9 @@ $(document).ready(function () {
             // Данные формы
             data: $testform.serializeArray()
 
-
         }).done(function (data) {
             if (data.error == null) {
                 // Если ответ сервера успешно получен
-                console.log(data.data);
                 $("#output").text('Выбрана модель = ' + data.data)
             } else {
                 // Если при обработке данных на сервере произошла ошибка

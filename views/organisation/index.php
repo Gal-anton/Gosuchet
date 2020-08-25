@@ -2,7 +2,6 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\OrganisationSearch */
@@ -41,12 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_okopf',
             //'id_owner',
             //'created_at',
-            //'updated_at',
-            ['label' => 'Отчеты',
-                'format' => 'raw',
-                'value' => function ($data) {
-                    return Html::a('Дабавить отчет', Url::to(['data-report/create?id_org=' . $data->id_org]));
-                }],
+//            'updated_at',
+//            ['label' => 'Отчеты',
+//                'format' => 'raw',
+//                'value' => function ($data) {
+//                    return Html::a('Дабавить отчет', Url::to(['data-report/create?id_org=' . $data->id_org]));
+//                }],
             ['class' => 'yii\grid\ActionColumn'],
 
 

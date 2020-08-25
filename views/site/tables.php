@@ -15,8 +15,6 @@ $this->title = 'Справочники';
             </a>
             <a href="<?= Url::to(['organisation/']); ?>" class="list-group-item list-group-item-action">Справочник:
                 "Организации"</a>
-            <a href="<?= Url::to(['data-report/']); ?>" class="list-group-item list-group-item-action">Отчетные данные
-                организаций</a>
             <a href="<?= Url::to(['dmu/']); ?>" class="list-group-item list-group-item-action">Справочник: "DMU"</a>
             <a href="<?= Url::to(['okato/']); ?>" class="list-group-item list-group-item-action">Справочник:
                 "Классификатор ОКАТО"</a>
