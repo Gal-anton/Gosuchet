@@ -4,28 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\search\OrgFunctionSearch */
+/* @var $model app\models\search\LevelSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="org-function-search">
+<div class="level-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_fun') ?>
+    <?= $form->field($model, 'id_level') ?>
 
-    <?= $form->field($model, 'kod_fun') ?>
-
-    <?= $form->field($model, 'name_fun') ?>
-
-    <?= $form->field($model, 'autonomus') ?>
-
-    <?= $form->field($model, 'budgetary') ?>
-
-    <?php echo $form->field($model, 'kazennoe') ?>
+    <?= $form->field($model, 'name_level') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

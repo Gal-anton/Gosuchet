@@ -1,14 +1,13 @@
 <?php
 
 use app\models\Master;
-use kartik\select2\Select2;
 use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model Master */
+/* @var $errors array */
 /* @var $searchModel app\models\search\OrganisationSearch */
 /* @var $orgData yii\data\ActiveDataProvider */
 
@@ -16,21 +15,8 @@ use yii\widgets\ActiveForm;
     <h1>Мастер оценки</h1>
 <?php echo $this->render('_modelView', ['model' => $model]); ?>
 
-<?php
-//echo $this->render('_searchOrg', ['model' => $searchModel]);
-?>
     <div class="master_data">
-
 <?php
-$form = ActiveForm::begin([
-    'id' => 'master_data',
-    'action' => \yii\helpers\Url::toRoute(['master/organisations']),
-    'method' => 'post',
-    'enableAjaxValidation' => false,
-]);
-?>
-<?php
-echo $this->render('_searchOrg', ['model' => $searchModel]);
 echo GridView::widget([
     'dataProvider' => $orgData,
     'filterModel' => $searchModel,
@@ -38,44 +24,45 @@ echo GridView::widget([
         ['class' => 'yii\grid\SerialColumn'],
         'reg_num',
         'inn',
-        'full_name:ntext',
+        //'full_name:ntext',
         'short_name',
-        //['attribute' => 'tip_name','label' => 'Тип', 'value'=>'tip.name_tip'],
+        ['attribute' => 'tip_name', 'label' => 'Тип', 'value' => 'tip.name_tip'],
         'ppo',
         //'id_tip',
         //'id_vid',
+        ['attribute' => 'vid_name', 'label' => 'Вид', 'value' => 'idV.name_vid'],
+        ['attribute' => 'kod_okved', 'label' => 'ОКВЭД', 'value' => 'okved.kod_okved'],
+        ['attribute' => 'kod_okato', 'label' => 'ОКАТО', 'value' => 'okato.kod_okato'],
+        ['attribute' => 'kod_oktmo', 'label' => 'ОКТМО', 'value' => 'oktmo.kod_oktmo'],
+        ['attribute' => 'kod_okfs', 'label' => 'ОКФС', 'value' => 'okfs.kod_okfs'],
+        ['attribute' => 'kod_okopf', 'label' => 'ОКОПФ', 'value' => 'okopf.kod_okopf'],
+        ['attribute' => 'owner_name', 'label' => 'Учредитель', 'value' => 'owner.reg_num'],
         //'id_okved',
         //'id_okato',
         //'id_oktmo',
         //'id_okfs',
         //'id_buj',
         //'id_okopf',
-        //'id_owner',
-        ['label' => 'Отчеты',
+//        'id_owner',
+        ['label' => '',
             'format' => 'raw',
             'value' => function ($data) {
-                return Html::radioList('abc', null, [$data->id_org => ""], ['class' => 'form-control input-sm radio']);
+                return Html::a('Выбрать', Url::to(['master/model?id_org=' . $data->id_org]));
             }],
 
 
     ],
 ]);
+echo '<h2>Создание DMU для группировки организаций</h2>';
 ?>
+    <div class="dmu-create">
 
-<?php
-echo '<label class="control-label">Выберите масштаб:</label>';
-echo Select2::widget([
-    'name' => 'model',
-    'data' => ArrayHelper::map(\app\models\tables\Organisation::find()
-        ->select(['id_org', 'concat(reg_num, " ", full_name) as value'])
-        ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_org', 'value'),
-    'options' => [
-        'placeholder' => 'Выберите организацию ...',
-        'multiple' => false
-    ],
-])
-?>
+        <h1><?= Html::encode($this->title) ?></h1>
 
+        <?= $this->render('_formDMU', [
+            'model' => $model,
+        ]) ?>
 
-<?= Html::submitButton('Выбрать', ['class' => 'btn btn-success']); ?>
-<?php $form->end(); ?>
+    </div>
+<?php var_dump($errors);
+

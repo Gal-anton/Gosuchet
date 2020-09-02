@@ -16,11 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name_fun')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'autonomus')->checkbox(['value' => '1']) ?>
+    <?= $form->field($model, 'autonomus')->checkbox() ?>
 
-    <?= $form->field($model, 'budgetary')->checkbox(['value' => '1']) ?>
+    <?= $form->field($model, 'budgetary')->checkbox() ?>
 
-    <?= $form->field($model, 'kazennoe')->checkbox(['value' => '1']) ?>
+    <?= $form->field($model, 'kazennoe')->checkbox() ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

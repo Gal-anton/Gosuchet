@@ -1,7 +1,6 @@
 <?php
 
 use app\models\tables\TipOrganisation;
-use app\models\tables\VidOrganisation;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -35,7 +34,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id_vid')->widget(Select2::classname(), [
+    <? /*= $form->field($model, 'id_vid')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(VidOrganisation::find()
             ->select(['id_vid', 'concat(kod_vid, " ", name_vid) as value'])
             ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_vid', 'value'),
@@ -43,7 +42,7 @@ use yii\widgets\ActiveForm;
         'pluginOptions' => [
             'allowClear' => true,
         ],
-    ]); ?>
+    ]); */ ?>
 
     <?= $form->field($model, 'id_okved')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(\app\models\tables\Okved::find()
@@ -54,7 +53,7 @@ use yii\widgets\ActiveForm;
             'allowClear' => true,
         ],
     ]); ?>
-    <?= $form->field($model, 'id_okato')->widget(Select2::classname(), [
+    <? /*= $form->field($model, 'id_okato')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(\app\models\tables\Okato::find()
             ->select(['id_okato', 'concat(kod_okato, " ", name_okato) as value'])
             ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_okato', 'value'),
@@ -62,7 +61,7 @@ use yii\widgets\ActiveForm;
         'pluginOptions' => [
             'allowClear' => true,
         ],
-    ]); ?>
+    ]); */ ?>
 
     <?= $form->field($model, 'id_oktmo')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(\app\models\tables\Oktmo::find()

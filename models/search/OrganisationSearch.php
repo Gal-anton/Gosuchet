@@ -2,9 +2,15 @@
 
 namespace app\models\search;
 
+use app\models\tables\Okato;
+use app\models\tables\Okopf;
+use app\models\tables\Oktmo;
+use app\models\tables\Okved;
 use app\models\tables\Organisation;
 use app\models\tables\Owner;
 use app\models\tables\TipOrganisation;
+use app\models\tables\VidOrganisation;
+use app\models\tables\VidSob;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -15,7 +21,13 @@ class OrganisationSearch extends Organisation
 {
 
     public $tip_name;
+    public $vid_name;
     public $owner_name;
+    public $kod_okved;
+    public $kod_okato;
+    public $kod_oktmo;
+    public $kod_okfs;
+    public $kod_okopf;
 
     /**
      * @inheritdoc
@@ -24,7 +36,8 @@ class OrganisationSearch extends Organisation
     {
         return [
             [['id_org', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at', 'tip_name', 'owner_name'], 'safe'],
+            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at',
+                'tip_name', 'vid_name', 'owner_name', 'kod_okved', 'kod_okato', 'kod_oktmo', 'kod_okfs', 'kod_okopf'], 'safe'],
         ];
     }
 
@@ -48,6 +61,12 @@ class OrganisationSearch extends Organisation
     {
         $query = Organisation::find();
         $query->joinWith('tip');
+        $query->joinWith('idV');
+        $query->joinWith('okved');
+        $query->joinWith('okato');
+        $query->joinWith('okfs');
+        $query->joinWith('okopf');
+        $query->joinWith('oktmo');
         $query->joinWith('owner');
         // add conditions that should always apply here
 
@@ -55,14 +74,44 @@ class OrganisationSearch extends Organisation
             'query' => $query,
         ]);
 
-        $dataProvider->sort->attributes['name_tip'] = [
-            'asc' => [TipOrganisation::tableName() . '.name_tip' => SORT_ASC],
-            'desc' => [TipOrganisation::tableName() . '.name_tip' => SORT_DESC],
+        $dataProvider->sort->attributes['tip_name'] = [
+            'asc' => [TipOrganisation::tableName() . '.tip_name' => SORT_ASC],
+            'desc' => [TipOrganisation::tableName() . '.tip_name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['vid_name'] = [
+            'asc' => [VidOrganisation::tableName() . '.vid_name' => SORT_ASC],
+            'desc' => [VidOrganisation::tableName() . '.vid_name' => SORT_DESC],
         ];
 
         $dataProvider->sort->attributes['owner_name'] = [
-            'asc' => [TipOrganisation::tableName() . '.name' => SORT_ASC],
-            'desc' => [TipOrganisation::tableName() . '.name' => SORT_DESC],
+            'asc' => [Owner::tableName() . '.name' => SORT_ASC],
+            'desc' => [Owner::tableName() . '.name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['kod_okved'] = [
+            'asc' => [Okved::tableName() . '.kod_okved' => SORT_ASC],
+            'desc' => [Okved::tableName() . '.kod_okved' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['kod_okato'] = [
+            'asc' => [Okato::tableName() . '.kod_okato' => SORT_ASC],
+            'desc' => [Okato::tableName() . '.kod_okato' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['kod_oktmo'] = [
+            'asc' => [Oktmo::tableName() . '.kod_oktmo' => SORT_ASC],
+            'desc' => [Oktmo::tableName() . '.kod_oktmo' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['kod_okfs'] = [
+            'asc' => [VidSob::tableName() . '.kod_okfs' => SORT_ASC],
+            'desc' => [VidSob::tableName() . '.kod_okfs' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['kod_okopf'] = [
+            'asc' => [Okopf::tableName() . '.kod_okopf' => SORT_ASC],
+            'desc' => [Okopf::tableName() . '.kod_okopf' => SORT_DESC],
         ];
 
 
@@ -77,8 +126,6 @@ class OrganisationSearch extends Organisation
         // grid filtering conditions
         $query->andFilterWhere([
             'id_org' => $this->id_org,
-            'id_tip' => $this->id_tip,
-            'id_vid' => $this->id_vid,
             'id_okved' => $this->id_okved,
             'id_okato' => $this->id_okato,
             'id_oktmo' => $this->id_oktmo,
@@ -96,6 +143,12 @@ class OrganisationSearch extends Organisation
             ->andFilterWhere(['like', 'inn', $this->inn])
             ->andFilterWhere(['like', 'ppo', $this->ppo])
             ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name])
+            ->andFilterWhere(['like', Okved::tableName() . '.kod_okved', $this->kod_okved])
+            ->andFilterWhere(['like', Okato::tableName() . '.kod_okato', $this->kod_okato])
+            ->andFilterWhere(['like', Oktmo::tableName() . '.kod_oktmo', $this->kod_oktmo])
+            ->andFilterWhere(['like', VidSob::tableName() . '.kod_okfs', $this->kod_okfs])
+            ->andFilterWhere(['like', Okopf::tableName() . '.kod_okopf', $this->kod_okopf])
+            ->andFilterWhere(['like', VidOrganisation::tableName() . '.name_vid', $this->vid_name])
             ->andFilterWhere(['like', Owner::tableName() . '.name', $this->owner_name]);
 
         return $dataProvider;

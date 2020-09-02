@@ -37,5 +37,5 @@ echo Select2::widget([
 ])
 ?>
 
-<?= Html::submitButton('Выбрать'); ?>
+<?= Html::submitButton('Выбрать', ['class' => 'btn btn-success']); ?>
 <?php $form->end(); ?>

@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
     echo Select2::widget([
         'name' => 'model',
         'data' => ArrayHelper::map(Model::find()
-            ->select(['id_mod', 'concat(kod_mod, " ", name_mod) as value'])
-            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_mod', 'value'),
-        'value' => $model->id_model,
+            ->select(['kod_mod', 'concat(kod_mod, " ", name_mod) as value'])
+            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'kod_mod', 'value'),
+        'value' => $model->id_mod,
         'options' => [
             'placeholder' => 'Выберите модель ...',
             'multiple' => false
