@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = "Изменить: $model->name_input";
 $this->params['breadcrumbs'][] = ['label' => 'Вид ресурса', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_input, 'url' => ['view', 'id' => $model->id_input]];
+$this->params['breadcrumbs'][] = ['label' => $model->name_input, 'url' => ['view', 'id' => $model->id_input]];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="inputs-update">
