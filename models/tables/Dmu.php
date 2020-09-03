@@ -12,6 +12,7 @@ use yii\db\Expression;
  * @property string $dmu_dmu
  * @property int $criteria_id_org
  * @property int $level_search
+ * @property int $vid_org
  * @property int $id_fun
  * @property int $id_mod
  * @property int $id_input
@@ -28,6 +29,7 @@ use yii\db\Expression;
  * @property OrgFunction $fun
  * @property Inputs $input
  * @property Model $mod
+ * @property VidOrganisation $vidOrg
  * @property Outputs $output
  * @property Journal[] $journals
  */
@@ -60,11 +62,12 @@ class Dmu extends \yii\db\ActiveRecord
     {
         return [
             [['dmu_dmu', 'criteria_id_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'id_output'], 'required'],
-            [['criteria_id_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
+            [['criteria_id_org', 'vid_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['dmu_dmu'], 'string', 'max' => 65],
             [['criteria_id_org'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['criteria_id_org' => 'id_org']],
             [['level_search'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['level_search' => 'id_level']],
+            [['vid_org'], 'exist', 'skipOnError' => true, 'targetClass' => VidOrganisation::className(), 'targetAttribute' => ['vid_org' => 'id_vid']],
             [['id_fun'], 'exist', 'skipOnError' => true, 'targetClass' => OrgFunction::className(), 'targetAttribute' => ['id_fun' => 'id_fun']],
             [['id_input'], 'exist', 'skipOnError' => true, 'targetClass' => Inputs::className(), 'targetAttribute' => ['id_input' => 'id_input']],
             [['id_mod'], 'exist', 'skipOnError' => true, 'targetClass' => Model::className(), 'targetAttribute' => ['id_mod' => 'id_mod']],
@@ -81,6 +84,7 @@ class Dmu extends \yii\db\ActiveRecord
             'id_dmu' => 'Номер записи',
             'dmu_dmu' => 'Наименование',
             'criteria_id_org' => 'Код критерия для группировки',
+            'vid_org' => 'Вид организации',
             'id_fun' => 'Функция',
             'id_mod' => 'Модель',
             'id_input' => 'Входные данные',
@@ -148,6 +152,14 @@ class Dmu extends \yii\db\ActiveRecord
     public function getOutput()
     {
         return $this->hasOne(Outputs::className(), ['id_output' => 'id_output']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVidOrg()
+    {
+        return $this->hasOne(VidOrganisation::className(), ['id_vid' => 'vid_org']);
     }
 
     /**
