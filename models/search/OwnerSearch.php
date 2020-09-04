@@ -6,7 +6,6 @@ use app\models\tables\Okato;
 use app\models\tables\Okopf;
 use app\models\tables\Oktmo;
 use app\models\tables\Okved;
-use app\models\tables\Organisation;
 use app\models\tables\Owner;
 use app\models\tables\TipOrganisation;
 use app\models\tables\VidOrganisation;
@@ -15,14 +14,13 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * OrganisationSearch represents the model behind the search form of `app\models\tables\Organisation`.
+ * OwnerSearch represents the model behind the search form of `app\models\tables\Owner`.
  */
-class OrganisationSearch extends Organisation
+class OwnerSearch extends Owner
 {
 
     public $tip_name;
     public $vid_name;
-    public $owner_name;
     public $kod_okved;
     public $kod_okato;
     public $kod_oktmo;
@@ -35,9 +33,8 @@ class OrganisationSearch extends Organisation
     public function rules()
     {
         return [
-            [['id_org', 'id_tip', 'id_vid', 'id_okved', 'id_okato', 'id_oktmo', 'id_okfs', 'id_buj', 'id_okopf'], 'integer'],
-            [['reg_num', 'full_name', 'short_name', 'inn', 'ppo', 'id_owner', 'created_at', 'updated_at',
-                'tip_name', 'vid_name', 'owner_name', 'kod_okved', 'kod_okato', 'kod_oktmo', 'kod_okfs', 'kod_okopf'], 'safe'],
+            [['id_owner', 'reg_num'], 'integer'],
+            [['name', 'tip_name', 'vid_name', 'kod_okved', 'kod_okato', 'kod_oktmo', 'kod_okfs', 'kod_okopf'], 'safe'],
         ];
     }
 
@@ -59,7 +56,7 @@ class OrganisationSearch extends Organisation
      */
     public function search($params)
     {
-        $query = Organisation::find();
+        $query = Owner::find();
         $query->joinWith('tip');
         $query->joinWith('idV');
         $query->joinWith('okved');
@@ -67,12 +64,14 @@ class OrganisationSearch extends Organisation
         $query->joinWith('okfs');
         $query->joinWith('okopf');
         $query->joinWith('oktmo');
-        $query->joinWith('owner');
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $this->load($params);
 
         $dataProvider->sort->attributes['tip_name'] = [
             'asc' => [TipOrganisation::tableName() . '.tip_name' => SORT_ASC],
@@ -114,9 +113,6 @@ class OrganisationSearch extends Organisation
             'desc' => [Okopf::tableName() . '.kod_okopf' => SORT_DESC],
         ];
 
-
-        $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -125,31 +121,18 @@ class OrganisationSearch extends Organisation
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_org' => $this->id_org,
-            'id_okved' => $this->id_okved,
-            'id_okato' => $this->id_okato,
-            'id_oktmo' => $this->id_oktmo,
-            'id_okfs' => $this->id_okfs,
-            'id_buj' => $this->id_buj,
-            'id_okopf' => $this->id_okopf,
-            'owner_name' => $this->owner_name,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id_owner' => $this->id_owner,
+            'reg_num' => $this->reg_num,
         ]);
 
-        $query->andFilterWhere(['like', Organisation::tableName() . '.reg_num', $this->reg_num])
-            ->andFilterWhere(['like', 'full_name', $this->full_name])
-            ->andFilterWhere(['like', 'short_name', $this->short_name])
-            ->andFilterWhere(['like', 'inn', $this->inn])
-            ->andFilterWhere(['like', 'ppo', $this->ppo])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name])
             ->andFilterWhere(['like', Okved::tableName() . '.kod_okved', $this->kod_okved])
             ->andFilterWhere(['like', Okato::tableName() . '.kod_okato', $this->kod_okato])
             ->andFilterWhere(['like', Oktmo::tableName() . '.kod_oktmo', $this->kod_oktmo])
             ->andFilterWhere(['like', VidSob::tableName() . '.kod_okfs', $this->kod_okfs])
             ->andFilterWhere(['like', Okopf::tableName() . '.kod_okopf', $this->kod_okopf])
-            ->andFilterWhere(['like', VidOrganisation::tableName() . '.name_vid', $this->vid_name])
-            ->andFilterWhere(['like', Owner::tableName() . '.name', $this->owner_name]);
+            ->andFilterWhere(['like', VidOrganisation::tableName() . '.name_vid', $this->vid_name]);
 
         return $dataProvider;
     }

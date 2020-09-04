@@ -1,30 +1,23 @@
 <?php
 
-namespace app\models\search;
+namespace app\models\tables;
 
-use app\models\tables\Dmu;
-use app\models\tables\OrgFunction;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-
 /**
- * DmuSearch represents the model behind the search form of `app\models\Dmu`.
+ * DmuSearch represents the model behind the search form of `app\models\tables\Dmu`.
  */
 class DmuSearch extends Dmu
 {
-
-    public $name_mod;
-    public $name_fun;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_dmu', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
-            [['dmu_dmu', 'created_at', 'updated_at', 'name_fun', 'name_mod'], 'safe'],
+            [['id_dmu', 'criteria_id_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
+            [['dmu_dmu', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -49,22 +42,10 @@ class DmuSearch extends Dmu
         $query = Dmu::find();
 
         // add conditions that should always apply here
-        $query->joinWith('mod');
-        $query->joinWith('fun');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $dataProvider->sort->attributes['name_mod'] = [
-            'asc' => [\app\models\tables\Model::tableName() . '.name_mod' => SORT_ASC],
-            'desc' => [\app\models\tables\Model::tableName() . '.name_mod' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['name_fun'] = [
-            'asc' => [OrgFunction::tableName() . '.name_fun' => SORT_ASC],
-            'desc' => [OrgFunction::tableName() . '.name_fun' => SORT_DESC],
-        ];
 
         $this->load($params);
 
@@ -77,6 +58,8 @@ class DmuSearch extends Dmu
         // grid filtering conditions
         $query->andFilterWhere([
             'id_dmu' => $this->id_dmu,
+            'criteria_id_org' => $this->criteria_id_org,
+            'level_search' => $this->level_search,
             'id_fun' => $this->id_fun,
             'id_mod' => $this->id_mod,
             'id_input' => $this->id_input,
@@ -84,15 +67,11 @@ class DmuSearch extends Dmu
             'id_output' => $this->id_output,
             'sum_output' => $this->sum_output,
             'efficency' => $this->efficency,
-            'name_mod' => $this->name_mod,
-            'name_fun' => $this->name_fun,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'dmu_dmu', $this->dmu_dmu])
-            ->andFilterWhere(['like', \app\models\tables\Model::tableName() . '.name_mod', $this->name_mod])
-            ->andFilterWhere(['like', OrgFunction::tableName() . '.name_fun', $this->name_fun]);
+        $query->andFilterWhere(['like', 'dmu_dmu', $this->dmu_dmu]);
 
         return $dataProvider;
     }

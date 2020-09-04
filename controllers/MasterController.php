@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Master;
 use app\models\search\OrganisationSearch;
+use app\models\search\OwnerSearch;
 use app\models\tables\Dmu;
 use app\models\tables\Oktmo;
 use app\models\tables\Organisation;
@@ -29,6 +30,7 @@ class MasterController extends \yii\web\Controller
         $request = Yii::$app->request;
         $modelNum = $request->get('model', 1);
         $organisation = $request->getQueryParam('id_org');
+        $owner = $request->getQueryParam('id_owner');
         $modelView = "model1";
         switch ($modelNum) {
             case "1" :
@@ -45,7 +47,15 @@ class MasterController extends \yii\web\Controller
                 break;
             case "2" :
                 $modelView = "model2";
-                $params = array("model" => $model);
+                $searchModel = new OwnerSearch();
+                if (isset($owner) === true) {
+                    $orgDataProvider = $searchModel->search([$searchModel->formName() => ["id_owner" => $owner]]);
+                    $model->criteria_id_org = $owner;
+                } else {
+                    $orgDataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                }
+                $params = array("model" => $model, "searchModel" => $searchModel,
+                    "orgData" => $orgDataProvider, "errors" => $model->getErrors());
                 break;
         }
         $model->id_mod = $modelNum;
@@ -78,17 +88,20 @@ class MasterController extends \yii\web\Controller
      */
     private function getSimilarOrgByOrg(Dmu $dmu)
     {
-        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
         $organisationCriteria = $dmu->criteriaIdOrg;
+        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
+
         $arrayOrg = Organisation::find()->where(['id_tip' => $organisationCriteria->id_tip,
             'id_vid' => $organisationCriteria->id_vid,
             'id_okfs' => $organisationCriteria->id_okfs,])
             ->joinWith(Oktmo::tableName())
             ->andWhere(['like', Oktmo::tableName() . '.kod_oktmo',
-                $this->getOktmoSearch($dmu->level_search, $kod_oktmo . "%")])
+                $this->getOktmoSearch($dmu->level_search, $kod_oktmo) . "%", false])
             ->all();
-
-        return $arrayOrg;
+        foreach ($arrayOrg as $org) {
+            $orgTest[] = $org->full_name;
+        }
+        return $orgTest;
     }
 
     /**

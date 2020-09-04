@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\search\OwnerSearch;
 use app\models\tables\Owner;
-use app\models\tables\OwnerSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

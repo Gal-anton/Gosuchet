@@ -10,6 +10,7 @@ namespace app\models\tables;
  * @property string $name
  *
  * @property Organisation[] $organisations
+ * @property Organisation $organisation
  */
 class Owner extends \yii\db\ActiveRecord
 {
@@ -52,5 +53,69 @@ class Owner extends \yii\db\ActiveRecord
     public function getOrganisations()
     {
         return $this->hasMany(Organisation::className(), ['id_owner' => 'id_owner']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrganisation()
+    {
+        return $this->hasOne(Organisation::className(), ['reg_num' => 'reg_num']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTip()
+    {
+        return $this->hasOne(TipOrganisation::className(), ['id_tip' => 'id_tip'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOkopf()
+    {
+        return $this->hasOne(Okopf::className(), ['id_okopf' => 'id_okopf'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOkved()
+    {
+        return $this->hasOne(Okved::className(), ['id_okved' => 'id_okved'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOkato()
+    {
+        return $this->hasOne(Okato::className(), ['id_okato' => 'id_okato'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdV()
+    {
+        return $this->hasOne(VidOrganisation::className(), ['id_vid' => 'id_vid'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOkfs()
+    {
+        return $this->hasOne(VidSob::className(), ['id_okfs' => 'id_okfs'])->via('organisation');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOktmo()
+    {
+        return $this->hasOne(Oktmo::className(), ['id_oktmo' => 'id_oktmo'])->via('organisation');
     }
 }

@@ -4,7 +4,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\tables\OwnerSearch */
+/* @var $searchModel \app\models\search\OwnerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Owners';
