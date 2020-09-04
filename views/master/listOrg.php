@@ -1,24 +1,18 @@
 <?php
 
-use app\models\Master;
+use app\models\tables\Dmu;
 use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model Master */
-/* @var $errors array */
+/* @var $model Dmu */
+/* @var $organisations yii\data\ActiveDataProvider */
 /* @var $searchModel app\models\search\OrganisationSearch */
-/* @var $orgData yii\data\ActiveDataProvider */
 
 ?>
-    <h1>Мастер оценки</h1>
-<?php echo $this->render('_modelView', ['model' => $model]); ?>
-
     <div class="master_data">
 <?php
 echo GridView::widget([
-    'dataProvider' => $orgData,
+    'dataProvider' => $organisations,
     'filterModel' => $searchModel,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
@@ -44,25 +38,7 @@ echo GridView::widget([
         //'id_buj',
         //'id_okopf',
 //        'id_owner',
-        ['label' => '',
-            'format' => 'raw',
-            'value' => function ($data) {
-                return Html::a('Выбрать', Url::to(['master/model?model=1&id_org=' . $data->id_org]));
-            }],
 
 
     ],
 ]);
-echo '<h2>Создание DMU для группировки организаций</h2>';
-?>
-    <div class="dmu-create">
-
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <?= $this->render('_formDMU', [
-            'model' => $model,
-        ]) ?>
-
-    </div>
-<?php //var_dump($errors);
-

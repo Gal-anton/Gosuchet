@@ -2,14 +2,7 @@
 
 namespace app\models\search;
 
-use app\models\tables\Okato;
-use app\models\tables\Okopf;
-use app\models\tables\Oktmo;
-use app\models\tables\Okved;
 use app\models\tables\Owner;
-use app\models\tables\TipOrganisation;
-use app\models\tables\VidOrganisation;
-use app\models\tables\VidSob;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -57,13 +50,6 @@ class OwnerSearch extends Owner
     public function search($params)
     {
         $query = Owner::find();
-        $query->joinWith('tip');
-        $query->joinWith('idV');
-        $query->joinWith('okved');
-        $query->joinWith('okato');
-        $query->joinWith('okfs');
-        $query->joinWith('okopf');
-        $query->joinWith('oktmo');
 
         // add conditions that should always apply here
 
@@ -73,45 +59,6 @@ class OwnerSearch extends Owner
 
         $this->load($params);
 
-        $dataProvider->sort->attributes['tip_name'] = [
-            'asc' => [TipOrganisation::tableName() . '.tip_name' => SORT_ASC],
-            'desc' => [TipOrganisation::tableName() . '.tip_name' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['vid_name'] = [
-            'asc' => [VidOrganisation::tableName() . '.vid_name' => SORT_ASC],
-            'desc' => [VidOrganisation::tableName() . '.vid_name' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['owner_name'] = [
-            'asc' => [Owner::tableName() . '.name' => SORT_ASC],
-            'desc' => [Owner::tableName() . '.name' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['kod_okved'] = [
-            'asc' => [Okved::tableName() . '.kod_okved' => SORT_ASC],
-            'desc' => [Okved::tableName() . '.kod_okved' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['kod_okato'] = [
-            'asc' => [Okato::tableName() . '.kod_okato' => SORT_ASC],
-            'desc' => [Okato::tableName() . '.kod_okato' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['kod_oktmo'] = [
-            'asc' => [Oktmo::tableName() . '.kod_oktmo' => SORT_ASC],
-            'desc' => [Oktmo::tableName() . '.kod_oktmo' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['kod_okfs'] = [
-            'asc' => [VidSob::tableName() . '.kod_okfs' => SORT_ASC],
-            'desc' => [VidSob::tableName() . '.kod_okfs' => SORT_DESC],
-        ];
-
-        $dataProvider->sort->attributes['kod_okopf'] = [
-            'asc' => [Okopf::tableName() . '.kod_okopf' => SORT_ASC],
-            'desc' => [Okopf::tableName() . '.kod_okopf' => SORT_DESC],
-        ];
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -125,14 +72,7 @@ class OwnerSearch extends Owner
             'reg_num' => $this->reg_num,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', TipOrganisation::tableName() . '.name_tip', $this->tip_name])
-            ->andFilterWhere(['like', Okved::tableName() . '.kod_okved', $this->kod_okved])
-            ->andFilterWhere(['like', Okato::tableName() . '.kod_okato', $this->kod_okato])
-            ->andFilterWhere(['like', Oktmo::tableName() . '.kod_oktmo', $this->kod_oktmo])
-            ->andFilterWhere(['like', VidSob::tableName() . '.kod_okfs', $this->kod_okfs])
-            ->andFilterWhere(['like', Okopf::tableName() . '.kod_okopf', $this->kod_okopf])
-            ->andFilterWhere(['like', VidOrganisation::tableName() . '.name_vid', $this->vid_name]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

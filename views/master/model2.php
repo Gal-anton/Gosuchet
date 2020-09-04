@@ -3,6 +3,7 @@
 use app\models\Master;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model Master */
@@ -25,15 +26,20 @@ echo GridView::widget([
         //'id_owner',
         'reg_num',
         'name',
-        ['attribute' => 'tip_name', 'label' => 'Тип', 'value' => 'tip.name_tip'],
-        ['attribute' => 'vid_name', 'label' => 'Вид', 'value' => 'idV.name_vid'],
-        ['attribute' => 'kod_okved', 'label' => 'ОКВЭД', 'value' => 'okved.kod_okved'],
-        ['attribute' => 'kod_okato', 'label' => 'ОКАТО', 'value' => 'okato.kod_okato'],
-        ['attribute' => 'kod_oktmo', 'label' => 'ОКТМО', 'value' => 'oktmo.kod_oktmo'],
-        ['attribute' => 'kod_okfs', 'label' => 'ОКФС', 'value' => 'okfs.kod_okfs'],
-        ['attribute' => 'kod_okopf', 'label' => 'ОКОПФ', 'value' => 'okopf.kod_okopf'],
+//        ['attribute' => 'tip_name', 'label' => 'Тип', 'value' => 'tip.name_tip'],
+//        ['attribute' => 'vid_name', 'label' => 'Вид', 'value' => 'idV.name_vid'],
+//        ['attribute' => 'kod_okved', 'label' => 'ОКВЭД', 'value' => 'okved.kod_okved'],
+//        ['attribute' => 'kod_okato', 'label' => 'ОКАТО', 'value' => 'okato.kod_okato'],
+//        ['attribute' => 'kod_oktmo', 'label' => 'ОКТМО', 'value' => 'oktmo.kod_oktmo'],
+//        ['attribute' => 'kod_okfs', 'label' => 'ОКФС', 'value' => 'okfs.kod_okfs'],
+//        ['attribute' => 'kod_okopf', 'label' => 'ОКОПФ', 'value' => 'okopf.kod_okopf'],
+        ['label' => '',
+            'format' => 'raw',
+            'value' => function ($data) {
+                return Html::a('Выбрать', Url::to(['master/model?model=2&id_owner=' . $data->id_owner]));
+            }],
 
-        ['class' => 'yii\grid\ActionColumn'],
+        //['class' => 'yii\grid\ActionColumn'],
     ],
 ]);
 echo '<h2>Создание DMU для группировки организаций</h2>';

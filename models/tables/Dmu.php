@@ -24,7 +24,7 @@ use yii\db\Expression;
  * @property string $updated_at
  *
  * @property DataReport[] $dataReports
- * @property Organisation $criteriaIdOrg
+ * @property Organisation|Owner $criteriaIdOrg
  * @property Level $levelSearch
  * @property OrgFunction $fun
  * @property Inputs $input
@@ -111,7 +111,10 @@ class Dmu extends \yii\db\ActiveRecord
      */
     public function getCriteriaIdOrg()
     {
-        return $this->hasOne(Organisation::className(), ['id_org' => 'criteria_id_org']);
+        if ($this->id_mod == "1") {
+            return $this->hasOne(Organisation::className(), ['id_org' => 'criteria_id_org']);
+        }
+        return $this->hasOne(Owner::className(), ['id_owner' => 'criteria_id_org']);
     }
 
     /**

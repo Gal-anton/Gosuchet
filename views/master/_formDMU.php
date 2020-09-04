@@ -4,6 +4,7 @@ use app\models\tables\Inputs;
 use app\models\tables\Level;
 use app\models\tables\OrgFunction;
 use app\models\tables\Outputs;
+use app\models\tables\VidOrganisation;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -30,6 +31,20 @@ use yii\widgets\ActiveForm;
             'allowClear' => true,
         ],
     ]); ?>
+
+    <?php
+    if ($model->id_mod == 2) {
+        echo $form->field($model, 'vid_org')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(VidOrganisation::find()
+                ->select(['id_vid', 'name_vid as value'])
+                ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_vid', 'value'),
+            'options' => ['placeholder' => 'Выберите вид организации ...'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ]);
+    }
+    ?>
 
     <?= $form->field($model, 'level_search')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Level::find()
