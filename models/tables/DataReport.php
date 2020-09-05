@@ -50,7 +50,7 @@ class DataReport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_org', 'id_dmu', 'id_orgstr'], 'required'],
+            [['id_org', 'id_dmu'], 'required'],
             [['id_org', 'id_dmu', 'id_orgstr', 'input', 'output', 'efficency'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['id_org'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['id_org' => 'id_org']],
@@ -65,15 +65,15 @@ class DataReport extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_data_report' => 'Id Data Report',
-            'id_org' => 'Id Org',
-            'id_dmu' => 'Id Dmu',
-            'id_orgstr' => 'Id Orgstr',
-            'input' => 'Input',
-            'output' => 'Output',
-            'efficency' => 'Efficency',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'id_data_report' => 'Номер записи',
+            'id_org' => 'Организация',
+            'id_dmu' => 'DMU',
+            'id_orgstr' => 'Оргструктура',
+            'input' => 'Ресурс',
+            'output' => 'Результат',
+            'efficency' => 'Эффективность',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата изменения',
         ];
     }
 

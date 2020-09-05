@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\DataReport */
+/* @var $model app\models\tables\DataReport */
 
 $this->title = $model->id_data_report;
-$this->params['breadcrumbs'][] = ['label' => 'Data Reports', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Данные организаций', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="data-report-view">
@@ -15,14 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_data_report], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_data_report], [
+        <?= Html::a('Обновить', ['update', 'id' => $model->id_data_report], ['class' => 'btn btn-primary']) ?>
+        <?php /* Html::a('Удалить', ['delete', 'id' => $model->id_data_report], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) */ ?>
     </p>
 
     <?= DetailView::widget([
@@ -30,14 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_data_report',
             'id_org',
-            'report_year',
-            'report_staff_plan',
-            'report_staff_fact',
-            'report_sum_fin',
-            'report_sum_fot',
+            'id_dmu',
             'id_orgstr',
-            'id_fun',
-            'resource_sum',
+            'input',
+            'output',
+            'efficency',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

@@ -46,8 +46,6 @@ echo '<h2>Создание DMU для группировки организац�
 ?>
     <div class="dmu-create">
 
-        <h1><?= Html::encode($this->title) ?></h1>
-
         <?= $this->render('_formDMU', [
             'model' => $model,
         ]) ?>

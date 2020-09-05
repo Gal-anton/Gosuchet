@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\tables\DataReport */
+/* @var $model app\models\tables\DataReport */
 
-$this->title = "Обновить отчет: {$model->id_data_report}";
-$this->params['breadcrumbs'][] = ['label' => 'Отчетные данные', 'url' => ['index']];
+$this->title = 'Обновить данные организации:' . $model->id_data_report;
+$this->params['breadcrumbs'][] = ['label' => 'Данные организации', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_data_report, 'url' => ['view', 'id' => $model->id_data_report]];
 $this->params['breadcrumbs'][] = 'Обновить';
 ?>

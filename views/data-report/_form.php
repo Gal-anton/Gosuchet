@@ -1,5 +1,7 @@
 <?php
 
+use app\models\tables\Organisation;
+use app\models\tables\Orgstruct;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -8,49 +10,36 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\tables\DataReport */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $id_org string */
-/* @var $orgName string */
-$id_org = (isset($id_org) === true) ? $id_org : $model->id_org;
 ?>
 
 <div class="data-report-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_org')->textInput(['value' => $id_org]) ?>
-    <?= '<p>' . $orgName . '</p>' ?>
+    <?php echo '<h2>' . Organisation::findOne($model->id_org)->short_name . '</h2>';
+    //$form->field($model, 'id_org')->textInput() ?>
 
-    <?= $form->field($model, 'report_year')->textInput(['']) ?>
-
-    <?= $form->field($model, 'report_staff_plan')->textInput() ?>
-
-    <?= $form->field($model, 'report_staff_fact')->textInput() ?>
-
-    <?= $form->field($model, 'report_sum_fin')->textInput() ?>
-
-    <?= $form->field($model, 'report_sum_fot')->textInput() ?>
+    <?php //$form->field($model, 'id_dmu')->textInput() ?>
 
     <?= $form->field($model, 'id_orgstr')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(\app\models\tables\Orgstruct::find()
+        'data' => ArrayHelper::map(Orgstruct::find()
             ->select(['id_orgstr', 'concat(kod_orgstr, " ", name_orgstr) as value'])
             ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_orgstr', 'value'),
-        'options' => ['placeholder' => 'Выберите орг структуру ...'],
+        'options' => ['placeholder' => 'Выберите структуру организации ...'],
         'pluginOptions' => [
             'allowClear' => true,
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id_fun')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(\app\models\tables\OrgFunction::find()
-            ->select(['id_fun', 'concat(kod_fun, " ", name_fun) as value'])
-            ->orderBy(['value' => SORT_ASC])->asArray()->all(), 'id_fun', 'value'),
-        'options' => ['placeholder' => 'Выберите функцию ...'],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ]); ?>
+    <?= $form->field($model, 'input')->textInput() ?>
 
-    <?= $form->field($model, 'resource_sum')->textInput() ?>
+    <?= $form->field($model, 'output')->textInput() ?>
+
+    <?php //$form->field($model, 'efficency')->textInput() ?>
+
+    <?php //$form->field($model, 'created_at')->textInput() ?>
+
+    <?php //$form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

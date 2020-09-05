@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php //echo Html::a('Update', ['update', 'id' => $model->id_dmu], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_dmu], [
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id_dmu], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_dmu',
             'dmu_dmu',
-            'kod_is',
+            //'kod_is',
             ['attribute' => 'name_fun', 'label' => 'Функция организации',
                 'value' => function ($model) {
                     return $model->fun->kod_fun . " " . $model->fun->name_fun;

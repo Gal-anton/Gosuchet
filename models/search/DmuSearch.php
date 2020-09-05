@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models\tables;
+namespace app\models\search;
 
+use app\models\tables\Dmu;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

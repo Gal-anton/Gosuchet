@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model \app\models\search\DataReportSearch */
+/* @var $model app\models\search\DataReportSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -19,21 +19,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_org') ?>
 
-    <?= $form->field($model, 'report_year') ?>
+    <?= $form->field($model, 'id_dmu') ?>
 
-    <?= $form->field($model, 'report_staff_plan') ?>
+    <?= $form->field($model, 'id_orgstr') ?>
 
-    <?= $form->field($model, 'report_staff_fact') ?>
+    <?= $form->field($model, 'input') ?>
 
-    <?php // echo $form->field($model, 'report_sum_fin') ?>
+    <?php // echo $form->field($model, 'output') ?>
 
-    <?php // echo $form->field($model, 'report_sum_fot') ?>
+    <?php // echo $form->field($model, 'efficency') ?>
 
-    <?php // echo $form->field($model, 'id_orgstr') ?>
+    <?php // echo $form->field($model, 'created_at') ?>
 
-    <?php // echo $form->field($model, 'id_fun') ?>
-
-    <?php // echo $form->field($model, 'resource_sum') ?>
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
