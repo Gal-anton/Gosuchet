@@ -5,15 +5,14 @@ namespace app\controllers;
 use app\models\search\DmuSearch;
 use app\models\tables\DataReport;
 use app\models\tables\Dmu;
-use app\models\tables\Oktmo;
-use app\models\tables\Organisation;
+use Throwable;
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
-use yii\db\Query;
+use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * DmuController implements the CRUD actions for Dmu model.
@@ -106,11 +105,15 @@ class DmuController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+        } catch (StaleObjectException $e) {
+        } catch (NotFoundHttpException $e) {
+        } catch (Throwable $e) {
+        }
 
         return $this->redirect(['index']);
     }
@@ -131,13 +134,20 @@ class DmuController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * @param $id
+     * @return string|Response
+     */
     public function actionData($id)
     {
         try {
             $model = $this->findModel($id);
         } catch (NotFoundHttpException $e) {
+            Yii::$app->session->setFlash('error', "Ошибка при загрузке данных");
+            return $this->render("index");
         }
-        $listOrg = $this->getSimilarOrg($model);
+
+        $listOrg = $model->getSimilarOrg();
 
         if (empty($listOrg->models) === true) {
             Yii::$app->session->setFlash('info', "Отсутствуют однотипные организации");
@@ -163,7 +173,7 @@ class DmuController extends Controller
                 }
             }
             Yii::$app->session->setFlash('success', "Processed {$count} records successfully.");
-            return $this->redirect(['index']); // redirect to your next desired page
+            return $this->redirect(['post/index?id_dmu=' . $model->id_dmu]); // redirect to your next desired page
         } else {
             return $this->render('data', [
                 'model' => $model,
@@ -173,99 +183,5 @@ class DmuController extends Controller
 
     }
 
-    /**
-     * @param $dmu Dmu
-     * @return array|false
-     */
-    private function getSimilarOrg(Dmu $dmu)
-    {
-        $organisations = false;
-        if ($dmu->id_mod == 1) {
-            $organisations = $this->getSimilarOrgByOrg($dmu);
-        } else if ($dmu->id_mod == 2) {
-            $organisations = $this->getSimilarOrgByOwner($dmu);
-        }
-        return $organisations;
-    }
 
-    /**
-     * @param Dmu $dmu
-     * @return ActiveDataProvider
-     */
-    private function getSimilarOrgByOrg(Dmu $dmu)
-    {
-        $organisationCriteria = $dmu->criteriaIdOrg;
-        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
-
-        $query = new Query();
-        $query->select('*')
-            ->from(Organisation::tableName())
-            ->andWhere(['id_tip' => $organisationCriteria->id_tip])
-            ->andWhere(['id_vid' => $organisationCriteria->id_vid])
-            ->andWhere(['id_okfs' => $organisationCriteria->id_okfs])
-            ->innerJoin(Oktmo::tableName(),
-                Organisation::tableName() . '.id_oktmo = ' . Oktmo::tableName() . '.id_oktmo')
-            ->andWhere(['like', Oktmo::tableName() . '.kod_oktmo',
-                $this->getOktmoSearch($dmu->level_search, $kod_oktmo) . "%", false])
-            ->all();
-
-        $arrayOrg = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                //'pageSize' => 20,
-            ],
-        ]);
-
-        return $arrayOrg;
-    }
-
-    /**
-     * @param Dmu $dmu
-     * @return ActiveDataProvider
-     */
-    private function getSimilarOrgByOwner(Dmu $dmu)
-    {
-        $owner = $dmu->criteriaIdOrg;
-        $organisationCriteria = $owner->organisations[0];
-        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
-        $ownerCriteria = $dmu->criteria_id_org;
-
-        $query = new Query();
-        $query->select('*')
-            ->from(Organisation::tableName())
-            ->andWhere(['id_owner' => $ownerCriteria])
-            ->andWhere(['id_vid' => $dmu->vid_org])
-            ->innerJoin(Oktmo::tableName(),
-                Organisation::tableName() . '.id_oktmo = ' . Oktmo::tableName() . '.id_oktmo')
-            ->andWhere(['like', Oktmo::tableName() . '.kod_oktmo',
-                $this->getOktmoSearch($dmu->level_search, $kod_oktmo) . "%", false])
-            ->all();
-
-        $arrayOrg = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                //'pageSize' => 20,
-            ],
-        ]);
-
-        return $arrayOrg;
-    }
-
-    private function getOktmoSearch($level_search, $kod_oktmo = "")
-    {
-        $search = "";
-        switch ($level_search) {
-            case "1":
-                $search = substr($kod_oktmo, 0, 2);
-                break;
-            case "2":
-                $search = substr($kod_oktmo, 0, 5);
-                break;
-            case "3":
-                $search = substr($kod_oktmo, 0, 8);
-                break;
-            default;
-        }
-        return $search;
-    }
 }

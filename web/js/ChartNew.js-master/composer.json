@@ -9,17 +9,19 @@
         {
             "name": "Vancoppenolle Francois",
             "email": "francois.vancoppenolle@favomo.be",
-            "homepage": "https://github.com/FVANCOP/ChartNew.js",
-            "role": "Developer"
+          "homepage": "https://github.com/FVANCOP/ChartNew.js",
+          "role": "Developer"
         },
-        {
-            "name": "Kroger Ole",
-            "email": "o.kroeger@wikunia.de",
-            "homepage": "http://github.wikunia.de",
-            "role": "Developer"
-        }
-    ],
-  "main": ["ChartNew.js"],
+    {
+      "name": "Kroger Ole",
+      "email": "o.kroeger@wikunia.de",
+      "homepage": "http://github.wikunia.de",
+      "role": "Developer"
+    }
+  ],
+  "main": [
+    "ChartNew.js"
+  ],
   "dependencies": {
   }
 }

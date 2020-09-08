@@ -86,7 +86,7 @@ class DataReportSearch extends DataReport
         $query->andFilterWhere([
             'id_data_report' => $this->id_data_report,
             'id_org' => $this->id_org,
-            'id_dmu' => $this->id_dmu,
+            'data_report.id_dmu' => $this->id_dmu,
             'id_orgstr' => $this->id_orgstr,
             'input' => $this->input,
             'output' => $this->output,

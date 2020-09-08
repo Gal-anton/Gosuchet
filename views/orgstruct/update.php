@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model \app\models\tables\Orgstruct */
 
-$this->title = 'Обновить запись: ' . $model->id_orgstr;
+$this->title = 'Обновить запись: ' . $model->kod_orgstr;
 $this->params['breadcrumbs'][] = ['label' => 'Орг. структуры', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_orgstr, 'url' => ['view', 'id' => $model->id_orgstr]];
+$this->params['breadcrumbs'][] = ['label' => $model->kod_orgstr, 'url' => ['view', 'id' => $model->id_orgstr]];
 $this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="orgstruct-update">

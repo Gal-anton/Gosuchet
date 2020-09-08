@@ -24,6 +24,9 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         //'js/site.js'
+        'js/ChartNew.js-master/Add-ins/format.js',
+        'js/ChartNew.js-master/ChartNew.js',
+        'js/ChartNew.js-master/Add-ins/stats.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -3,7 +3,11 @@
 namespace app\models\tables;
 
 use yii\behaviors\TimestampBehavior;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\db\Query;
 
 /**
  * This is the model class for table "dmu".
@@ -33,7 +37,7 @@ use yii\db\Expression;
  * @property Outputs $output
  * @property Journal[] $journals
  */
-class Dmu extends \yii\db\ActiveRecord
+class Dmu extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -99,7 +103,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDataReports()
     {
@@ -107,7 +111,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCriteriaIdOrg()
     {
@@ -118,7 +122,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getLevelSearch()
     {
@@ -126,7 +130,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFun()
     {
@@ -134,7 +138,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getInput()
     {
@@ -142,7 +146,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMod()
     {
@@ -150,7 +154,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOutput()
     {
@@ -158,7 +162,7 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getVidOrg()
     {
@@ -166,10 +170,99 @@ class Dmu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getJournals()
     {
         return $this->hasMany(Journal::className(), ['id_dmu' => 'id_dmu']);
+    }
+
+    /**
+     * @return array|false
+     */
+    public function getSimilarOrg()
+    {
+        $organisations = false;
+        if ($this->id_mod == 1) {
+            $organisations = $this->getSimilarOrgByOrg();
+        } else if ($this->id_mod == 2) {
+            $organisations = $this->getSimilarOrgByOwner();
+        }
+        return $organisations;
+    }
+
+    /**
+     * @return ActiveDataProvider
+     */
+    private function getSimilarOrgByOrg()
+    {
+        $organisationCriteria = $this->criteriaIdOrg;
+        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
+
+        $query = new Query();
+        $query->select('*')
+            ->from(Organisation::tableName())
+            ->andWhere(['id_tip' => $organisationCriteria->id_tip])
+            ->andWhere(['id_vid' => $organisationCriteria->id_vid])
+            ->andWhere(['id_okfs' => $organisationCriteria->id_okfs])
+            ->innerJoin(Oktmo::tableName(),
+                Organisation::tableName() . '.id_oktmo = ' . Oktmo::tableName() . '.id_oktmo')
+            ->andWhere(['like', Oktmo::tableName() . '.kod_oktmo',
+                $this->getOktmoSearch($this->level_search, $kod_oktmo) . "%", false])
+            ->all();
+
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                //'pageSize' => 20,
+            ],
+        ]);
+    }
+
+    /**
+     * @return ActiveDataProvider
+     */
+    private function getSimilarOrgByOwner()
+    {
+        $owner = $this->criteriaIdOrg;
+        $organisationCriteria = $owner->organisations[0];
+        $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
+        $ownerCriteria = $this->criteria_id_org;
+
+        $query = new Query();
+        $query->select('*')
+            ->from(Organisation::tableName())
+            ->andWhere(['id_owner' => $ownerCriteria])
+            ->andWhere(['id_vid' => $this->vid_org])
+            ->innerJoin(Oktmo::tableName(),
+                Organisation::tableName() . '.id_oktmo = ' . Oktmo::tableName() . '.id_oktmo')
+            ->andWhere(['like', Oktmo::tableName() . '.kod_oktmo',
+                $this->getOktmoSearch($this->level_search, $kod_oktmo) . "%", false])
+            ->all();
+
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                //'pageSize' => 20,
+            ],
+        ]);
+    }
+
+    private function getOktmoSearch($level_search, $kod_oktmo = "")
+    {
+        $search = "";
+        switch ($level_search) {
+            case "1":
+                $search = substr($kod_oktmo, 0, 2);
+                break;
+            case "2":
+                $search = substr($kod_oktmo, 0, 5);
+                break;
+            case "3":
+                $search = substr($kod_oktmo, 0, 8);
+                break;
+            default;
+        }
+        return $search;
     }
 }
