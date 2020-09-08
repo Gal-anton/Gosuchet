@@ -9,12 +9,17 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $items \app\models\tables\DataReport[] */
+/* @var $model \app\models\tables\Dmu */
 
 $this->title = 'Изменить Данные организаций';
 $this->params['breadcrumbs'][] = ['label' => 'Организации', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Изменить';
-
+$this->params['breadcrumbs'][] = 'Внесение данных';
+$inputName = $model->input->name_input;
+$outputName = $model->output->name_output;
 ?>
+
+<h3><?= "Вид ресурса: " . $inputName ?></h3>
+<h3><?= "Вид результата: " . $outputName ?></h3>
 <div class="form">
     <?php $form = ActiveForm::begin(); ?>
     <table class="table table-striped">

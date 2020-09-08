@@ -166,6 +166,7 @@ class DmuController extends Controller
             return $this->redirect(['index']); // redirect to your next desired page
         } else {
             return $this->render('data', [
+                'model' => $model,
                 'items' => $items,
             ]);
         }
