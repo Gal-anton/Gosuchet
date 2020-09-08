@@ -29,9 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_data_report',
-            'id_org',
-            'id_dmu',
-            'id_orgstr',
+            ['attribute' => 'name_org', 'label' => 'Организации',
+                'value' => function ($model) {
+                    return $model->org->reg_num . " " . $model->org->short_name;
+                },],
+            ['attribute' => 'dmu_dmu', 'label' => 'DMU',
+                'value' => function ($model) {
+                    return $model->dmu->id_dmu . " " . $model->dmu->dmu_dmu;
+                },],
+            ['attribute' => 'name_orgstr', 'label' => 'Структура',
+                'value' => function ($model) {
+                    return (isset($model->orgstr) === true) ?
+                        $model->orgstr->kod_orgstr . " " . $model->orgstr->name_orgstr :
+                        "Не установлено";
+                },],
+            //'id_org',
+            //'id_dmu',
+            //'id_orgstr',
             'input',
             'output',
             'efficency',

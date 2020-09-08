@@ -3,6 +3,7 @@
 namespace app\models\tables;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
@@ -17,12 +18,13 @@ use yii\db\Expression;
  * @property int $efficency
  * @property string $created_at
  * @property string $updated_at
+ * @property array $formAttribs
  *
  * @property Organisation $org
  * @property Orgstruct $orgstr
  * @property Dmu $dmu
  */
-class DataReport extends \yii\db\ActiveRecord
+class DataReport extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -100,4 +102,5 @@ class DataReport extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Dmu::className(), ['id_dmu' => 'id_dmu']);
     }
+
 }

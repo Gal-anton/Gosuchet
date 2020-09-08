@@ -3,12 +3,12 @@
 namespace app\controllers;
 
 use app\models\search\DmuSearch;
-use app\models\search\OrganisationSearch;
 use app\models\tables\DataReport;
 use app\models\tables\Dmu;
 use app\models\tables\Oktmo;
 use app\models\tables\Organisation;
 use Yii;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -137,19 +137,38 @@ class DmuController extends Controller
             $model = $this->findModel($id);
         } catch (NotFoundHttpException $e) {
         }
-
         $listOrg = $this->getSimilarOrg($model);
 
-        foreach ($listOrg->models as $org) {
-            $dataOrg = new DataReport();
-            $dataOrg->id_org = $org['id_org'];
-            $dataOrg->id_dmu = $model->getPrimaryKey();
-            $dataOrg->save();
-            var_dump($dataOrg->getErrors());
+        if (empty($listOrg->models) === true) {
+            Yii::$app->session->setFlash('info', "Отсутствуют однотипные организации");
+            return $this->redirect(['index']); // redirect to your next desired page
         }
-        $params = array("model" => $model,
-            "organisations" => $listOrg,
-            "searchModel" => new OrganisationSearch());
+
+        $items = array();
+        foreach ($listOrg->models as $org) {
+            $item = new DataReport();
+            $item->id_org = $org['id_org'];
+            $item->id_dmu = $model->id_dmu;
+            $items[] = $item;
+        }
+
+        if (Model::loadMultiple($items, Yii::$app->request->post()) &&
+            Model::validateMultiple($items)) {
+            $count = 0;
+            foreach ($items as $item) {
+                // populate and save records for each model
+                if ($item->save()) {
+                    // do something here after saving
+                    $count++;
+                }
+            }
+            Yii::$app->session->setFlash('success', "Processed {$count} records successfully.");
+            return $this->redirect(['index']); // redirect to your next desired page
+        } else {
+            return $this->render('data', [
+                'items' => $items,
+            ]);
+        }
 
     }
 

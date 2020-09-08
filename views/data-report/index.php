@@ -34,12 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'name_orgstr', 'label' => 'Структура', 'value' => 'orgstr.name_orgstr'],
             'input',
             'output',
-            //'efficency',
+            'efficency',
             //'created_at',
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{view}{update}'],
+                'template' => '{view}'],
         ],
     ]); ?>
 </div>
