@@ -15,9 +15,6 @@
 /* @var $title string */
 /* @var $graphMin float */
 /* @var $graphMax float */
-/* @var $sumOutput float */
-
-/* @var $sumInput float */
 
 use yii\grid\GridView;
 
@@ -52,7 +49,7 @@ $this->title = $model->dmu_dmu;
         defCanvasHeight = 500;
 
         var mydata1 = {
-            labels: [<?=$Xlabels?>],
+            labels: [<?php echo $Xlabels?>],
             xBegin: <?=$min_g?>,
             xEnd: <?=$max_g?>,
 
@@ -108,9 +105,9 @@ $this->title = $model->dmu_dmu;
     <h4><?= "Модель: " . $model->mod->name_mod ?></h4>
     <h4><?= "Уровень поиска: " . $model->levelSearch->name_level ?></h4>
     <h4><?= "Вид ресурса: " . $model->input->name_input ?></h4>
-    <h5><?= "Суммарное количество : " . $sumInput ?></h5>
+    <h5><?= "Суммарное количество : " . $model->sum_input ?></h5>
     <h4><?= "Вид результата: " . $model->output->name_output ?></h4>
-    <h5><?= "Суммарное количество : " . $sumOutput ?></h5>
+    <h5><?= "Суммарное количество : " . $model->sum_output ?></h5>
     <h4><?= "Функция: " . $model->fun->name_fun ?></h4>
 
     <script>

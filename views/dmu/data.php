@@ -1,6 +1,5 @@
 <?php
 
-use app\models\tables\Organisation;
 use app\models\tables\Orgstruct;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -23,9 +22,10 @@ $outputName = $model->output->name_output;
 <div class="form">
     <?php $form = ActiveForm::begin(); ?>
     <table class="table table-striped">
-        <?php foreach ($items as $i => $item): ?>
+        <?php
+        foreach ($items as $i => $item): ?>
             <tr>
-                <td><?= Organisation::findOne($item->id_org)->short_name . '</td>'; ?>
+                <td><?= $item->org->short_name . '</td>'; ?>
                 <td><?= $form->field($item, "[$i]id_orgstr")->widget(Select2::classname(), [
                         'data' => ArrayHelper::map(Orgstruct::find()
                             ->select(['id_orgstr', 'concat(kod_orgstr, " ", name_orgstr) as value'])

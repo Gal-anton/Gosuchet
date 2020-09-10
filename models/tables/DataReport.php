@@ -53,7 +53,8 @@ class DataReport extends ActiveRecord
     {
         return [
             [['id_org', 'id_dmu'], 'required'],
-            [['id_org', 'id_dmu', 'id_orgstr', 'input', 'output', 'efficency'], 'integer'],
+            [['id_org', 'id_dmu', 'id_orgstr', 'input', 'output'], 'integer'],
+            [['efficency'], 'double'],
             [['created_at', 'updated_at'], 'safe'],
             [['id_org'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['id_org' => 'id_org']],
             [['id_orgstr'], 'exist', 'skipOnError' => true, 'targetClass' => Orgstruct::className(), 'targetAttribute' => ['id_orgstr' => 'id_orgstr']],

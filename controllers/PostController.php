@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 use app\models\search\DataReportSearch;
+use app\models\tables\DataReport;
 use app\models\tables\Dmu;
 use Yii;
 use yii\base\Exception;
@@ -24,18 +25,36 @@ class PostController extends AppController
             $PreparedArray['Min'] = $min;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
-            $PreparedArray = ['InputArray' => [],'Max' => 0,'Min' => 0];
+            $PreparedArray = ['InputArray' => [], 'Max' => 0, 'Min' => 0];
         }
 
         return $PreparedArray;
     }
 
-    function CalculateRectangleCoordinate() {
+    function CalculateRectangleCoordinate()
+    {
 
 
     }
 
-    function SplitParallelepiped($Parallelepiped, $Step) {
+    function unique_multidim_array($array, $key)
+    {
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+
+        foreach ($array as $val) {
+            if (!in_array($val[$key], $key_array)) {
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            }
+            $i++;
+        }
+        return $temp_array;
+    }
+
+    function SplitParallelepiped($Parallelepiped, $Step)
+    {
         $exp = pow(2, $Step);
         $ArraySplittedParallelepipeds = [];
         $FirstParallelepiped = new Parallelepiped(new Coordinate(), new Coordinate());
@@ -59,11 +78,35 @@ class PostController extends AppController
         $SecondParallelepiped->point1 = $FirstParallelepiped->point2;
 
         array_push($ArraySplittedParallelepipeds, $FirstParallelepiped, $SecondParallelepiped);
-
+        //print_r('FirstParall = ' . var_dump($FirstParallelepiped) . "Second = " . var_dump($SecondParallelepiped) . '\n');
         return $ArraySplittedParallelepipeds;
     }
 
-    function ScaleRanges($InputArray1,$InputArray2) {
+    function getClosedValue($xArray, $array)
+    {
+        $resultArray = array();
+        foreach ($xArray as $x) {
+            foreach ($array as $index => $item) {
+                if (($item["x"] - $x) > 0) {
+                    $item_max = $item;
+                    $item_min = $array[$index - 1];
+                    $resultArray[] = array('x' => $x,
+                        'y' => round($item_max["y"] -
+                            ($item_max["x"] - $item_min["x"]) /
+                            (($item_max["x"] - $x) * ($item_max["y"] - $item_min["y"])))
+                    );
+                    break;
+                } elseif (($item["x"] - $x) == 0) {
+                    $resultArray[] = array('x' => $x, 'y' => round($item["y"]));
+                    break;
+                }
+            }
+        }
+        return $resultArray;
+    }
+
+    function ScaleRanges($InputArray1, $InputArray2)
+    {
 
         // TODO:
         // Как то нужно масштабировать для графиков
@@ -92,7 +135,10 @@ class PostController extends AppController
         $request = Yii::$app->request;
         $model = Dmu::findOne($request->get('id_dmu'));
         $organisations = $model->dataReports;
-
+        if (empty($organisations) === true) {
+            Yii::$app->session->setFlash('info', "Отсутствуют организации");
+            return $this->redirect(['site/index']); // redirect to your next desired page
+        }
         $searchModel = new DataReportSearch();
         $dataProvider = $searchModel->search([$searchModel->formName() => ['id_dmu' => $model->id_dmu]]);
 
@@ -117,34 +163,36 @@ class PostController extends AppController
 
         $ArrayOfParallelepipeds = [$Parallelepiped];
 
-        $Steps = 5; // Количество итераций
+        $Steps = 8; // Количество итераций
         $CurrentStep = 1;
         //$Xmin = 31;
         while ($CurrentStep <= $Steps) {
             $TempArrayOfParallelepipeds = [];
             foreach ($ArrayOfParallelepipeds as $tmpParallelepiped) {
-                if ($tmpParallelepiped->step == $CurrentStep - 1){
-                    $TempArrayOfParallelepipeds = array_merge($TempArrayOfParallelepipeds, $this->SplitParallelepiped($tmpParallelepiped,$CurrentStep));
+                if ($tmpParallelepiped->step === $CurrentStep - 1) {
+                    $TempArrayOfParallelepipeds = array_merge($TempArrayOfParallelepipeds, $this->SplitParallelepiped($tmpParallelepiped, $CurrentStep));
                 }
             }
             $ArrayOfParallelepipeds = array_merge($ArrayOfParallelepipeds, $TempArrayOfParallelepipeds);
-            $CurrentStep ++;
+            $CurrentStep++;
         }
 
         //$Xmin = $num;
-        $Arr = [['x' => $coord_left->x,'y' => $coord_left->y]];
+        $Arr = [['x' => $coord_left->x, 'y' => $coord_left->y]];
         foreach ($ArrayOfParallelepipeds as $tmpParallelepiped) {
-            array_push($Arr, ['x' => $tmpParallelepiped->point2->x,'y' => $tmpParallelepiped->point2->y]);
+            array_push($Arr, ['x' => $tmpParallelepiped->point2->x, 'y' => $tmpParallelepiped->point2->y]);
         }
         sort($Arr);
-
+        $Arr = $this->unique_multidim_array($Arr, "x");
+        $yExpectedValues = $this->getClosedValue($PreparedArrayX['InputArray'], $Arr);
+        $this->setEfficency($model, $organisations, $yExpectedValues);
 
         // Делаем массивы для рисования точек
         $tek = NULL;
         $XData = '';
         foreach ($PreparedArrayX['InputArray'] as $X) {
-            if ($X <> $tek){
-                $XData .= $X.',';
+            if ($X <> $tek) {
+                $XData .= $X . ',';
                 $tek = $X;
             }
         }
@@ -180,8 +228,10 @@ class PostController extends AppController
         //
 
         //Делаем массив подписи данных
+
         $min = round($PreparedArrayX['Min']);
         $max = round($PreparedArrayX['Max']);
+        if ($max == $min) $max++;
         $steps = sizeof($inputArr);
         //$steps = 15;
         $step_size = ($max - $min) / $steps;
@@ -190,6 +240,7 @@ class PostController extends AppController
         if ($min_g < 0) $min_g = 0;
         $max_g = round($max + $step_size / 2);
         $step_size = round(($max_g - $min_g) / $steps);
+
         $Xlabels = '0,';
         $point = '0';
         for ($i = 0; $i <= $max_g; $i += $step_size) {
@@ -215,12 +266,37 @@ class PostController extends AppController
         if ($graphMin < 0) {
             $graphMin = 0;
         }
-        $sumInput = (float)array_sum($PreparedArrayX['InputArray']);
-        $sumOutput = (float)array_sum($PreparedArrayY['InputArray']);
         return $this->render('arr', compact('model', 'Xmin', 'Xmax', 'Jarr', 'XData',
             'YData', 'XLine', 'YLine', 'Xlabels',
             'min_g', 'max_g', 'title', 'labelNameFunction',
-            'graphMin', 'graphMax', 'sumInput', 'sumOutput', 'dataProvider', 'searchModel'));
+            'graphMin', 'graphMax', 'dataProvider', 'searchModel'));
+    }
+
+    /**
+     * @param $dmu Dmu
+     * @param $data DataReport[]
+     * @param array $yExpectedValues
+     */
+    private function setEfficency($dmu, $data, $yExpectedValues)
+    {
+        $uniqYExpectedValues = $this->unique_multidim_array($yExpectedValues, 'x');
+        $values = array('x' => [], 'y' => []);
+        foreach ($uniqYExpectedValues as $yExpectedValue) {
+            $values['x'][] = $yExpectedValue['x'];
+            $values['y'][] = $yExpectedValue['y'];
+        }
+        //var_dump($values);
+        $sumDifference = 0;
+        foreach ($data as $item) {
+            $index = array_search($item->input, $values['x']);
+            //var_dump($index);
+            $item->efficency = round($item->output / $values['y'][$index], 3);
+            $item->save();
+            $sumDifference += abs($item->output - $values['y'][$index]);
+            //var_dump($item->getErrors());
+        }
+        $dmu->efficency = $sumDifference;
+        $dmu->save();
     }
 
 }

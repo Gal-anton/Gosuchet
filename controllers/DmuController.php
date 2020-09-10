@@ -147,6 +147,13 @@ class DmuController extends Controller
             return $this->render("index");
         }
 
+        $listOrg = $model->dataReports;
+        if (empty($listOrg) !== true) {
+            Yii::$app->session->setFlash('info', "Данные уже были введены, 
+                                            перейдите на страницу справочники для дальнейшего изменения");
+            return $this->redirect(['index']); // redirect to your next desired page
+        }
+
         $listOrg = $model->getSimilarOrg();
 
         if (empty($listOrg->models) === true) {
@@ -161,17 +168,22 @@ class DmuController extends Controller
             $item->id_dmu = $model->id_dmu;
             $items[] = $item;
         }
-
+        $sumInput = 0;
+        $sumOutput = 0;
         if (Model::loadMultiple($items, Yii::$app->request->post()) &&
             Model::validateMultiple($items)) {
             $count = 0;
             foreach ($items as $item) {
                 // populate and save records for each model
                 if ($item->save()) {
-                    // do something here after saving
+                    $sumInput += $item->input;
+                    $sumOutput += $item->output;
                     $count++;
                 }
             }
+            $model->sum_input = $sumInput;
+            $model->sum_output = $sumOutput;
+            $model->save();
             Yii::$app->session->setFlash('success', "Processed {$count} records successfully.");
             return $this->redirect(['post/index?id_dmu=' . $model->id_dmu]); // redirect to your next desired page
         } else {

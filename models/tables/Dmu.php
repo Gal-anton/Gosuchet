@@ -66,8 +66,9 @@ class Dmu extends ActiveRecord
     {
         return [
             [['dmu_dmu', 'criteria_id_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'id_output'], 'required'],
-            [['criteria_id_org', 'vid_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output', 'efficency'], 'integer'],
+            [['criteria_id_org', 'vid_org', 'level_search', 'id_fun', 'id_mod', 'id_input', 'sum_input', 'id_output', 'sum_output'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['efficency'], 'double'],
             [['dmu_dmu'], 'string', 'max' => 65],
             [['criteria_id_org'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['criteria_id_org' => 'id_org']],
             [['level_search'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['level_search' => 'id_level']],
@@ -95,7 +96,7 @@ class Dmu extends ActiveRecord
             'sum_input' => 'Сумма входа',
             'id_output' => 'Выходные данные',
             'sum_output' => 'Сумма выхода',
-            'efficency' => 'Эффективность',
+            'efficency' => 'Общая неэффективность',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
             'level_search' => 'Уровень поиска',
@@ -200,6 +201,7 @@ class Dmu extends ActiveRecord
         $kod_oktmo = (isset($organisationCriteria->oktmo) === true) ? $organisationCriteria->oktmo->kod_oktmo : "";
 
         $query = new Query();
+        $subQuery = new Query();
         $query->select('*')
             ->from(Organisation::tableName())
             ->andWhere(['id_tip' => $organisationCriteria->id_tip])
@@ -213,9 +215,7 @@ class Dmu extends ActiveRecord
 
         return new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                //'pageSize' => 20,
-            ],
+            'pagination' => false,
         ]);
     }
 
@@ -242,9 +242,7 @@ class Dmu extends ActiveRecord
 
         return new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                //'pageSize' => 20,
-            ],
+            'pagination' => false,
         ]);
     }
 
