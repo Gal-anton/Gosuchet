@@ -8,6 +8,7 @@ $config = [
     'name' => 'ИС Оценки эффективности',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru-RU',
     'defaultRoute' => 'site',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -46,7 +47,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -55,7 +56,21 @@ $config = [
                 //'vidsob' => 'table/vidsob',
             ],*/
         ],
-        
+
+    ],
+    'as beforeRequest' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'actions' => ['login', 'error'],
+                'allow' => true,
+            ],
+            [
+
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
     ],
     'params' => $params,
 ];

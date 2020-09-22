@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить модель', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php //echo Html::a('Добавить модель', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'kod_mod',
             'name_mod',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view}'],
         ],
     ]); ?>
 </div>

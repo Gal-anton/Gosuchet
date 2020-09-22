@@ -7,7 +7,6 @@ use app\models\tables\DataReport;
 use app\models\tables\Dmu;
 use Throwable;
 use Yii;
-use yii\base\Model;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -91,12 +90,17 @@ class DmuController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_dmu]);
+        $items = $model->dataReports;
+
+        $count = $model->saveDataReports($items);
+        if ($count !== false) {
+            Yii::$app->session->setFlash('success', "Успешно обновлено {$count} записей.");
+            return $this->redirect(['post/index?id_dmu=' . $model->id_dmu]); // redirect to your next desired page
         }
 
         return $this->render('update', [
             'model' => $model,
+            'items' => $items,
         ]);
     }
 
@@ -168,22 +172,8 @@ class DmuController extends Controller
             $item->id_dmu = $model->id_dmu;
             $items[] = $item;
         }
-        $sumInput = 0;
-        $sumOutput = 0;
-        if (Model::loadMultiple($items, Yii::$app->request->post()) &&
-            Model::validateMultiple($items)) {
-            $count = 0;
-            foreach ($items as $item) {
-                // populate and save records for each model
-                if ($item->save()) {
-                    $sumInput += $item->input;
-                    $sumOutput += $item->output;
-                    $count++;
-                }
-            }
-            $model->sum_input = $sumInput;
-            $model->sum_output = $sumOutput;
-            $model->save();
+        $count = $model->saveDataReports($items);
+        if ($count !== false) {
             Yii::$app->session->setFlash('success', "Processed {$count} records successfully.");
             return $this->redirect(['post/index?id_dmu=' . $model->id_dmu]); // redirect to your next desired page
         } else {
@@ -192,8 +182,5 @@ class DmuController extends Controller
                 'items' => $items,
             ]);
         }
-
     }
-
-
 }

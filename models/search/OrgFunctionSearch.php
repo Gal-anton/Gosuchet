@@ -17,7 +17,8 @@ class OrgFunctionSearch extends OrgFunction
     public function rules()
     {
         return [
-            [['id_fun', 'kod_fun', 'autonomus', 'budgetary', 'kazennoe'], 'integer'],
+            [['id_fun', 'autonomus', 'budgetary', 'kazennoe'], 'integer'],
+            [['kod_fun'], 'string'],
             [['name_fun'], 'safe'],
         ];
     }

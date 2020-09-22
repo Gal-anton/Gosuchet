@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_j',
+            //'id_j',
             //'id_dmu',
             ['attribute' => 'dmu_dmu', 'label' => 'DMU', 'value' => 'dmu.dmu_dmu'],
             'minX',
@@ -30,10 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'minY',
             'maxY',
             'un_efficency',
-            //'created_at',
+            'created_at',
 
-            ['class' => 'yii\grid\ActionColumn',
-                'template' => '{view}']
         ],
     ]); ?>
 </div>

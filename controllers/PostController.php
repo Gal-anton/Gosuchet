@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\models\search\DataReportSearch;
 use app\models\tables\DataReport;
 use app\models\tables\Dmu;
+use app\models\tables\Journal;
 use Yii;
 use yii\base\Exception;
 
@@ -89,13 +90,16 @@ class PostController extends AppController
             foreach ($array as $index => $item) {
                 if (($item["x"] - $x) > 0) {
                     $item_max = $item;
-                    $item_min = $array[$index - 1];
-                    $resultArray[] = array('x' => $x,
-                        'y' => round($item_max["y"] -
-                            ($item_max["x"] - $item_min["x"]) /
-                            (($item_max["x"] - $x) * ($item_max["y"] - $item_min["y"])))
-                    );
-                    break;
+                    if (isset($array[$index - 1]) === true) {
+                        $item_min = $array[$index - 1];
+                        $resultArray[] = array('x' => $x,
+                            'y' => round($item_max["y"] -
+                                ($item_max["x"] - $item_min["x"]) /
+                                (($item_max["x"] - $x) * ($item_max["y"] - $item_min["y"])))
+                        );
+                        break;
+                    }
+                    $resultArray[] = array('x' => $x, 'y' => round($item["y"]));
                 } elseif (($item["x"] - $x) == 0) {
                     $resultArray[] = array('x' => $x, 'y' => round($item["y"]));
                     break;
@@ -122,16 +126,8 @@ class PostController extends AppController
 
     }
 
-    public function actionTest() {
-
-        return $this->render('test');
-
-    }
-
     public function actionIndex()
     {
-
-
         $request = Yii::$app->request;
         $model = Dmu::findOne($request->get('id_dmu'));
         $organisations = $model->dataReports;
@@ -266,6 +262,11 @@ class PostController extends AppController
         if ($graphMin < 0) {
             $graphMin = 0;
         }
+        $yMin = min($PreparedArrayY['InputArray']);
+        $yMax = max($PreparedArrayY['InputArray']);
+        $xMin = min($PreparedArrayX['InputArray']);
+        $xMax = max($PreparedArrayX['InputArray']);
+        $this->setJournal($model, $xMax, $xMin, $yMax, $yMin);
         return $this->render('arr', compact('model', 'Xmin', 'Xmax', 'Jarr', 'XData',
             'YData', 'XLine', 'YLine', 'Xlabels',
             'min_g', 'max_g', 'title', 'labelNameFunction',
@@ -297,6 +298,30 @@ class PostController extends AppController
         }
         $dmu->efficency = $sumDifference;
         $dmu->save();
+    }
+
+    /**
+     * @param $model Dmu
+     * @param $xMax integer|double
+     * @param $xMin integer|double
+     * @param $yMax integer|double
+     * @param $yMin integer|double
+     *
+     * @return void
+     */
+    private function setJournal($model, $xMax, $xMin, $yMax, $yMin)
+    {
+        $journal = Journal::findOne(["id_dmu" => $model->id_dmu]);
+        if (isset($journal) === false) {
+            $journal = new Journal();
+            $journal->id_dmu = $model->id_dmu;
+            $journal->minX = $xMin;
+            $journal->maxX = $xMax;
+            $journal->minY = $yMin;
+            $journal->maxY = $yMax;
+            $journal->un_efficency = $model->efficency;
+            $journal->save();
+        }
     }
 
 }

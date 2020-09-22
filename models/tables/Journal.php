@@ -36,6 +36,7 @@ class Journal extends ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => false,
                 'value' => new Expression('NOW()'),
             ],
         ];
@@ -47,8 +48,9 @@ class Journal extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_dmu', 'minX', 'maxX', 'minY', 'maxY', 'un_efficency', 'created_at'], 'required'],
-            [['id_dmu', 'minX', 'maxX', 'minY', 'maxY', 'un_efficency'], 'integer'],
+            [['id_dmu', 'minX', 'maxX', 'minY', 'maxY', 'un_efficency'], 'required'],
+            [['id_dmu', 'minX', 'maxX', 'minY', 'maxY'], 'integer'],
+            [['un_efficency'], 'double'],
             [['created_at'], 'safe'],
             [['id_dmu'], 'exist', 'skipOnError' => true, 'targetClass' => Dmu::className(), 'targetAttribute' => ['id_dmu' => 'id_dmu']],
         ];

@@ -2,6 +2,7 @@
 
 namespace app\models\tables;
 
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
@@ -262,5 +263,32 @@ class Dmu extends ActiveRecord
             default;
         }
         return $search;
+    }
+
+    /**
+     * @param $items DataReport[]
+     * @return int|boolean
+     */
+    public function saveDataReports($items)
+    {
+        $sumInput = 0;
+        $sumOutput = 0;
+        if (yii\base\Model::loadMultiple($items, Yii::$app->request->post()) &&
+            yii\base\Model::validateMultiple($items)) {
+            $count = 0;
+            foreach ($items as $item) {
+                // populate and save records for each model
+                if ($item->save()) {
+                    $sumInput += $item->input;
+                    $sumOutput += $item->output;
+                    $count++;
+                }
+            }
+            $this->sum_input = $sumInput;
+            $this->sum_output = $sumOutput;
+            $this->save();
+            return (int)$count;
+        }
+        return false;
     }
 }
