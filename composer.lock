@@ -4,14 +4,14 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "a0cddbac780f186c1c21c23c62a1e62f",
+  "content-hash": "935d214e4fc25ba0e26ce64f0d2f74a6",
   "packages": [
     {
       "name": "bower-asset/bootstrap",
       "version": "v3.3.7",
       "source": {
         "type": "git",
-        "url": "https://github.com/twbs/bootstrap.git",
+        "url": "git@github.com:twbs/bootstrap.git",
         "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
       },
       "dist": {
@@ -28,11 +28,29 @@
       ]
     },
     {
+      "name": "bower-asset/chart.js",
+      "version": "v2.9.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/chartjs/Chart.js.git",
+        "reference": "06f73dc3590084b2c464bf08189c7aee2b6b92d2"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/06f73dc3590084b2c464bf08189c7aee2b6b92d2",
+        "reference": "06f73dc3590084b2c464bf08189c7aee2b6b92d2"
+      },
+      "type": "bower-asset",
+      "license": [
+        "MIT"
+      ]
+    },
+    {
       "name": "bower-asset/inputmask",
       "version": "3.3.11",
       "source": {
         "type": "git",
-        "url": "git@github.com:RobinHerbots/Inputmask.git",
+        "url": "https://github.com/RobinHerbots/Inputmask.git",
         "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
       },
       "dist": {
@@ -45,17 +63,17 @@
       },
       "type": "bower-asset",
       "license": [
-                "http://opensource.org/licenses/mit-license.php"
-            ]
-        },
-        {
-            "name": "bower-asset/jquery",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e"
-            },
+        "http://opensource.org/licenses/mit-license.php"
+      ]
+    },
+    {
+      "name": "bower-asset/jquery",
+      "version": "3.2.1",
+      "source": {
+        "type": "git",
+        "url": "git@github.com:jquery/jquery-dist.git",
+        "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e"
+      },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/77d2a51d0520d2ee44173afdf4e40a9201f5964e",
@@ -166,16 +184,16 @@
             "name": "ezyang/htmlpurifier",
             "version": "v4.9.3",
             "source": {
-                "type": "git",
-                "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "95e1bae3182efc0f3422896a3236e991049dac69"
+              "type": "git",
+              "url": "https://github.com/ezyang/htmlpurifier.git",
+              "reference": "95e1bae3182efc0f3422896a3236e991049dac69"
             },
-            "dist": {
-                "type": "zip",
-              "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/95e1bae3182efc0f3422896a3236e991049dac69",
-              "reference": "95e1bae3182efc0f3422896a3236e991049dac69",
-              "shasum": ""
-            },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/95e1bae3182efc0f3422896a3236e991049dac69",
+            "reference": "95e1bae3182efc0f3422896a3236e991049dac69",
+            "shasum": ""
+          },
           "require": {
             "php": ">=5.2"
           },
@@ -322,6 +340,53 @@
       "time": "2020-07-22T10:40:59+00:00"
     },
     {
+      "name": "phpnt/yii2-chartjs",
+      "version": "0.0.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/phpnt/yii2-chartjs.git",
+        "reference": "ce836c38180bc7a6509d3e96b668f7976058ed3c"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/phpnt/yii2-chartjs/zipball/ce836c38180bc7a6509d3e96b668f7976058ed3c",
+        "reference": "ce836c38180bc7a6509d3e96b668f7976058ed3c",
+        "shasum": ""
+      },
+      "require": {
+        "bower-asset/chart.js": "*",
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*"
+      },
+      "type": "yii2-extension",
+      "autoload": {
+        "psr-4": {
+          "phpnt\\chartJS\\": ""
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "phpNT",
+          "email": "phpnt@phpnt.com",
+          "homepage": "http://phpnt.com"
+        }
+      ],
+      "description": "Yii2 chartjs",
+      "keywords": [
+        "Chart.js",
+        "chart js",
+        "chartjs",
+        "phpnt",
+        "yii2",
+        "yii2 chartjs"
+      ],
+      "time": "2017-04-29T03:43:19+00:00"
+    },
+    {
       "name": "select2/select2",
       "version": "4.0.13",
       "source": {
@@ -400,16 +465,16 @@
           "name": "Chris Corbyn"
         },
         {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "https://swiftmailer.symfony.com",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer"
+          "name": "Fabien Potencier",
+          "email": "fabien@symfony.com"
+        }
+      ],
+      "description": "Swiftmailer, free feature-rich PHP mailer",
+      "homepage": "https://swiftmailer.symfony.com",
+      "keywords": [
+        "email",
+        "mail",
+        "mailer"
             ],
             "time": "2018-01-23T07:37:21+00:00"
         },
@@ -2916,16 +2981,16 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/db41f647d9b73702ceb6864fdfce827a72b5ce42",
-                "reference": "db41f647d9b73702ceb6864fdfce827a72b5ce42",
-                "shasum": ""
+              "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/db41f647d9b73702ceb6864fdfce827a72b5ce42",
+              "reference": "db41f647d9b73702ceb6864fdfce827a72b5ce42",
+              "shasum": ""
             },
-            "require": {
-                "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
-                "phpspec/php-diff": ">=1.0.2",
-                "yiisoft/yii2": "~2.0.13",
-                "yiisoft/yii2-bootstrap": "~2.0.0"
-            },
+          "require": {
+            "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
+            "phpspec/php-diff": ">=1.0.2",
+            "yiisoft/yii2": "~2.0.13",
+            "yiisoft/yii2-bootstrap": "~2.0.0"
+          },
           "type": "yii2-extension",
           "extra": {
             "branch-alias": {
@@ -2968,10 +3033,12 @@
   "prefer-stable": false,
   "prefer-lowest": false,
   "platform": {
-    "php": ">=5.4.0",
+    "php": "5.6.40",
     "ext-ftp": "*",
     "ext-zip": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "ext-pdo": "*",
+    "ext-json": "*"
   },
   "platform-dev": [],
   "plugin-api-version": "1.1.0"

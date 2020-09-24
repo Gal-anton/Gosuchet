@@ -23,10 +23,10 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        //'js/site.js'
-        'js/ChartNew.js-master/Add-ins/format.js',
-        'js/ChartNew.js-master/ChartNew.js',
-        'js/ChartNew.js-master/Add-ins/stats.js',
+        'https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js',
+        'https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0',
+        //'async' => 'async',
+        //'data'=>['script'=>'usocial']
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -118,14 +118,6 @@ class PostController extends AppController
         // А если там будут миллионы?
     }
 
-
-    public function actionIndex1($name = 'Guest') {
-        $hello = 'Hello!';
-        $hi = 'Hi!';
-        return $this->render('index', compact('hello','hi','name'));
-
-    }
-
     public function actionIndex()
     {
         $request = Yii::$app->request;
@@ -159,7 +151,7 @@ class PostController extends AppController
 
         $ArrayOfParallelepipeds = [$Parallelepiped];
 
-        $Steps = 8; // Количество итераций
+        $Steps = 6; // Количество итераций
         $CurrentStep = 1;
         //$Xmin = 31;
         while ($CurrentStep <= $Steps) {
@@ -179,69 +171,52 @@ class PostController extends AppController
             array_push($Arr, ['x' => $tmpParallelepiped->point2->x, 'y' => $tmpParallelepiped->point2->y]);
         }
         sort($Arr);
-        $Arr = $this->unique_multidim_array($Arr, "x");
+        $Arr = array_values($this->unique_multidim_array($Arr, "x"));
+
         $yExpectedValues = $this->getClosedValue($PreparedArrayX['InputArray'], $Arr);
         $this->setEfficency($model, $organisations, $yExpectedValues);
-
         // Делаем массивы для рисования точек
         $tek = NULL;
-        $XData = '';
-        foreach ($PreparedArrayX['InputArray'] as $X) {
-            if ($X <> $tek) {
-                $XData .= $X . ',';
-                $tek = $X;
-            }
-        }
-        $XData = substr($XData, 0, strlen($XData)-1);
-        $tek = NULL;
-        $YData = '';
-        foreach ($PreparedArrayY['InputArray'] as $Y) {
-            if ($Y <> $tek){
-                $YData .= $Y . ',';
-                $tek = $Y;
-            }
-        }
-        $YData = substr($YData, 0, strlen($YData)-1);
-        // 
+        $XData = implode(",", $PreparedArrayX['InputArray']);
+        $YData = implode(",", $PreparedArrayY['InputArray']);
+//        var_dump($PreparedArrayX['InputArray']);
+//        var_dump($PreparedArrayY['InputArray']);
+//        var_dump($XData);
+//        var_dump($YData);
+
 
         //Делаем массивы для рисования линии эффективности
-        $tek = 0;
-        $Xmax = '';
-        $XLine = '';
-        $YLine = '';
-        foreach ($Arr as $Y) {
-            if ($Y <> $tek) {
-                $Xmax .= '[' . $Y['x'] . ',' . $Y['y'] . '],';
-                $XLine .= $Y['x'] . ',';
-                $YLine .= $Y['y'] . ',';
-                $tek = $Y;
-            }
-        }
-        // var_dump($Arr);
-        $Xmax = substr($Xmax, 0, strlen($Xmax) - 1);
-        $XLine = substr($XLine, 0, strlen($XLine) - 1);
-        $YLine = substr($YLine, 0, strlen($YLine) - 1);
-        //
+        $XLine = implode(', ', array_map(function ($value) {
+            return round($value['x'], 3);
+        }, $Arr));
+        $YLine = implode(', ', array_map(function ($value) {
+            return round($value['y'], 3);
+        }, $Arr));
+
+//        var_dump($XLine);
+//        var_dump($YLine);
 
         //Делаем массив подписи данных
 
         $min = round($PreparedArrayX['Min']);
         $max = round($PreparedArrayX['Max']);
+
         if ($max == $min) $max++;
         $steps = sizeof($inputArr);
-        //$steps = 15;
-        $step_size = ($max - $min) / $steps;
+        $step_size = round($max / $steps, 3); //($max - $min) / $steps;
 
-        $min_g = round($min - $step_size / 2);
-        if ($min_g < 0) $min_g = 0;
-        $max_g = round($max + $step_size / 2);
-        $step_size = round(($max_g - $min_g) / $steps);
+        $min_g = 0;
+        $max_g = $max + $step_size * 0.5;
 
-        $Xlabels = '0,';
-        $point = '0';
+        //var_dump($inputArr);
+//        var_dump($XData);
+//        var_dump($YData);
+//        var_dump($step_size);
+        $Xlabels = '';
+        $point = 0;
         for ($i = 0; $i <= $max_g; $i += $step_size) {
-            $point += $step_size;
             $Xlabels .= $point . ',';
+            $point += $step_size;
         }
         $Xlabels = substr($Xlabels, 0, strlen($Xlabels) - 1);
 
@@ -262,6 +237,13 @@ class PostController extends AppController
         if ($graphMin < 0) {
             $graphMin = 0;
         }
+        $unitedData = array();
+        foreach ($PreparedArrayX["InputArray"] as $index => $data) {
+            $unitedData[] = array('label' => $labelArr[$index], 'x' => $data, 'y' => $PreparedArrayY["InputArray"][$index]);
+        }
+
+//        var_dump($Arr);
+        //var_dump($unitedData);
         $yMin = min($PreparedArrayY['InputArray']);
         $yMax = max($PreparedArrayY['InputArray']);
         $xMin = min($PreparedArrayX['InputArray']);
@@ -270,7 +252,7 @@ class PostController extends AppController
         return $this->render('arr', compact('model', 'Xmin', 'Xmax', 'Jarr', 'XData',
             'YData', 'XLine', 'YLine', 'Xlabels',
             'min_g', 'max_g', 'title', 'labelNameFunction',
-            'graphMin', 'graphMax', 'dataProvider', 'searchModel'));
+            'graphMin', 'graphMax', 'dataProvider', 'searchModel', "unitedData", 'Arr'));
     }
 
     /**
@@ -291,7 +273,8 @@ class PostController extends AppController
         foreach ($data as $item) {
             $index = array_search($item->input, $values['x']);
             //var_dump($index);
-            $item->efficency = round($item->output / $values['y'][$index], 3);
+            $item->efficency = ($values['y'][$index] == 0) ? 0 :
+                round($item->output / $values['y'][$index], 3);
             $item->save();
             $sumDifference += abs($item->output - $values['y'][$index]);
             //var_dump($item->getErrors());
